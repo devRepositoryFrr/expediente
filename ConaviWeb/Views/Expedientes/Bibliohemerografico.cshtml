@@ -1,0 +1,398 @@
+﻿@{
+    ViewData["Title"] = "Acervo Bibliohemerográfico";
+}
+@****************************************************************************************************************************************************************************@
+@{
+    @await Html.PartialAsync("../Expedientes/Botones");
+}
+<div class="row">
+    <div class="col-md-12" id="alertAjax">
+        @Html.Raw(@ViewBag.Alert)
+    </div>
+</div>
+@*formulario de acervo bibliohemerográfico*@
+<div class="row form-group">
+    <div class="col-md-12">
+        <h3 class="text-center">Inventario de acervo bibliohemerográfico</h3>
+    </div>
+</div>
+<div id="divAdd">
+    @{
+        @await Html.PartialAsync("../Expedientes/_AddInventarioBibliohemerografico")
+    }
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form id="formTable">
+            <table id="tableExpedientes" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            No. Prog.
+                        </th>
+                        <th>
+                            No. Ejem.
+                        </th>
+                        <th>
+                            Tipo de Soporte
+                        </th>
+                        <th>
+                            Título del Libro
+                        </th>
+                        <th>
+                            Nombre del Autor
+                        </th>
+                        <th>
+                            Tema
+                        </th>
+                        <th>
+                            Editorial
+                        </th>
+                        <th>
+                            Año
+                        </th>
+                        <th>
+                            ISBN/ISSN
+                        </th>
+                        <th>
+                            No. Pág.
+                        </th>
+                        <th>
+                            No. Volumen
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<br />
+<div id="div_btn_addExp">
+    <button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente">
+        <span class="fa fa-plus"></span> Agregar Expediente
+    </button>
+</div>
+@*formulario de expediente bibliohemerográfico*@
+<div id="divAddExpediente">
+    @{
+        @await Html.PartialAsync("../Expedientes/_AddExpedienteBibliohemerografico")
+    }
+</div>
+@*fin del formulario de acervo bobliohemerográfico*@
+<!-- Modal Drop Expediente -->
+<div class="modal fade fade-in" style="z-index:1041" id="showModalTrashExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_DropExpedienteBb")
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal SendVal Expediente -->
+@*<div class="modal fade fade-in" style="z-index:1041" id="showModalSendValExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_SendValExpedienteBiblio")
+            }
+        </div>
+    </div>
+</div>*@
+
+<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        var table;
+        $(document).ready(function () {
+            showAlert();
+            if ($("#hd_id_inventario").val() == 0) {
+                $("#btn_fto").remove();
+                $("#btn_add_exp").remove();
+            }
+            showTable();
+            $('#modalExpediente').on('hidden.bs.modal', function (e) {
+                $(this).find('#formInsertExpedienteBibliohemerografico')[0].reset();
+                $('#hd_id_expediente').val("0");
+            });
+            $('#showModalTrashExpediente').on('show.bs.modal', function (e) {
+                var expId = $(e.relatedTarget).data('exp-id');
+                $(e.currentTarget).find('#idExpediente').val(expId);
+            });
+            //$('#showModalSendValExpediente').on('show.bs.modal', function (e) {
+            //    var expId = $(e.relatedTarget).data('exp-id');
+            //    $(e.currentTarget).find('#idExpediente').val(expId);
+            //});
+            $('#modalExpediente').on('show.bs.modal', function (e) {
+                var bookId = $(e.relatedTarget).data('exp-id');
+                if (!isNaN(bookId)) {
+                    $.ajax({
+                        url: "@Url.Action("GetExpedienteBibliohemerografico", "Bibliohemerografico")", // Url
+                        data: {
+                            // Datos / Parámetros
+                            Id: bookId
+                        },
+                        type: "post"  // Verbo HTTP
+                    }).done(function (result) {
+                        if (result.id != null) {
+                            $('#hd_id_expediente').val(result.id);
+                            $('#Ejemplar').val(result.ejemplar);
+                            $('#slcTipoSoporte option[value="' + result.idTipoSoporte + '"]').prop('selected', true);
+                            $('#titulo_libro').val(result.titulo);
+                            $('#nombre_autor').val(result.autor);
+                            $('#tema').val(result.tema);
+                            $('#editorial').val(result.editorial);
+                            $('#slctAnio option[value="' + result.anio + '"]').prop('selected', true);
+                            $('#asbn_issn').val(result.isbnIssn);
+                            $('#paginas').val(result.paginas);
+                            $('#volumen').val(result.volumen);
+                        } else {
+                            window.scrollTo(0,0);
+                            $('#modalExpediente').modal('toggle');
+                            $('#alertAjax').append(result);
+                            showAlert();
+                        }
+                    })
+                        // Se ejecuta si se produjo un error.
+                        .fail(function (xhr, status, error) {
+                            // Mostramos un mensaje de error.
+                            //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
+
+                            // Escondemos el Ajax Loader
+                            //$("#AjaxLoader").hide("slow");
+
+                            // Habilitamos el botón de Submit
+                            //$("#SubmitBtn").prop("disabled", false);
+                        })
+                        // Hacer algo siempre, haya sido exitosa o no.
+                        .always(function () {
+
+                        });
+                    //$(e.currentTarget).find('#idSerie').val(bookId);
+                }
+            });
+            getAnio();
+            $("#slctPuesto").on("change", function () {
+                $.ajax({
+                    url: "@Url.Action("GetInventarioBibliohemerografico", "Bibliohemerografico")", // Url
+                    data: {
+                        // Datos / Parámetros
+                        puesto: $("#" + this.id + " option:selected").text()
+                    },
+                    type: "post"  // Verbo HTTP
+                }).done(function (result) {
+                    if (result.id != null) {
+                        //$('#unidadAdministrativa').text(result.nombreUnidadAdministrativa);
+                        $('#hd_id_inventario').val(result.id);
+                        $('#hd_id_inventario_expediente').val(result.id);
+                        $('#responsableAT').val(result.nombreResponsableAT);
+                        $('#ftransferencia_biblio').val(result.fechaTransferencia != null ? result.fechaTransferencia.substring(0, 4) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(8, 10) : '');
+                        $('#felaboracion_inventario_biblio').val(result.fechaElaboracion != null ? result.fechaElaboracion.substring(0, 4) + '/' + result.fechaElaboracion.substring(5, 7) + '/' + result.fechaElaboracion.substring(8, 10) : '');
+                        //$("#btn_fto").prop('disabled', false);
+                        //$("#btn_add_exp").prop('disabled', false);
+                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de acervo blibliohemerográfico" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
+                        $("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
+
+                        var urlTipo = "";
+                        urlTipo = "/Bibliohemerografico/GetExpedientesBiblioByIdInv";
+                        table = $('#tableExpedientes').DataTable({
+                            "proccessing": true,
+                            "serverSide": false,
+                            "ajax": {
+                                url: urlTipo,
+                                data: { Id : result.id },
+                                type: 'POST',
+                                headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() },
+                                complete: function () {
+                                    $("#spinner").hide();
+                                }
+                            },
+                            "columnDefs": columns,
+                            "order": [[0, "desc"]],
+                            "autoWidth": true,
+                            "destroy": true,
+                            "scrollY": '700px',
+                            "scrollCollapse": true,
+                            "paging": true,
+                            "info": true,
+                            "buttons": ['excel'],
+                            "scrollX": true,
+                            "fixedColumns": true,
+                            "ordering": false,
+                            "language": {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                }
+                            }
+                        });
+                    } else {
+                        $("#alertAjax").append(result);
+                        showAlert();
+                        $('#hd_id_inventario').val('0');
+                        $('#hd_id_inventario_expediente').val('0');
+                        $('#responsableAT').val('');
+                        $('#ftransferencia_biblio').val('');
+                        $('#felaboracion_inventario_biblio').val('');
+                        $("#btn_fto").remove();
+                        $("#btn_add_exp").remove();
+                        $('#tableExpedientes').DataTable().clear();
+                        $('#tableExpedientes').DataTable().destroy();
+                    }
+                })
+                // Se ejecuta si se produjo un error.
+                .fail(function (xhr, status, error) {
+                    // Mostramos un mensaje de error.
+                    //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
+
+                    // Escondemos el Ajax Loader
+                    //$("#AjaxLoader").hide("slow");
+
+                    // Habilitamos el botón de Submit
+                    //$("#SubmitBtn").prop("disabled", false);
+                })
+                // Hacer algo siempre, haya sido exitosa o no.
+                .always(function () {
+
+                });
+            });
+        });
+        function showTable() {
+            var urlTipo = "";
+            urlTipo = "/Bibliohemerografico/ExpedientesBibliohemerograficos";
+            table = $('#tableExpedientes').DataTable({
+                "proccessing": true,
+                "serverSide": false,
+                "ajax": {
+                    url: urlTipo,
+                    type: 'GET',
+                    headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() },
+                    complete: function () {
+                        $("#spinner").hide();
+                    }
+                },
+                "columnDefs": columns,
+                "order": [[0, "desc"]],
+                "autoWidth": true,
+                "destroy": true,
+                "scrollY": '700px',
+                "scrollCollapse": true,
+                "paging": true,
+                "info": true,
+                "buttons": ['excel'],
+                "scrollX": true,
+                "fixedColumns": true,
+                "ordering": false,
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                }
+            });
+        }
+        var columns = [
+            { "name": "NoProg", "data": "noProg", "targets": 0},
+            { "name": "Ejemplar", "data": "ejemplar", "targets": 1 },
+            {
+                "name": "TipoSoporte",
+                "data": null,
+                "targets": 2,
+                "render": function (data, type, row) {
+                    return row.claveSoporte + '-' + row.consecutivo + '/' + row.anio;
+                }
+            },
+            { "name": "Titulo", "data": "titulo", "targets": 3 },
+            { "name": "Autor", "data": "autor", "targets": 4 },
+            { "name": "Tema", "data": "tema", "targets": 5 },
+            { "name": "Editorial", "data": "editorial", "targets": 6 },
+            { "name": "Anio", "data": "anio", "targets": 7 },
+            { "name": "IsbnIssn", "data": "isbnIssn", "targets": 8 },
+            { "name": "Paginas", "data": "paginas", "targets": 9 },
+            { "name": "Volumen", "data": "volumen", "targets": 10 },
+            {
+                "targets": 11,
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    /*var ret = '<span style="cursor:pointer;" title="Carátula" class="glyphicon glyphicon-file" aria-hidden="true" onclick="location.href=\'CaratulaControl?id='+ data.id +'\'"></span>';*/
+                    var ret = "";
+                    if (row.esEditable == 'editable') {
+                        ret += (row.estatus == 'Registro') ? '<a data-exp-id="' + row.id + '" class="gold" type="button" title="Editar" data-toggle="modal" data-target="#modalExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-pencil-square-o" aria-hidden="true"></span></a><br><a data-exp-id=' + row.id + ' class="gold" type="button" title="Eliminar" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-trash-o" aria-hidden="true"></span></a>' : '';
+                        //ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación') ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Enviar a revisión" class="glyphicon glyphicon-check" aria-hidden="true"></span></a>' : '';
+                        //ret += (row.estatus == 'Revisión') ? '<span style="color: #b8925f;" title="Enviado a revisión" class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></a>' : '';
+                        //ret += (row.estatus == 'Aceptado') ? '<span style="color: #b8925f;" title="Validado" class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>' : '';
+                    }
+                    return ret;
+                },
+                "sortable": false,
+                "className": 'text-center'
+            },
+        ];
+        function showAlert() {
+            setTimeout(function () {
+                $("#alerta").slideToggle(1500);
+            }, 4000);
+            setTimeout(function () {
+                $("#alerta").remove();
+            }, 6000);
+        }
+        function getAnio() {
+            var optionString = '';
+            var data = [];
+            // Return today's date and time
+            var currentTime = new Date();
+            // returns the year (four digits)
+            var year = currentTime.getFullYear();
+            for (var i = year; i >= 1900;i--) {
+                data.push(i);
+            }
+            data.forEach(function (dataItem, index) {
+                optionString += '<option value="' + dataItem + '">' + dataItem + '</option>';
+            });
+            $('#slctAnio').append(optionString);
+        }
+        function sendToFormat() {
+            var id = $("#hd_id_inventario").val();
+            if (!isNaN(id) && id > 0)
+                window.open("/BibliohemerograficoFto?id=" + id, "_blank");
+        }
+    </script>
+}

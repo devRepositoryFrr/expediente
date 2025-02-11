@@ -1,0 +1,304 @@
+﻿@model ConaviWeb.Model.Catalogo
+@{
+    ViewData["Title"] = "No Expedientable";
+}
+@********************************************************************************************************************************************************************@
+@{
+    @await Html.PartialAsync("../Expedientes/Botones");
+}
+<div class="row">
+    <div class="col-md-12" id="alertAjax">
+        @Html.Raw(@ViewBag.Alert)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-12">
+        <h3 class="text-center">Inventario de Documentación no Expedientable transferible al Archivo de Concentración</h3>
+    </div>
+</div>
+<div id="divAdd">
+    @{
+        @await Html.PartialAsync("../Expedientes/_AddInventarioNoExpedientable")
+    }
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form id="formTable">
+            <table id="table" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            No. Prog.
+                        </th>
+                        <th>
+                            Cve. Tipo de Soporte
+                        </th>
+                        <th>
+                            Clave Interna
+                        </th>
+                        <th>
+                            No. de Partes
+                        </th>
+                        <th>
+                            Título del Expediente
+                        </th>
+                        <th>
+                            Fecha de Elaboración
+                        </th>
+                        <th>
+                            Observaciones
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+@*fin del formulario de documentacion no expedientable*@
+@*<button id="btn_new_exp" class="btn btn-default btn-md" data-toggle="modal" data-target="#modalExpediente">Agregar Expediente</button>*@
+<div id="addExpediente">
+    @{
+        @await Html.PartialAsync("../Expedientes/_AddExpedienteNoExpedientable")
+    }
+</div>
+<!-- Modal Drop Expediente -->
+<div class="modal fade fade-in" style="z-index:1041" id="showModalTrashExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_DropExpediente")
+            }
+        </div>
+    </div>
+</div>
+<hr />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+        var table;
+        $(document).ready(function () {
+            showAlert();
+            if ($("#hd_id_inventario").val() == 0) {
+                $("#btn_save_inv").remove();
+                $("#btn_fto").remove();
+            }
+            showTable();
+            $('#showModalTrashExpediente').on('show.bs.modal', function (e) {
+                var expId = $(e.relatedTarget).data('exp-id');
+                $(e.currentTarget).find('#idExpediente').val(expId);
+            });
+            $("#slctPuesto").on("change", function () {
+                $.ajax({
+                    url: "@Url.Action("GetInventarioControl", "InventarioControl")", // Url
+                    data: {
+                        // Datos / Parámetros
+                        puesto: $("#" + this.id + " option:selected").text()
+                    },
+                    type: "post"  // Verbo HTTP
+                }).done(function (result) {
+                    if (result.id != null) {
+                        $('#hd_id_inventario').val(result.id);
+                        $('#text_responsableAT').val(result.nombreResponsableAT);
+                        $('#ftransferencia_inventario_nexp').val(result.fechaTransferencia != null ? result.fechaTransferencia.substring(0, 4) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(8, 10) : '');
+                        $('#felaboracion_inventario_nexp').val(result.fechaElaboracion != null ? result.fechaElaboracion.substring(0, 4) + '/' + result.fechaElaboracion.substring(5, 7) + '/' + result.fechaElaboracion.substring(8, 10) : '');
+                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de acervo blibliohemerográfico" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
+                        
+                        var urlTipo = "";
+                        urlTipo = "/NoExpedientable/GetExpedientesNoExpedientablesByIdInv";
+                        table = $('#table').DataTable({
+                            "proccessing": true,
+                            "serverSide": false,
+                            "ajax": {
+                                url: urlTipo,
+                                data: { Id: result.id },
+                                type: 'POST',
+                                headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() },
+                                complete: function () {
+                                    $("#spinner").hide();
+                                }
+                            },
+                            "columnDefs": columns,
+                            "order": [[0, "desc"]],
+                            "autoWidth": true,
+                            "destroy": true,
+                            "scrollY": true,
+                            "scrollCollapse": true,
+                            "paging": true,
+                            "info": true,
+                            "buttons": ['excel'],
+                            "scrollX": true,
+                            "fixedColumns": true,
+                            "ordering": false,
+                            "language": {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                }
+                            }
+                        });
+                    } else {
+                        $("#alertAjax").append(result);
+                        showAlert();
+                        $('#hd_id_inventario').val('0');
+                        $('#text_responsableAT, #ftransferencia_inventario_nexp, #felaboracion_inventario_nexp').val('');
+                        $("#btn_fto").remove();
+                        $('#table').DataTable().clear().destroy();
+                    }
+                })
+                // Se ejecuta si se produjo un error.
+                .fail(function (xhr, status, error) {
+                    // Mostramos un mensaje de error.
+                    //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
+                })
+                // Hacer algo siempre, haya sido exitosa o no.
+                .always(function () {
+
+                });
+            });
+        });
+        function showTable() {
+            var urlTipo = "";
+            urlTipo = "/NoExpedientable/ExpedientesNoExpedientables";
+            table = $('#table').DataTable({
+                "proccessing": true,
+                "serverSide": false,
+                "ajax": {
+                    url: urlTipo,
+                    type: 'GET',
+                    headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() },
+                    complete: function () {
+                        $("#spinner").hide();
+                    }
+                },
+                "columnDefs": columns,
+                "order": [[0, "desc"]],
+                "autoWidth": true,
+                "destroy": true,
+                "scrollY": '700px',
+                "scrollCollapse": true,
+                "paging": true,
+                "info": true,
+                "buttons": ['excel'],
+                "scrollX": true,
+                "fixedColumns": true,
+                "ordering": false,
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                }
+            });
+        }
+        var columns = [
+            { "name": "NoProg", "data": "noProg", "targets": 0},
+            //{ "name": "Clave", "data": "clave", "targets": 1 },
+            {
+                "name": "Clave",
+                "data": null,
+                "targets": 1,
+                "render": function (data, type, row) {
+                    return (row.idTipoDocumental!=null && row.codigo!=null) ? row.idTipoDocumental + '-' + row.codigo : "";
+                }
+            },
+            {
+                "name": "ClaveInterna",
+                "data": null,
+                "targets": 2,
+                "render": function (data, type, row) {
+                    //var fprimero = new Date(row.fechaElaboracion);
+                    //return row.claveInterna + "-" + row.noProg + "/" + fprimero.getFullYear();
+                    return row.clave + "-" + row.consecutivo + "/" + row.periodo;
+                }
+            },
+            {
+                "name": "Partes",
+                "data": null,
+                "targets": 3,
+                "render": function (data, type, row) {
+                    return row.noPartes != null ? row.noPartes : "";
+                }
+            },
+            { "name": "Nombre", "data": "nombre", "targets": 4 },
+            {
+                "name": "FechaElaboracion",
+                "data": null,
+                "targets": 5,
+                "render": function (data, type, row) {
+                    var fprimero = new Date(row.fechaElaboracion);
+                    //var month = fprimero.getMonth() + 1;
+                    //var day = fprimero.getDate();
+                    //return (fprimero.getFullYear() + '/' + (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day);
+                    return fprimero.getFullYear();
+                }
+            },
+            { "name": "Observaciones", "data": "observaciones", "targets": 6 },
+            {
+                "targets": 7,
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="CaratulaNoExpedientable?id=' + data.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
+                    //ret += (row.estatus == 'Revisión') ? '<span style="color: #b8925f;" title="Enviado a revisión" class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></a>' : '';
+                    //if (row.esEditable == 'editable') {
+                    //    ret += '<a data-exp-id=' + row.id +' class="gold" type="button" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Eliminar" class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
+                    //    ret += '<span style="cursor:pointer;" title="Enviar a revisión" class="gold glyphicon glyphicon-check" aria-hidden="true"></span>';
+                    //}
+                    return ret;
+                },
+                "sortable": false,
+                "className": 'text-center'
+            },
+        ];
+        function showAlert() {
+            setTimeout(function () {
+                $("#alerta").slideToggle(1500);
+            }, 4000);
+            setTimeout(function () {
+                $("#alerta").remove();
+            }, 6000);
+        }
+        function sendToFormat() {
+            var id = $("#hd_id_inventario").val();
+            if (!isNaN(id) && id > 0)
+                window.open("/NoExpedientableFto?id=" + id, "_blank");
+        }
+</script>
+}

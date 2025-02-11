@@ -1,0 +1,342 @@
+﻿@{
+    ViewData["Title"] = "Inventario de Transferencia Primaria";
+}
+@********************************************************************************************************************************************************************@
+@*Formulario para el el Inventario de Transferencia Primaria al Archivo de Concentración*@
+@{
+    @await Html.PartialAsync("../Expedientes/Botones");
+}
+<div class="row">
+    <div class="col-md-12" id="alertAjax">
+        @Html.Raw(@ViewBag.Alert)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-12">
+        <h3 class="text-center">Inventario de Transferencia Primaria al Archivo de Concentración</h3>
+    </div>
+</div>
+<div id="divAdd">
+    @{
+        @await Html.PartialAsync("../Expedientes/_AddInventario")
+    }
+    <hr />
+</div>
+<div id="divListaExpedientes">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="formTable">
+                <table id="tableExpedientes" class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                No. Prog.
+                            </th>
+                            <th>
+                                Cve del Expediente
+                            </th>
+                            <th>
+                                Nombre del Expediente
+                            </th>
+                            <th>
+                                Periodo
+                            </th>
+                            <th>
+                                Cantidad en años de resguardo en el archivo de concentración
+                            </th>
+                            <th>
+                                No. de Legajos
+                            </th>
+                            <th>
+                                No. de Fojas
+                            </th>
+                            <th>
+                                Observaciones
+                            </th>
+                            @*<th>
+                                Estatus
+                            </th>*@
+                            <th>
+                                &nbsp;
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+@*<button id="btn_add_exp" class="btn btn-default btn-md" data-toggle="modal" data-target="#modalExpediente">Agregar Expediente</button>*@
+<div id="addExpediente">
+    @{
+        @await Html.PartialAsync("../Expedientes/_AddExpedienteInventarioTP")
+    }
+</div>
+<!-- Modal Drop Expediente -->
+<div class="modal fade fade-in" style="z-index:1041" id="showModalTrashExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_DropExpedienteTp")
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal SendVal Expediente -->
+@*<div class="modal fade fade-in" style="z-index:1041" id="showModalSendValExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_SendValExpedienteTp")
+            }
+        </div>
+    </div>
+</div>*@
+<!-- Modal VoBo Expediente -->
+@*<div class="modal fade fade-in" style="z-index:1041" id="showModalVoBoExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_VoBoExpedienteTp")
+            }
+        </div>
+    </div>
+</div>*@
+<!-- Modal Revalidacion Expediente -->
+@*<div class="modal fade fade-in" style="z-index:1041" id="showModalRevalidacionExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @{
+                @await Html.PartialAsync("../Expedientes/_RevalidacionExpedienteTp")
+            }
+        </div>
+    </div>
+</div>*@
+<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+        var table;
+        $(document).ready(function () {
+            showAlert();
+            if ($("#hd_id_inventario").val() == 0) {
+                $("#btn_save_inv").remove();
+                $("#btn_fto").remove();
+            } else {
+
+            }
+            showTable();
+            $('#showModalTrashExpediente').on('show.bs.modal', function (e) {
+                var expId = $(e.relatedTarget).data('exp-id');
+                $(e.currentTarget).find('#idExpediente').val(expId);
+            });
+            $('#showModalSendValExpediente').on('show.bs.modal', function (e) {
+                var expId = $(e.relatedTarget).data('exp-id');
+                $(e.currentTarget).find('#idExpediente').val(expId);
+            });
+            $("#slctPuesto").on("change", function () {
+                $.ajax({
+                    url: "@Url.Action("GetInventarioControl", "InventarioControl")", // Url
+                    data: {
+                        // Datos / Parámetros
+                        puesto: $("#" + this.id + " option:selected").text()
+                    },
+                    type: "post"  // Verbo HTTP
+                }).done(function (result) {
+                    if (result.id != null) {
+                        $('#hd_id_inventario').val(result.id);
+                        $('#NombreResponsableAT').val(result.nombreResponsableAT);
+                        $('#ftransferencia_archivo').val(result.fechaTransferencia != null ? result.fechaTransferencia.substring(0, 4) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(8, 10) : '');
+                        $('#felaboracion_inventario').val(result.fechaElaboracion != null ? result.fechaElaboracion.substring(0, 4) + '/' + result.fechaElaboracion.substring(5, 7) + '/' + result.fechaElaboracion.substring(8, 10) : '');
+                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de acervo blibliohemerográfico" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
+                        //$("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
+
+                        var urlTipo = "";
+                        urlTipo = "/Inventario/GetExpedientesTPByIdInv";
+                        table = $('#tableExpedientes').DataTable({
+                            "proccessing": true,
+                            "serverSide": false,
+                            "ajax": {
+                                url: urlTipo,
+                                data: { Id: result.id },
+                                type: 'POST',
+                                headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() },
+                                complete: function () {
+                                    $("#spinner").hide();
+                                }
+                            },
+                            "columnDefs": columns,
+                            "order": [[0, "desc"]],
+                            "autoWidth": true,
+                            "destroy": true,
+                            "scrollY": true,
+                            "scrollCollapse": true,
+                            "paging": true,
+                            "info": true,
+                            "buttons": ['excel'],
+                            "scrollX": true,
+                            "fixedColumns": true,
+                            "ordering": false,
+                            "language": {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                }
+                            }
+                        });
+                    } else {
+                        $("#alertAjax").append(result);
+                        showAlert();
+                        $('#hd_id_inventario').val('0');
+                        $('#NombreResponsableAT, #ftransferencia_archivo, #felaboracion_inventario').val('');
+                        $("#btn_fto").remove();
+                        //$("#btn_add_exp").remove();
+                        $('#tableExpedientes').DataTable().clear().destroy();
+                        //$('#tableExpedientesControl').DataTable().destroy();
+                    }
+                })
+                // Se ejecuta si se produjo un error.
+                .fail(function (xhr, status, error) {
+                    // Mostramos un mensaje de error.
+                    //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
+
+                    // Escondemos el Ajax Loader
+                    //$("#AjaxLoader").hide("slow");
+
+                    // Habilitamos el botón de Submit
+                    //$("#SubmitBtn").prop("disabled", false);
+                })
+                // Hacer algo siempre, haya sido exitosa o no.
+                .always(function () {
+
+                });
+            });
+            //$('#showModalVoBoExpediente').on('show.bs.modal', function (e) {
+            //    var expId = $(e.relatedTarget).data('exp-id');
+            //    $(e.currentTarget).find('#idExpediente').val(expId);
+            //});
+            //$('#showModalRevalidacionExpediente').on('show.bs.modal', function (e) {
+            //    var expId = $(e.relatedTarget).data('exp-id');
+            //    $(e.currentTarget).find('#idExpediente').val(expId);
+            //});
+        });
+        function showTable() {
+            var urlTipo = "";
+            urlTipo = "/Inventario/ExpedientesTP";
+            table = $('#tableExpedientes').DataTable({
+                "proccessing": true,
+                "serverSide": false,
+                "ajax": {
+                    url: urlTipo,
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': $('@Html.AntiForgeryToken()').val() },
+                    complete: function () {
+                        $("#spinner").hide();
+                    }
+                },
+                "columnDefs": columns,
+                "order": [[0, "desc"]],
+                "autoWidth": true,
+                "destroy": true,
+                "scrollY": true,
+                "scrollCollapse": true,
+                "paging": true,
+                "info": true,
+                "buttons": ['excel'],
+                "scrollX": true,
+                "fixedColumns": true,
+                "ordering": false,
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    }
+                }
+            });
+        }
+        var columns = [
+            { "name": "NoProg", "data": "noProg", "targets": 0},
+            //{ "name": "Codigo", "data": "codigo", "targets": 1 },
+            {
+                "targets": 1,
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    var ret = row.codigo + '-' + row.consecutivo + '/' + row.periodo;
+                    return ret;
+                },
+                "sortable": false,
+                "className": 'text-center'
+            },
+            { "name": "Nombre", "data": "nombre", "targets": 2 },
+            { "name": "Periodo", "data": "periodo", "targets": 3 },
+            { "name": "AniosResguardo", "data": "aniosResguardo", "targets": 4 },
+            { "name": "Legajos", "data": "legajos", "targets": 5 },
+            { "name": "Fojas", "data": "fojas", "targets": 6 },
+            { "name": "Observaciones", "data": "observaciones", "targets": 7 },
+            //{ "name": "Estatus", "data": "estatus", "targets": 8 },
+            {
+                "targets": 8,
+                "data": null,
+                "render": function (data, type, row, meta) {
+                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="Caratula?id=' + data.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
+                    //ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalVoBoExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="VoBo" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>' : '';
+                    //ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalRevalidacionExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Revalidación" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>' : '';
+                    //if (row.esEditable == 'editable') {     //is editable by owner
+                    //    ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación') ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Eliminar" class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Enviar a revisión" class="glyphicon glyphicon-check" aria-hidden="true"></span></a>' : '';
+                    //}
+                    ret += (row.estatus == 'Revisión') ? '<span style="color: #b8925f;" title="Enviado a revisión" class="fa fa-clock-o" aria-hidden="true"></span></a>' : '';
+                    return ret;
+                },
+                "sortable": false,
+                "className": 'text-center'
+            },
+        ];
+        function showAlert() {
+            setTimeout(function () {
+                $("#alerta").slideToggle(1500);
+            }, 4000);
+            setTimeout(function () {
+                $("#alerta").remove();
+            }, 6000);
+        }
+        function sendToFormat() {
+            var id = $("#hd_id_inventario").val();
+            if (!isNaN(id) && id > 0)
+                window.open("/InventarioFto?id=" + id, "_blank");
+        }
+</script>
+}
