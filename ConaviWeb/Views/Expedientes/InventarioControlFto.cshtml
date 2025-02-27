@@ -272,7 +272,8 @@
                     $('#Almacenamiento').text(result.almacenamiento != null ? result.almacenamiento : '');
 
                     var urlTipo = "";
-                    urlTipo = "/InventarioControl/GetExpedientesControlByIdInv";
+                    //urlTipo = "/InventarioControl/GetExpedientesControlByIdInv";
+                    urlTipo = "@Url.Action("GetExpedientesControlByIdInv","InventarioControl")";
                     table = $('#tableExpControl').DataTable({
                         "proccessing": true,
                         "serverSide": false,

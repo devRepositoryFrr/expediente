@@ -10,16 +10,14 @@ using ConaviWeb.Services;
 using static ConaviWeb.Models.AlertsViewModel;
 using ConaviWeb.Model.Response;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConaviWeb.Controllers.Expedientes
 {
+    [Authorize]
     public class InventarioControlController : Controller
     {
         private readonly IExpedienteRepository _expedienteRepository;
-        //public IActionResult Index()
-        //{
-        //    return View("../Expedientes/InventarioAcervoDocumental");
-        //}
         public InventarioControlController(IExpedienteRepository expedienteRepository)
         {
             _expedienteRepository = expedienteRepository;

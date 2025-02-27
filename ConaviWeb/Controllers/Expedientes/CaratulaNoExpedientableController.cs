@@ -9,9 +9,11 @@ using ConaviWeb.Services;
 using static ConaviWeb.Models.AlertsViewModel;
 using ConaviWeb.Model.Response;
 using ConaviWeb.Commons;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConaviWeb.Controllers.Expedientes
 {
+    [Authorize]
     public class CaratulaNoExpedientableController : Controller
     {
         private readonly IExpedienteRepository _expedienteRepository;

@@ -166,7 +166,8 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Catalogos/ListaUsuarios";
+            //urlTipo = "/Catalogos/ListaUsuarios";
+            urlTipo = "@Url.Action("ListaUsuarios","Catalogos")";
             $("#spinner").show();
             //$("#divTable").show();
             table = $('#tableUsuarios').DataTable({

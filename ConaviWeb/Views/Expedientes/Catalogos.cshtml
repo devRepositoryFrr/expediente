@@ -202,7 +202,8 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Catalogos/ListaAjax";
+            //urlTipo = "/Catalogos/ListaAjax";
+            urlTipo = "@Url.Action("ListaAjax","Catalogos")";
             $("#spinner").show();
             $("#divTable").show();
             table = $('#table').DataTable({

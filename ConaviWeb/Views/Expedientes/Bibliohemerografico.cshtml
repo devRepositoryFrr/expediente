@@ -204,7 +204,8 @@
                         $("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
 
                         var urlTipo = "";
-                        urlTipo = "/Bibliohemerografico/GetExpedientesBiblioByIdInv";
+                        //urlTipo = "/Bibliohemerografico/GetExpedientesBiblioByIdInv";
+                        urlTipo = "@Url.Action("GetExpedientesBiblioByIdInv","Bibliohemerografico")";
                         table = $('#tableExpedientes').DataTable({
                             "proccessing": true,
                             "serverSide": false,
@@ -283,7 +284,8 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Bibliohemerografico/ExpedientesBibliohemerograficos";
+            //urlTipo = "/Bibliohemerografico/ExpedientesBibliohemerograficos";
+            urlTipo = "@Url.Action("ExpedientesBibliohemerograficos","Bibliohemerografico")";
             table = $('#tableExpedientes').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -392,7 +394,7 @@
         function sendToFormat() {
             var id = $("#hd_id_inventario").val();
             if (!isNaN(id) && id > 0)
-                window.open("/BibliohemerograficoFto?id=" + id, "_blank");
+                window.open("@Url.Action("Index","BibliohemerograficoFto")?id=" + id, "_blank");
         }
     </script>
 }

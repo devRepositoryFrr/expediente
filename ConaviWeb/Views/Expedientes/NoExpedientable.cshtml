@@ -114,7 +114,8 @@
                         $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de acervo blibliohemerográfico" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
                         
                         var urlTipo = "";
-                        urlTipo = "/NoExpedientable/GetExpedientesNoExpedientablesByIdInv";
+                        //urlTipo = "/NoExpedientable/GetExpedientesNoExpedientablesByIdInv";
+                        urlTipo = "@Url.Action("GetExpedientesNoExpedientablesByIdInv","NoExpedientable")";
                         table = $('#table').DataTable({
                             "proccessing": true,
                             "serverSide": false,
@@ -182,7 +183,8 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/NoExpedientable/ExpedientesNoExpedientables";
+            //urlTipo = "/NoExpedientable/ExpedientesNoExpedientables";
+            urlTipo = "@Url.Action("ExpedientesNoExpedientables","NoExpedientable")";
             table = $('#table').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -275,7 +277,7 @@
                 "targets": 7,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="CaratulaNoExpedientable?id=' + data.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
+                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="@Url.Action("Index","CaratulaNoExpedientable")?id=' + data.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
                     //ret += (row.estatus == 'Revisión') ? '<span style="color: #b8925f;" title="Enviado a revisión" class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></a>' : '';
                     //if (row.esEditable == 'editable') {
                     //    ret += '<a data-exp-id=' + row.id +' class="gold" type="button" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Eliminar" class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>';
@@ -297,8 +299,10 @@
         }
         function sendToFormat() {
             var id = $("#hd_id_inventario").val();
-            if (!isNaN(id) && id > 0)
-                window.open("/NoExpedientableFto?id=" + id, "_blank");
+            if (!isNaN(id) && id > 0) {
+                //window.open("/NoExpedientableFto?id=" + id, "_blank");
+                window.open("@Url.Action("Index","NoExpedientableFto")?id=" + id, "_blank");
+            }
         }
 </script>
 }

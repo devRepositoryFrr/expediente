@@ -12,9 +12,11 @@ using ConaviWeb.Model.Request;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ConaviWeb.Commons;
 using ConaviWeb.Model.Response;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConaviWeb.Controllers.Expedientes
 {
+    [Authorize]
     public class CatalogosController : Controller
     {
         private readonly IExpedienteRepository _expedientesRepository;

@@ -139,7 +139,7 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Catalogos/ListaAreas";
+            urlTipo = "@Url.Action("ListaAreas","Catalogos")";
             $("#spinner").show();
             //$("#divTable").show();
             table = $('#tableAreas').DataTable({

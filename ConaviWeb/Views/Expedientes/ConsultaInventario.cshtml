@@ -154,7 +154,7 @@
             $("#divtableExpedientesControl").hide();
             //const tipo = $('#slcInventario option:selected').val();
             const idArea = $('#slcArea option:selected').val();
-            urlTipo = "/InventarioValidacion/GetExpedientesTP";
+            urlTipo = "@Url.Action("GetExpedientesTP","InventarioValidacion")";
             $('#divtableExpedientes').show();
             //table.destroy();
             //$('#' + tableName).empty();
@@ -213,7 +213,7 @@
             $("#divtableExpedientes").hide();
             //const tipo = $('#slcInventario option:selected').val();
             const idArea = $('#slcArea option:selected').val();
-            urlTipo = "/InventarioValidacion/GetExpedientesControl";
+            urlTipo = "@Url.Action("GetExpedientesControl","InventarioValidacion")";
             $('#divtableExpedientesControl').show();
             //table.destroy();
             //$('#' + tableName).empty();
@@ -281,7 +281,7 @@
                 "targets": 9,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var ret = '<a href="Caratula?id=' + data.id + '&sh=1" class="btn btn-link" title="Carátula" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>';
+                    var ret = '<a href="@Url.Action("Index","Caratula")?id=' + data.id + '&sh=1" class="btn btn-link" title="Carátula" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>';
                     return ret;
                 },
                 "sortable": false,
@@ -320,7 +320,7 @@
                 "targets": 7,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var ret = '<a target="_blank" class="btn btn-link" title="Carátula" href="CaratulaControl?id=' + data.id + '&sh=1"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>';
+                    var ret = '<a target="_blank" class="btn btn-link" title="Carátula" href="@Url.Action("Index","CaratulaControl")?id=' + data.id + '&sh=1"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>';
                     return ret;
                 },
                 "sortable": false,

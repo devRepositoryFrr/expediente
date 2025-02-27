@@ -158,7 +158,8 @@
                         //$("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
 
                         var urlTipo = "";
-                        urlTipo = "/Inventario/GetExpedientesTPByIdInv";
+                        //urlTipo = "/Inventario/GetExpedientesTPByIdInv";
+                        urlTipo = "@Url.Action("GetExpedientesTPByIdInv","Inventario")";
                         table = $('#tableExpedientes').DataTable({
                             "proccessing": true,
                             "serverSide": false,
@@ -242,7 +243,8 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Inventario/ExpedientesTP";
+            //urlTipo = "/Inventario/ExpedientesTP";
+            urlTipo = "@Url.Action("ExpedientesTP", "Inventario")";
             table = $('#tableExpedientes').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -325,18 +327,20 @@
                 "className": 'text-center'
             },
         ];
-        function showAlert() {
-            setTimeout(function () {
+            function showAlert() {
+                setTimeout(function () {
                 $("#alerta").slideToggle(1500);
-            }, 4000);
+                }, 4000);
             setTimeout(function () {
                 $("#alerta").remove();
             }, 6000);
         }
         function sendToFormat() {
             var id = $("#hd_id_inventario").val();
-            if (!isNaN(id) && id > 0)
-                window.open("/InventarioFto?id=" + id, "_blank");
+            if (!isNaN(id) && id > 0) {
+                //window.open("/InventarioFto?id=" + id, "_blank");
+                window.open("@Url.Action("Index","InventarioFto")?id=" + id, "_blank");
+            }
         }
-</script>
+    </script>
 }

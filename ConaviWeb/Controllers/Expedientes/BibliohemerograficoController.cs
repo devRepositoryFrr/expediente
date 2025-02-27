@@ -11,9 +11,11 @@ using static ConaviWeb.Models.AlertsViewModel;
 using ConaviWeb.Model.Response;
 using ConaviWeb.Model;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConaviWeb.Controllers.Expedientes
 {
+    [Authorize]
     public class BibliohemerograficoController : Controller
     {
         private readonly IExpedienteRepository _expedienteRepository;

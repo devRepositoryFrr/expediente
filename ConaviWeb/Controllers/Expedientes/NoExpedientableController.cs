@@ -10,9 +10,11 @@ using ConaviWeb.Model.Response;
 using ConaviWeb.Services;
 using static ConaviWeb.Models.AlertsViewModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConaviWeb.Controllers.Expedientes
 {
+    [Authorize]
     public class NoExpedientableController : Controller
     {
         private readonly IExpedienteRepository _expedienteRepository;
