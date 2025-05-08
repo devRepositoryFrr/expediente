@@ -1,0 +1,214 @@
+﻿@model ConaviWeb.Model.Levantamiento.Predio
+@{
+    Layout = "_LayoutSedatu";
+    var lSeccion = ViewData["Seccion"] as ConaviWeb.Model.Catalogo;
+    var lArchivo = ViewData["Archivo"] as ConaviWeb.Model.Levantamiento.Archivo;
+    ViewData["Title"] = "Archivos homologación";
+    bool painted1 = false, painted2 = false;
+}
+<div class="row">
+    <div class="col-md-12" id="alert">
+        @Html.Raw(@ViewBag.Alert)
+    </div>
+</div>
+<div id="general">
+    <div class="row">
+        <div class="col-md-12 center-block">
+            <img src="../img/encab2021.png" class="img-responsive" />
+        </div>
+        @*<div class="col-md-7 text-right">
+                <label>
+                    SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />
+                    COORDINACIÓN GENERAL DE ADMINISTRACIÓN<br />
+                    DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />
+                    DEPARTAMENTO DE UNIDADES DOCUMENTALES
+                </label>
+            </div>*@
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <label>
+                RUTA Y REQUERIMIENTOS GENERALES DE GESTIÓN PARA LOS PREDIOS DE INTERÉS
+            </label>
+        </div>
+    </div>
+    <input type="hidden" asp-for="Id" id="idPredio" value="0" />
+    @if (((IEnumerable<ConaviWeb.Model.Catalogo>)ViewData["Seccion"]).Count() > 0)
+    {
+        @foreach (var seccion in (IEnumerable<ConaviWeb.Model.Catalogo>)ViewData["Seccion"])
+        {
+            @if (seccion.Id >= 2 && painted1 == false)
+            {
+                <div class="row" style="background-color: #56242A;color:white;">
+                    <div class="col-md-12 text-center">
+                        <label>CONSIDERACIONES GENERALES PARA LOS PROCESOS DE GESTIÓN EN CONJUNTOS HABITACIONALES</label>
+                    </div>
+                </div>
+                painted1 = true;
+            }
+            @if (seccion.Id >= 5 && painted2 == false)
+            {
+                <div class="row" style="background-color: #56242A;color:white;">
+                    <div class="col-md-12 text-center">
+                        <label>PROCESOS DE GESTIÓN CON DEPENDENCIAS/ORGANISMOS/INSTITUCIONES ESTATALES/FEDERALES</label>
+                    </div>
+                </div>
+                painted2 = true;
+            }
+            <div class="row form-group" style="background-color: #9D2449; color: white;">
+                <div class="col-md-12 text-center">
+                    <label>@seccion.Descripcion</label>
+                </div>
+            </div>
+            @foreach (var archivo in (IEnumerable<ConaviWeb.Model.Levantamiento.Archivo>)ViewData["Archivo"])
+            {
+                @if (seccion.Id == archivo.IdSeccion)
+                {
+                    <div class="row form-group-sm">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">@archivo.ArchivoH</label>
+                        </div>
+                        <div class="mb-3 col-md-3 d-flex justify-content-center">
+                            <input class="form-control form-control-sm" accept=".docx,.xlsx,.pdf" type="file" id="file@($"{archivo.Id}")" name="file@($"{archivo.Id}")">
+                        </div>
+                        <div class="mb-3 col-md-5 d-flex justify-content-center">
+                            <span id="div_file@($"{archivo.Id}")"></span>
+                        </div>
+                        <div class="mb-3 col-md-2 d-flex justify-content-center">
+                            <span id="div_status@($"{archivo.Id}")"></span>
+                        </div>
+                        <div class="mb-3 col-md-2 text-center">
+                            <button class="btn btn-primary btn-sm" onclick="Upload(@archivo.Id)">Enviar <span class="fa fa-paper-plane-o"></span></button>
+                            <button id="btn-validar@($"{archivo.Id}")" class="btn btn-success btn-sm btn-validar hidden" onclick="Validar(@archivo.Id)">Validar <span class="fa fa-check-square-o"></span></button>
+                            <button id="btn-rechazar@($"{archivo.Id}")" class="btn btn-danger btn-sm btn-rechazar hidden" onclick="Rechazar(@archivo.Id)">Rechazar <span class="fa fa-ban"></span></button>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    }
+    else {
+        <div class="row alert alert-warning">
+            <div class="col-md-12 text-center">
+                <label>SIN ARCHIVOS REQUERIDOS</label>
+            </div>
+        </div>
+    }
+    @*Fin del formulario para el alta de formato de homologación*@
+    <hr />
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        const urlParams = new URLSearchParams(window.location.search);
+        const idPredio = urlParams.get('id');
+        $(document).ready(function () {
+            @*$(".breadcrumb").html("<li><i class='fa fa-home'></i></li><li><a href='@Url.Action("Index","Levantamiento")'>Lista de predios</a></li>");*@
+            if (idPredio != 0 && idPredio != null) {
+                $("input:file").each(function () {
+                    GetFile(this.id.slice(4));
+                });
+            }
+        });
+        function showAlert() {
+            setTimeout(function () {
+                $("#alert").slideToggle(1500);
+            }, 4000);
+            setTimeout(function () {
+                $("#alert").slideUp(1500);
+            }, 6000);
+        }
+        function Upload(idFile) {
+            if ($("#file" + idFile)[0].files[0] != null) {
+                $('#spinner').show();
+                var data = new FormData();
+                let json = JSON.stringify({ idPredio: idPredio, idFile: idFile });
+                data.append("json", json);
+                data.append('file', $("#file" + idFile)[0].files[0]);
+                $.ajax({
+                    type: "post",
+                    url: "@Url.Action("Upload", "Levantamiento")", // Url
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $('#spinner').hide();
+                        $("#alert").html(data.message).fadeIn("slow");
+                        window.scrollTo(0, 0);
+                        GetFile(idFile);
+                        showAlert();
+                    }
+                });
+            } else {
+                $("#file" + idFile).focus();
+            }
+        }
+        function GetFile(idFile) {
+            $('#spinner').show();
+            var data = new FormData();
+            data.append("idPredio", idPredio);
+            data.append("idFile", idFile);
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("GetFile", "Levantamiento")", // Url
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    $('#spinner').hide();
+                    if (result.data != null) {
+                        $('#btn-validar' + idFile + ',#btn-rechazar' + idFile).addClass('hidden');
+                        $("#div_file" + idFile).html(" <a href='https://" + window.location.host + "/Levantamiento/doc/PrediosAdquisicion/" + idPredio + "/" + idFile + "/" + result.data.descripcion + "' target='_blank'>(" + result.data.descripcion + ") <span class='fa fa-download'></span></a>");
+                        result.data.clave != null ? $("#div_status" + idFile).html(' <b>(' + result.data.clave + ')</b>') : '';
+                        result.data.clave == 'Validado' ? $('#btn-rechazar' + idFile).removeClass('hidden') : $('#btn-validar' + idFile).removeClass('hidden');
+                    }
+                }
+            });
+        }
+        function Validar(idFile) {
+            $('#spinner').show();
+            var data = new FormData();
+            data.append("idPredio", idPredio);
+            data.append("idFile", idFile);
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("ValidarArchivo", "Levantamiento")", // Url
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#spinner').hide();
+                    if (data.success == false) {
+                        $("#alert").html(data.message).fadeIn("slow");
+                        showAlert();
+                        window.scrollTo(0, 0);
+                    }
+                    GetFile(idFile);
+                }
+            });
+        }
+        function Rechazar(idFile) {
+            $('#spinner').show();
+            var data = new FormData();
+            data.append("idPredio", idPredio);
+            data.append("idFile", idFile);
+            $.ajax({
+                type: "post",
+                url: "@Url.Action("RechazarArchivo", "Levantamiento")", // Url
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $('#spinner').hide();
+                    if (data.success == false) {
+                        $("#alert").html(data.message).fadeIn("slow");
+                        showAlert();
+                        window.scrollTo(0, 0);
+                    }
+                    GetFile(idFile);
+                }
+            });
+        }
+    </script>
+}

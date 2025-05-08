@@ -1,0 +1,422 @@
+﻿@{
+    Layout = "_LayoutSedatu";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary" type="button" id="btnBuscarBen">Buscar</button>
+            <input type="text" class="form-control" placeholder="CURP" id="txtCurp" aria-describedby="button-addon1">
+        </div>
+    </div>
+</div>
+@Html.Raw(@ViewBag.Alert)
+
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#datos">Solicitante</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#levantamiento">Operativo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#visita1">1Er Visita</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#visita2">2Da Visita</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body tab-content">
+        <div class="mb-3 tab-pane active" id="datos">
+        <div class="card-body">
+            <h5 class="card-title">Datos del Solicitante</h5>
+            <br />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Nombre(s):</label>
+                        <div class="col-sm-8">
+                            <span id="txtNombre"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Primer apellido:</label>
+                        <div class="col-sm-8">
+                            <span id="txtPa"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Segundo apellido:</label>
+                        <div class="col-sm-8">
+                            <span id="txtSa"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Genero:</label>
+                        <div class="col-sm-8">
+                            <span id="txtGen"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Teléfono:</label>
+                        <div class="col-sm-8">
+                            <span id="txtTel"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Teléfono alterno:</label>
+                        <div class="col-sm-8">
+                            <span id="txtTelA"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Entidad:</label>
+                        <div class="col-sm-8">
+                            <span id="txtEnt"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Municipio:</label>
+                        <div class="col-sm-8">
+                            <span id="txtMun"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Localidad:</label>
+                        <div class="col-sm-8">
+                            <span id="txtLoc"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Calle:</label>
+                        <div class="col-sm-8">
+                            <span id="txtCalle"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Número exterior:</label>
+                        <div class="col-sm-8">
+                            <span id="txtNuEx"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Número interior:</label>
+                        <div class="col-sm-8">
+                            <span id="txtNuIn"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Colonia:</label>
+                        <div class="col-sm-8">
+                            <span id="txtCol"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Cp:</label>
+                        <div class="col-sm-8">
+                            <span id="txtCp"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row mb-3">
+                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Referencia:</label>
+                        <div class="col-sm-8">
+                            <span id="txtRef"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="mb-3 tab-pane" id="levantamiento">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">¿El registro es una prueba?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioPrueba" id="rp1" value="si" checked>
+                        <label class="form-check-label" for="rp1">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioPrueba" id="rp2" value="no">
+                        <label class="form-check-label" for="rp2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3" id="operacion" style="display:none">
+                    <label for="exampleInputPassword1" class="form-label">Seleccione el esquema de operación al que se puede integrar el registro</label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option value="1" selected>Vivienda para el bienestar</option>
+                        <option value="2">Subsidio 100% conavi</option>
+                        <option value="3">Cofinanciamiento</option>
+                    </select>
+                </div>
+                <div class="mb-3" id="identificador" style="display:none">
+                    <label for="exampleFormControlTextarea1" class="form-label">Ingrese el identificador del proyecto/operativo</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+        <div class="mb-3 tab-pane" id="visita1">
+            <form>
+                <div class="col-md-6">
+                    <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                        <input type="text" id="fechaSolicitud" name="fechaSolicitud" class="form-control" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="exampleInputEmail1" class="form-label">¿Se localizó al solicitante?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioSol" id="rs1" value="si">
+                        <label class="form-check-label" for="rs1">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioSol" id="rs2" value="no" checked>
+                        <label class="form-check-label" for="rs2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="exampleInputEmail1" class="form-label">¿Se acordó con el solicitante la visita para el levantamiento de la CIS?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioLev" id="rl1" value="si">
+                        <label class="form-check-label" for="rs1">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioLev" id="rl2" value="no" checked>
+                        <label class="form-check-label" for="rs2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" id="fecha" style="display:none">
+                    <label class="form-label" for="fechaVisita">Indique la fecha acordada para la visita</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                        <input type="text" id="fechaVisita" name="fechaVisita" class="form-control" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mb-3" id="lugar" style="display:none">
+                    <label for="exampleFormControlTextarea1" class="form-label">Indique el lugar acordado para la visita</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea2" rows="4"></textarea>
+                </div>
+                <div class="mb-3" id="motivo">
+                    <label for="exampleFormControlTextarea1" class="form-label">Motivo por el que no se acordó la visita</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea3" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+        <div class="mb-3 tab-pane" id="visita2">
+            <form>
+                <div class="col-md-6">
+                    <label class="form-label" for="fechaSolicitudS">Fecha del segundo intento de programación de visita</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                        <input type="text" id="fechaSolicitudS" name="fechaSolicitudS" class="form-control" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="exampleInputEmail1" class="form-label">¿Se localizó al solicitante?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioSolS" id="rss1" value="si">
+                        <label class="form-check-label" for="rss1">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioSolS" id="rss2" value="no" checked>
+                        <label class="form-check-label" for="rss2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="exampleInputEmail1" class="form-label">¿Se acordó con el solicitante la visita para el levantamiento de la CIS?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioLevS" id="rls1" value="si">
+                        <label class="form-check-label" for="rs1">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioLevS" id="rls2" value="no" checked>
+                        <label class="form-check-label" for="rs2">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6" id="fechaS" style="display:none">
+                    <label class="form-label" for="fechaVisitaS">Indique la fecha acordada para la visita</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                        <input type="text" id="fechaVisitaS" name="fechaVisitaS" class="form-control" autocomplete="off">
+                    </div>
+                </div>
+                <div class="mb-3" id="lugarS" style="display:none">
+                    <label for="exampleFormControlTextarea1" class="form-label">Indique el lugar acordado para la visita</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea2" rows="4"></textarea>
+                </div>
+                <div class="mb-3" id="motivoS">
+                    <label for="exampleFormControlTextarea1" class="form-label">Motivo por el que no se acordó la visita</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea3" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    $(document).ready(function () {
+        showAlert();
+        $('#fechaSolicitud').datepicker();
+        $('#fechaVisita').datepicker();
+        $('#fechaSolicitudS').datepicker();
+        $('#fechaVisitaS').datepicker();
+    });
+        $('input:radio[name=radioPrueba]').click(function() {
+    var value = $(this).val();
+    if(value == "no"){
+        $("#operacion").show()
+        $("#identificador").show()
+    }else{
+        $("#operacion").hide()
+        $("#identificador").hide()
+    }
+    });
+    $('input:radio[name=radioLev]').click(function() {
+    var value = $(this).val();
+    if(value == "si"){
+        $("#fecha").show()
+        $("#lugar").show()
+        $("#motivo").hide()
+    }else{
+        $("#fecha").hide()
+        $("#lugar").hide()
+        $("#motivo").show()
+    }
+    });
+    $('input:radio[name=radioLevS]').click(function() {
+    var value = $(this).val();
+    if(value == "si"){
+        $("#fechaS").show()
+        $("#lugarS").show()
+        $("#motivoS").hide()
+    }else{
+        $("#fechaS").hide()
+        $("#lugarS").hide()
+        $("#motivoS").show()
+    }
+    });
+        $("#btnBuscarBen").click(function(e) {
+            let curp = $("#txtCurp").val();
+            urlInf = '@Url.Action("GetBenef", "DHome")/' + curp;
+			console.log(urlInf);
+      $.ajax({
+        contentType: "application/json",
+        type: "GET",
+        url: urlInf,
+        data: JSON.stringify({
+          // name: document.getElementById("name").value,
+          // email: document.getElementById("emailAddress").value
+        }),
+        complete: function(data) {
+            console.log(data.responseJSON.data.nombre)
+                $("#txtNombre").text(data.responseJSON.data.nombre);
+                $("#txtPa").text(data.responseJSON.data.primerAp);
+                $("#txtSa").text(data.responseJSON.data.segundoAp);
+                $("#txtGen").text(data.responseJSON.data.genero);
+                $("#txtTel").text(data.responseJSON.data.telefono);
+                $("#txtTelA").text(data.responseJSON.data.telAlt);
+                $("#txtEnt").text(data.responseJSON.data.entidad);
+                $("#txtMun").text(data.responseJSON.data.municipio);
+                $("#txtLoc").text(data.responseJSON.data.localidad);
+                $("#txtCalle").text(data.responseJSON.data.calle);
+                $("#txtNuEx").text(data.responseJSON.data.numeroExt);
+                $("#txtNuIn").text(data.responseJSON.data.numeroInt);
+                $("#txtCol").text(data.responseJSON.data.colonia );
+                $("#txtCp").text(data.responseJSON.data.cp);
+                $("#txtRef").text(data.responseJSON.data.referencia);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          // $("#postResult").val(jqXHR.statusText);
+        }
+      });
+    });
+
+    $(window).on('beforeunload', function () {
+        console.log("before");
+
+        $('.spinner').css('display', 'block');
+    });
+
+    function showAlert() {
+
+        setTimeout(function () {
+            $("#alerta").fadeOut(1500);
+
+        }, 3000);
+        setTimeout(function () {
+
+            $("#alerta").remove();
+        }, 6000);
+
+    }
+</script>
