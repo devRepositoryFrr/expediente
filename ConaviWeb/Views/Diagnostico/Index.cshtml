@@ -3,10 +3,10 @@
 }
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-3">
         <div class="input-group mb-3">
-            <button class="btn btn-outline-secondary" type="button" id="btnBuscarBen">Buscar</button>
             <input type="text" class="form-control" placeholder="CURP" id="txtCurp" aria-describedby="button-addon1">
+            <button class="btn btn-outline-secondary" type="button" id="btnBuscarBen">Buscar</button>
         </div>
     </div>
 </div>
@@ -167,17 +167,18 @@
         </div>
     </div>
         <div class="mb-3 tab-pane" id="levantamiento">
-            <form>
+            <form id="formLevantamiento" method="post" asp-controller="Diagnostico" asp-action="InsertDiagnostico">
+				<input type="hidden" id="IdUnico" name="IdUnico"/>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">¿El registro es una prueba?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioPrueba" id="rp1" value="si" checked>
+                        <input class="form-check-input" type="radio" name="Prueba" id="rp1" value="si" checked>
                         <label class="form-check-label" for="rp1">
                             Sí
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioPrueba" id="rp2" value="no">
+                        <input class="form-check-input" type="radio" name="Prueba" id="rp2" value="no">
                         <label class="form-check-label" for="rp2">
                             No
                         </label>
@@ -185,15 +186,15 @@
                 </div>
                 <div class="mb-3" id="operacion" style="display:none">
                     <label for="exampleInputPassword1" class="form-label">Seleccione el esquema de operación al que se puede integrar el registro</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" name="Esquema">
                         <option value="1" selected>Vivienda para el bienestar</option>
                         <option value="2">Subsidio 100% conavi</option>
                         <option value="3">Cofinanciamiento</option>
                     </select>
                 </div>
-                <div class="mb-3" id="identificador" style="display:none">
-                    <label for="exampleFormControlTextarea1" class="form-label">Ingrese el identificador del proyecto/operativo</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                <div class="mb-3" id="ident" style="display:none">
+                    <label for="Identificador" class="form-label">Ingrese el identificador del proyecto/operativo</label>
+                    <textarea class="form-control" id="Identificador" name="Identificador" rows="4"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
@@ -331,14 +332,14 @@
         $('#fechaSolicitudS').datepicker();
         $('#fechaVisitaS').datepicker();
     });
-        $('input:radio[name=radioPrueba]').click(function() {
+        $('input:radio[name=Prueba]').click(function() {
     var value = $(this).val();
     if(value == "no"){
         $("#operacion").show()
-        $("#identificador").show()
+        $("#ident").show()
     }else{
         $("#operacion").hide()
-        $("#identificador").hide()
+        $("#ident").hide()
     }
     });
     $('input:radio[name=radioLev]').click(function() {
@@ -367,7 +368,7 @@
     });
         $("#btnBuscarBen").click(function(e) {
             let curp = $("#txtCurp").val();
-            urlInf = '@Url.Action("GetBenef", "DHome")/' + curp;
+            urlInf = '@Url.Action("GetBenef", "Diagnostico")/' + curp;
 			console.log(urlInf);
       $.ajax({
         contentType: "application/json",
@@ -378,7 +379,8 @@
           // email: document.getElementById("emailAddress").value
         }),
         complete: function(data) {
-            console.log(data.responseJSON.data.nombre)
+            console.log(data.responseJSON.data)
+                $("#IdUnico").val(data.responseJSON.data.idUnico);
                 $("#txtNombre").text(data.responseJSON.data.nombre);
                 $("#txtPa").text(data.responseJSON.data.primerAp);
                 $("#txtSa").text(data.responseJSON.data.segundoAp);
@@ -394,6 +396,9 @@
                 $("#txtCol").text(data.responseJSON.data.colonia );
                 $("#txtCp").text(data.responseJSON.data.cp);
                 $("#txtRef").text(data.responseJSON.data.referencia);
+                data.responseJSON.data.prueba == "NO" ? $("#rp2").attr('checked', 'checked'):$("#rp1").attr('checked', 'checked');
+                $("#txtRef").val(data.responseJSON.data.esquema);
+                $("#txtRef").val(data.responseJSON.data.identificador);
         },
         error: function(jqXHR, textStatus, errorThrown) {
           // $("#postResult").val(jqXHR.statusText);
