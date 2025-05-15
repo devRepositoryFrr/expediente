@@ -29,11 +29,40 @@ namespace ConaviWeb.Model.Diagnostico
         public string Esquema { get; set; }
         public string Identificador { get; set; }
         public int NuVisita { get; set; }
-        public DateTime FchProgramacion { get; set; }
+        public DateTime? FchProgramacion { get; set; }
         public string Localizo { get; set; }
         public string Acordo { get; set; }
-        public DateTime FchAcordada { get; set; }
+        public DateTime? FchAcordada { get; set; }
         public string Lugar { get; set; }
         public string Motivo { get; set; }
+        public byte[] ImgInmueble { get; set; }
+        public byte[] ImgCurpA { get; set; }
+        public byte[] ImgIdA { get; set; }
+        public byte[] ImgIdR { get; set; }
+        public byte[] ImgCompDom { get; set; }
+        public byte[] ImgVivienda_1 { get; set; }
+        public byte[] ImgVivienda_2 { get; set; }
+        public byte[] ImgVivienda_3 { get; set; }
+        public byte[] ImgVivienda_4 { get; set; }
+        public byte[] ImgMatMuro { get; set; }
+        public byte[] ImgMatTecho { get; set; }
+        public byte[] ImgMatPiso { get; set; }
+        public byte[] ImgFirma { get; set; }
+        public byte[] ImgCurpACIS { get; set; }
+        public byte[] ImgActaNacimientoCIS { get; set; }
+        public byte[] ImgFotoLugarCIS { get; set; }
+        public byte[] ImgIneACIS { get; set; }
+        public byte[] ImgIneRCIS { get; set; }
+        public byte[] ImgEstudiosCIS { get; set; }
+        public byte[] ImgCompNoPropCIS { get; set; }
+        public byte[] ImgCompPropCIS { get; set; }
+        public byte[] ImgCompDomCIS { get; set; }
+        public byte[] ImgCurp_ACIS { get; set; }
+        public byte[] ImgId_ACIS { get; set; }
+        public byte[] ImgId_RCIS { get; set; }
+        public byte[] ImgCompIngCIS { get; set; }
+        public byte[] ImgCartaNoDerCIS { get; set; }
+        public byte[] ImgFirmaCIS { get; set; }
+
     }
 }

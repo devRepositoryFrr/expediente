@@ -10,8 +10,9 @@ namespace ConaviWeb.Data.Diagnostico
 {
     public interface IDiagnosticoRepository
     {
-        Task<Beneficiario> GetBeneficiario (string curp);
-        Task<Beneficiario> GetCaptacion (int idUnico);
+        Task<IEnumerable<Beneficiario>> GetBeneficiario (string curp);
+        Task<Beneficiario> GetImgCD(string curp);
+        Task<Beneficiario> GetImgCIS(string curp);
         Task<bool> InsertCaptacion(Beneficiario beneficiario);
         Task<bool> InsertVisita(Beneficiario beneficiario);
     }

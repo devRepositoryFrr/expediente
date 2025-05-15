@@ -3,10 +3,11 @@
 }
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-6">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="CURP" id="txtCurp" aria-describedby="button-addon1">
-            <button class="btn btn-outline-secondary" type="button" id="btnBuscarBen">Buscar</button>
+            <button class="btn btn-outline-primary" type="button" id="btnBuscarBen">Buscar
+            </button>
         </div>
     </div>
 </div>
@@ -18,154 +19,269 @@
             <li class="nav-item">
                 <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#datos">Solicitante</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" id="capOp">
                 <a class="nav-link" data-bs-toggle="tab" href="#levantamiento">Operativo</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#visita1">1Er Visita</a>
+            <li class="nav-item" id="capVi">
+                <a class="nav-link" data-bs-toggle="tab" href="#visita1">Visita</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#visita2">2Da Visita</a>
+                <a class="nav-link fotos" data-bs-toggle="tab" href="#fotos">Fotos</a>
             </li>
         </ul>
     </div>
     <div class="card-body tab-content">
         <div class="mb-3 tab-pane active" id="datos">
         <div class="card-body">
-            <h5 class="card-title">Datos del Solicitante</h5>
-            <br />
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Nombre(s):</label>
-                        <div class="col-sm-8">
-                            <span id="txtNombre"></span>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Datos del Solicitante
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Nombre(s):</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtNombre"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Primer apellido:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtPa"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Segundo apellido:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtSa"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Genero:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtGen"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Teléfono:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtTel"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Teléfono alterno:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtTelA"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Entidad:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtEnt"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Municipio:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtMun"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Localidad:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtLoc"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Calle:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtCalle"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Número exterior:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtNuEx"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Número interior:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtNuIn"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Colonia:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtCol"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Cp:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtCp"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-sm-4 col-form-label">Referencia:</label>
+                                            <div class="col-sm-8">
+                                                <span id="txtRef"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Operativo
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="rPrueba" class="form-label">¿EL REGISTRO ES UNA PRUEBA?</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rPrueba">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label for="rEsquema" class="form-label">EL ESQUEMA DE OPERACIÓN AL QUE SE PUEDE INTEGRAR EL REGISTRO</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rEsquema">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rIdentificador" class="form-label">IDENTIFICADOR DEL PROYECTO/OPERATIVO</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rIdentificador">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Visita 1
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="rFechaPro" class=" col-form-label">FECHA DEL PRIMER INTENTO DE PROGRAMACIÓN DE VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rFechaPro">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rLocalizo" class=" col-form-label">¿SE LOCALIZÓ AL SOLICITANTE?</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rLocalizo">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rAcordo" class=" col-form-label">¿SE ACORDÓ CON EL SOLICITANTE LA VISITA PARA EL LEVANTAMIENTO DE LA CIS?</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rAcordo">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="rFechaAc" class=" col-form-label">FECHA ACORDADA PARA LA VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rFechaAc">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rLugar" class=" col-form-label">LUGAR ACORDADO PARA LA VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rLugar">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rMotivo" class=" col-form-label">MOTIVO POR EL QUE NO SE ACORDÓ LA VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rMotivo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Visita 2
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="rFechaPro2" class=" col-form-label">FECHA DEL PRIMER INTENTO DE PROGRAMACIÓN DE VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rFechaPro2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rLocalizo2" class=" col-form-label">¿SE LOCALIZÓ AL SOLICITANTE?</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rLocalizo2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rAcordo2" class=" col-form-label">¿SE ACORDÓ CON EL SOLICITANTE LA VISITA PARA EL LEVANTAMIENTO DE LA CIS?</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rAcordo2">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="rFechaAc2" class=" col-form-label">FECHA ACORDADA PARA LA VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rFechaAc2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rLugar2" class=" col-form-label">LUGAR ACORDADO PARA LA VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rLugar2">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="rMotivo2" class=" col-form-label">MOTIVO POR EL QUE NO SE ACORDÓ LA VISITA</label>
+                                        <input type="text" class="form-control-plaintext text-danger" id="rMotivo2">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Primer apellido:</label>
-                        <div class="col-sm-8">
-                            <span id="txtPa"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Segundo apellido:</label>
-                        <div class="col-sm-8">
-                            <span id="txtSa"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Genero:</label>
-                        <div class="col-sm-8">
-                            <span id="txtGen"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Teléfono:</label>
-                        <div class="col-sm-8">
-                            <span id="txtTel"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Teléfono alterno:</label>
-                        <div class="col-sm-8">
-                            <span id="txtTelA"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Entidad:</label>
-                        <div class="col-sm-8">
-                            <span id="txtEnt"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Municipio:</label>
-                        <div class="col-sm-8">
-                            <span id="txtMun"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Localidad:</label>
-                        <div class="col-sm-8">
-                            <span id="txtLoc"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Calle:</label>
-                        <div class="col-sm-8">
-                            <span id="txtCalle"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Número exterior:</label>
-                        <div class="col-sm-8">
-                            <span id="txtNuEx"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Número interior:</label>
-                        <div class="col-sm-8">
-                            <span id="txtNuIn"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Colonia:</label>
-                        <div class="col-sm-8">
-                            <span id="txtCol"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Cp:</label>
-                        <div class="col-sm-8">
-                            <span id="txtCp"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row mb-3">
-                        <label for="colFormLabelSm" class="col-sm-4 col-form-label col-form-label">Referencia:</label>
-                        <div class="col-sm-8">
-                            <span id="txtRef"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
+        </div>
         <div class="mb-3 tab-pane" id="levantamiento">
             <form id="formLevantamiento" method="post" asp-controller="Diagnostico" asp-action="InsertDiagnostico">
 				<input type="hidden" id="IdUnico" name="IdUnico"/>
@@ -186,7 +302,7 @@
                 </div>
                 <div class="mb-3" id="operacion" style="display:none">
                     <label for="exampleInputPassword1" class="form-label">Seleccione el esquema de operación al que se puede integrar el registro</label>
-                    <select class="form-select" aria-label="Default select example" name="Esquema">
+                    <select class="form-select" aria-label="Default select example" id="Esquema" name="Esquema">
                         <option value="1" selected>Vivienda para el bienestar</option>
                         <option value="2">Subsidio 100% conavi</option>
                         <option value="3">Cofinanciamiento</option>
@@ -196,28 +312,33 @@
                     <label for="Identificador" class="form-label">Ingrese el identificador del proyecto/operativo</label>
                     <textarea class="form-control" id="Identificador" name="Identificador" rows="4"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" id="btnCaptacion" class="btn btn-primary">Enviar</button>
             </form>
         </div>
         <div class="mb-3 tab-pane" id="visita1">
-            <form>
+            <form id="formVisita" method="post" asp-controller="Diagnostico" asp-action="InsertVisita">
+                <input type="hidden" id="IdUnicoV" name="IdUnico" />
                 <div class="col-md-6">
-                    <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
+                    <label class="form-label" for="fechaSolicitud" id="lblNV"></label>
+                    <input type="hidden" class="form-control" id="NuVisita" name="NuVisita"/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="fechaSolicitud">Fecha del primer intento de programación de visita</label>
                     <div class="input-group">
                         <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                        <input type="text" id="fechaSolicitud" name="fechaSolicitud" class="form-control" autocomplete="off">
+                        <input type="text" id="fechaSolicitud" name="FchProgramacion" class="form-control" autocomplete="off">
                     </div>
                 </div>
                 <div class="mb-6">
                     <label for="exampleInputEmail1" class="form-label">¿Se localizó al solicitante?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioSol" id="rs1" value="si">
+                        <input class="form-check-input" type="radio" name="Localizo" id="rs1" value="si">
                         <label class="form-check-label" for="rs1">
                             Sí
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioSol" id="rs2" value="no" checked>
+                        <input class="form-check-input" type="radio" name="Localizo" id="rs2" value="no" checked>
                         <label class="form-check-label" for="rs2">
                             No
                         </label>
@@ -226,13 +347,13 @@
                 <div class="mb-6">
                     <label for="exampleInputEmail1" class="form-label">¿Se acordó con el solicitante la visita para el levantamiento de la CIS?</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioLev" id="rl1" value="si">
+                        <input class="form-check-input" type="radio" name="Acordo" id="rl1" value="si">
                         <label class="form-check-label" for="rs1">
                             Sí
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="radioLev" id="rl2" value="no" checked>
+                        <input class="form-check-input" type="radio" name="Acordo" id="rl2" value="no" checked>
                         <label class="form-check-label" for="rs2">
                             No
                         </label>
@@ -242,21 +363,267 @@
                     <label class="form-label" for="fechaVisita">Indique la fecha acordada para la visita</label>
                     <div class="input-group">
                         <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                        <input type="text" id="fechaVisita" name="fechaVisita" class="form-control" autocomplete="off">
+                        <input type="text" id="fechaVisita" name="FchAcordada" class="form-control" autocomplete="off">
                     </div>
                 </div>
                 <div class="mb-3" id="lugar" style="display:none">
-                    <label for="exampleFormControlTextarea1" class="form-label">Indique el lugar acordado para la visita</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea2" rows="4"></textarea>
+                    <label for="Lugar" class="form-label">Indique el lugar acordado para la visita</label>
+                    <textarea class="form-control" id="Lugar" name="Lugar" rows="4"></textarea>
                 </div>
                 <div class="mb-3" id="motivo">
-                    <label for="exampleFormControlTextarea1" class="form-label">Motivo por el que no se acordó la visita</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea3" rows="4"></textarea>
+                    <label for="Motivo" class="form-label">Motivo por el que no se acordó la visita</label>
+                    <textarea class="form-control" id="Motivo" name="Motivo" rows="4"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Enviar</button>
+                <button type="submit" id="btnV1" class="btn btn-primary">Enviar</button>
             </form>
         </div>
-        <div class="mb-3 tab-pane" id="visita2">
+        <div class="mb-3 tab-pane" id="fotos">
+            <div class="card-body">
+                <div class="accordion" id="accordionFotos">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCd" aria-expanded="true" aria-controls="collapseCd">
+                                CD
+                            </button>
+                        </h2>
+                        <div id="collapseCd" class="accordion-collapse collapse show" data-bs-parent="#accordionFotos">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Inmueble</label>
+                                            <div>
+                                                <img id="inmueble" class="object-fit-contain border rounded" alt="..." width="200" height="200" width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">CURP</label>
+                                            <div>
+                                                <img id="curp" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">INE Anverso</label>
+                                            <div>
+                                                <img id="anverso" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">INE Reverso</label>
+                                            <div>
+                                                <img id="reverso" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Comprobante de Domicilio</label>
+                                            <div>
+                                                <img id="comprobante" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Vivienda 1</label>
+                                            <div>
+                                                <img id="viv1" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Vivienda 2</label>
+                                            <div>
+                                                <img id="viv2" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Vivienda 3</label>
+                                            <div>
+                                                <img id="viv3" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Vivienda 4</label>
+                                            <div>
+                                                <img id="viv4" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Muro</label>
+                                            <div>
+                                                <img id="muro" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Techo</label>
+                                            <div>
+                                                <img id="techo" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Piso</label>
+                                            <div>
+                                                <img id="piso" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Firma</label>
+                                            <div>
+                                                <img id="firma" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fotoCis" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCis" aria-expanded="false" aria-controls="collapseCis">
+                                CIS
+                            </button>
+                        </h2>
+                        <div id="collapseCis" class="accordion-collapse collapse" data-bs-parent="#accordionFotos">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">CURP</label>
+                                            <div>
+                                                <img id="curpcis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Acta de Nacimiento</label>
+                                            <div>
+                                                <img id="actacis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Inmueble</label>
+                                            <div>
+                                                <img id="inmueblecis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">INE Anverso</label>
+                                            <div>
+                                                <img id="anversocis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">INE Reverso</label>
+                                            <div>
+                                                <img id="reversocis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Estudios</label>
+                                            <div>
+                                                <img id="estudioscis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Comprobante de no Propiedad</label>
+                                            <div>
+                                                <img id="nopropiedadcis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Comprobante de Propiedad</label>
+                                            <div>
+                                                <img id="propiedadcis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Comprobante de Domicilio</label>
+                                            <div>
+                                                <img id="comprobantecis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Comprobante de Ingresos</label>
+                                            <div>
+                                                <img id="ingresocis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Carta de no Derechos</label>
+                                            <div>
+                                                <img id="derechocis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row mb-3">
+                                            <label for="colFormLabelSm" class="col-form-label">Firma</label>
+                                            <div>
+                                                <img id="firmacis" class="object-fit-contain border rounded" alt="..." width="200" height="200">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @* <div class="mb-3 tab-pane" id="visita2">
             <form>
                 <div class="col-md-6">
                     <label class="form-label" for="fechaSolicitudS">Fecha del segundo intento de programación de visita</label>
@@ -312,9 +679,11 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Enviar</button>
             </form>
-        </div>
+        </div> *@
     </div>
 </div>
+
+
 
 
 
@@ -327,10 +696,17 @@
 <script>
     $(document).ready(function () {
         showAlert();
+        $('input:radio[name=Prueba]').click();
         $('#fechaSolicitud').datepicker();
+        $('#fechaSolicitud').datepicker('setDate', new Date());
         $('#fechaVisita').datepicker();
         $('#fechaSolicitudS').datepicker();
         $('#fechaVisitaS').datepicker();
+        //$("#NuVisita").attr("disabled", "disabled");
+        $("#btnCaptacion").attr("disabled", "disabled");
+        $("#btnV1").attr("disabled", "disabled");
+        $("#capOp").hide();
+        $("#capVi").hide();
     });
         $('input:radio[name=Prueba]').click(function() {
     var value = $(this).val();
@@ -342,7 +718,7 @@
         $("#ident").hide()
     }
     });
-    $('input:radio[name=radioLev]').click(function() {
+    $('input:radio[name=Acordo]').click(function() {
     var value = $(this).val();
     if(value == "si"){
         $("#fecha").show()
@@ -369,7 +745,7 @@
         $("#btnBuscarBen").click(function(e) {
             let curp = $("#txtCurp").val();
             urlInf = '@Url.Action("GetBenef", "Diagnostico")/' + curp;
-			console.log(urlInf);
+			//console.log(urlInf);
       $.ajax({
         contentType: "application/json",
         type: "GET",
@@ -379,33 +755,161 @@
           // email: document.getElementById("emailAddress").value
         }),
         complete: function(data) {
-            console.log(data.responseJSON.data)
-                $("#IdUnico").val(data.responseJSON.data.idUnico);
-                $("#txtNombre").text(data.responseJSON.data.nombre);
-                $("#txtPa").text(data.responseJSON.data.primerAp);
-                $("#txtSa").text(data.responseJSON.data.segundoAp);
-                $("#txtGen").text(data.responseJSON.data.genero);
-                $("#txtTel").text(data.responseJSON.data.telefono);
-                $("#txtTelA").text(data.responseJSON.data.telAlt);
-                $("#txtEnt").text(data.responseJSON.data.entidad);
-                $("#txtMun").text(data.responseJSON.data.municipio);
-                $("#txtLoc").text(data.responseJSON.data.localidad);
-                $("#txtCalle").text(data.responseJSON.data.calle);
-                $("#txtNuEx").text(data.responseJSON.data.numeroExt);
-                $("#txtNuIn").text(data.responseJSON.data.numeroInt);
-                $("#txtCol").text(data.responseJSON.data.colonia );
-                $("#txtCp").text(data.responseJSON.data.cp);
-                $("#txtRef").text(data.responseJSON.data.referencia);
-                data.responseJSON.data.prueba == "NO" ? $("#rp2").attr('checked', 'checked'):$("#rp1").attr('checked', 'checked');
-                $("#txtRef").val(data.responseJSON.data.esquema);
-                $("#txtRef").val(data.responseJSON.data.identificador);
+            //console.log(data.responseJSON.data.length)
+            $("#IdUnico").val(data.responseJSON.data[0].idUnico);
+            $("#IdUnico").val(data.responseJSON.data[0].idUnico);
+            $("#IdUnicoV").val(data.responseJSON.data[0].idUnico);
+            $("#txtNombre").text(data.responseJSON.data[0].nombre);
+            $("#txtPa").text(data.responseJSON.data[0].primerAp);
+            $("#txtSa").text(data.responseJSON.data[0].segundoAp);
+            $("#txtGen").text(data.responseJSON.data[0].genero);
+            $("#txtTel").text(data.responseJSON.data[0].telefono);
+            $("#txtTelA").text(data.responseJSON.data[0].telAlt);
+            $("#txtEnt").text(data.responseJSON.data[0].entidad);
+            $("#txtMun").text(data.responseJSON.data[0].municipio);
+            $("#txtLoc").text(data.responseJSON.data[0].localidad);
+            $("#txtCalle").text(data.responseJSON.data[0].calle);
+            $("#txtNuEx").text(data.responseJSON.data[0].numeroExt);
+            $("#txtNuIn").text(data.responseJSON.data[0].numeroInt);
+            $("#txtCol").text(data.responseJSON.data[0].colonia );
+            $("#txtCp").text(data.responseJSON.data[0].cp);
+            $("#txtRef").text(data.responseJSON.data[0].referencia);
+            // data.responseJSON.data[0].prueba == "NO" ? $("#rp2").attr('checked', 'checked'):$("#rp1").attr('checked', 'checked');
+            // $("#Esquema").val(data.responseJSON.data[0].esquema == null ? 1 : data.responseJSON.data[0].esquema);
+            // $("#Identificador").val(data.responseJSON.data[0].identificador);
+            if(data.responseJSON.data[0].idUnico != null && data.responseJSON.data[0].prueba ==null){
+                $("#capOp").show();
+                $("#btnCaptacion").removeAttr("disabled");
+            }
+
+            if(data.responseJSON.data[0].idUnico != null && data.responseJSON.data[0].prueba != null){
+                if(data.responseJSON.data[0].nuVisita == 0){
+                    $("#NuVisita").val(1);
+                    $("#lblNV").text("Visita 1");
+                }
+                else{
+                    $("#NuVisita").val(2);
+                    $("#lblNV").text("Visita 2");
+                }
+                if(data.responseJSON.data.length !=2){
+                    $("#capVi").show();
+                    $("#btnV1").removeAttr("disabled");
+                }
+                
+            } 
+            // Respuestas
+            $("#rPrueba").val(data.responseJSON.data[0].prueba);
+            $("#rEsquema").val(data.responseJSON.data[0].esquema);
+            $("#rIdentificador").val(data.responseJSON.data[0].identificador);
+            // Visita 1
+            if(data.responseJSON.data[0].localizo != null){
+            $("#rFechaPro").val($.date(data.responseJSON.data[0].fchProgramacion));
+            $("#rLocalizo").val(data.responseJSON.data[0].localizo);
+            $("#rAcordo").val(data.responseJSON.data[0].acordo);
+            $("#rFechaAc").val($.date(data.responseJSON.data[0].fchAcordada));
+            $("#rLugar").val(data.responseJSON.data[0].lugar);
+            $("#rMotivo").val(data.responseJSON.data[0].motivo);
+            }
+            // Visita 2
+            if(data.responseJSON.data.length == 2){
+            $("#rFechaPro2").val($.date(data.responseJSON.data[1].fchProgramacion));
+            $("#rLocalizo2").val(data.responseJSON.data[1].localizo);
+            $("#rAcordo2").val(data.responseJSON.data[1].acordo);
+            $("#rFechaAc2").val($.date(data.responseJSON.data[1].fchAcordada));
+            $("#rLugar2").val(data.responseJSON.data[1].lugar);
+            $("#rMotivo2").val(data.responseJSON.data[1].motivo);
+            }
         },
         error: function(jqXHR, textStatus, errorThrown) {
           // $("#postResult").val(jqXHR.statusText);
         }
       });
     });
+    $(".fotos").click(function(e) {
+           let curp = $("#txtCurp").val();
+            urlInf = '@Url.Action("GetImgCD", "Diagnostico")/' + curp;
+            //console.log(curp);
+            if(curp != ""){
+      $.ajax({
+        contentType: "application/json",
+        type: "GET",
+        url: urlInf,
+        data: JSON.stringify({
+          // name: document.getElementById("name").value,
+          // email: document.getElementById("emailAddress").value
+        }),
+        complete: function(data) {
+            console.log(data.responseJSON.data);
+                $('#inmueble').attr('src', `data:image/png;base64,${data.responseJSON.data.imgInmueble}`);
+                $('#curp').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCurpA}`);
+                $('#anverso').attr('src', `data:image/png;base64,${data.responseJSON.data.imgIdA}`);
+                $('#reverso').attr('src', `data:image/png;base64,${data.responseJSON.data.imgIdR}`);
+                $('#comprobante').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCompDom}`);
+                $('#viv1').attr('src', `data:image/png;base64,${data.responseJSON.data.imgVivienda_1}`);
+                $('#viv2').attr('src', `data:image/png;base64,${data.responseJSON.data.imgVivienda_2}`);
+                $('#viv3').attr('src', `data:image/png;base64,${data.responseJSON.data.imgVivienda_3}`);
+                $('#viv4').attr('src', `data:image/png;base64,${data.responseJSON.data.imgVivienda_4}`);
+                $('#muro').attr('src', `data:image/png;base64,${data.responseJSON.data.imgMatMuro}`);
+                $('#techo').attr('src', `data:image/png;base64,${data.responseJSON.data.imgMatTecho}`);
+                $('#piso').attr('src', `data:image/png;base64,${data.responseJSON.data.imgMatPiso}`);
+                $('#firma').attr('src', `data:image/png;base64,${data.responseJSON.data.imgFirma}`);
 
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          // $("#postResult").val(jqXHR.statusText);
+        }
+      });
+      }
+    });
+    $(".fotoCis").click(function(e) {
+           let curp = $("#txtCurp").val();
+            urlInf = '@Url.Action("GetImgCIS", "Diagnostico")/' + curp;
+            console.log(curp);
+            if(curp != ""){
+      $.ajax({
+        contentType: "application/json",
+        type: "GET",
+        url: urlInf,
+        data: JSON.stringify({
+          // name: document.getElementById("name").value,
+          // email: document.getElementById("emailAddress").value
+        }),
+        complete: function(data) {
+            console.log(data.responseJSON.data);
+                        $('#curpcis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCurpACIS}`);
+                        $('#actacis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgActaNacimientoCIS}`);
+                        $('#inmueblecis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgFotoLugarCIS}`);
+                        $('#anversocis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgIneACIS}`);
+                        $('#reversocis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgIneRCIS}`);
+                        $('#estudioscis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgEstudiosCIS}`);
+                        $('#nopropiedadcis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCompNoPropCIS}`);
+                        $('#propiedadcis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCompPropCIS}`);
+                        $('#comprobantecis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCompDomCIS}`);
+                        $('#ingresocis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCompIngCIS}`);
+                        $('#derechocis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgCartaNoDerCIS}`);
+                        $('#firmacis').attr('src', `data:image/png;base64,${data.responseJSON.data.imgFirmaCIS}`);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          // $("#postResult").val(jqXHR.statusText);
+        }
+      });
+      }
+    });
+        $.date = function(dateObject) {
+        var d = new Date(dateObject);
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = day + "/" + month + "/" + year;
+
+        return date;
+    };
     $(window).on('beforeunload', function () {
         console.log("before");
 

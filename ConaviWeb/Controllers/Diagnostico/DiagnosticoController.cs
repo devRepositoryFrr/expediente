@@ -39,10 +39,23 @@ namespace ConaviWeb.Controllers.Diagnostico
             return Json(new { data = beneficiario });
         }
         [HttpGet]
-        [Route("GetCaptacion/{idUnico?}")]
-        public async Task<IActionResult> GetCaptacion(int idUnico)
+        [Route("GetImgCD/{curp?}")]
+        public async Task<IActionResult> GetImgCD(string curp)
         {
-            var beneficiario = await _diagnosticoRepository.GetCaptacion(idUnico);
+            var beneficiario = await _diagnosticoRepository.GetImgCD(curp);
+
+            if (beneficiario == null)
+            {
+                var alert = AlertService.ShowAlert(Alerts.Danger, "Sin registros");
+                return Ok(alert);
+            }
+            return Json(new { data = beneficiario });
+        }
+        [HttpGet]
+        [Route("GetImgCIS/{curp?}")]
+        public async Task<IActionResult> GetImgCIS(string curp)
+        {
+            var beneficiario = await _diagnosticoRepository.GetImgCIS(curp);
 
             if (beneficiario == null)
             {
@@ -57,6 +70,20 @@ namespace ConaviWeb.Controllers.Diagnostico
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
             var success = false;
             success = await _diagnosticoRepository.InsertCaptacion(beneficiario);
+            if (!success)
+            {
+                TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Ocurrio un error al registrar los datos");
+                return RedirectToAction("Index");
+            }
+            TempData["Alert"] = AlertService.ShowAlert(Alerts.Success, "Se registró correctamente");
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> InsertVisita(Beneficiario beneficiario)
+        {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            var success = false;
+            success = await _diagnosticoRepository.InsertVisita(beneficiario);
             if (!success)
             {
                 TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Ocurrio un error al registrar los datos");
