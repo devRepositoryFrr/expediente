@@ -91,8 +91,7 @@ namespace ConaviWeb.Controllers.Proyecto
         public async Task<IActionResult> InsertPropuestaConceptualAsync(PropuestaConceptual propuesta)
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
-            //predio.IdUser = user.Id;
-            propuesta.IdUser = 212;
+            propuesta.IdUser = user.Id;
 
             var success = false;
             success = await _proyectoRepository.InsertPropuestaConceptual(propuesta);
@@ -202,6 +201,23 @@ namespace ConaviWeb.Controllers.Proyecto
 
             var success = false;
             success = await _proyectoRepository.UpdateEstatusFile(idPredio, nameFile, estatus, observaciones, user.Id);
+            if (!success)
+            {
+                TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Ocurrio un error al registrar!");
+                return Redirect("~/Proyecto?id=" + idPredio);
+            }
+            TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Actualización realizada!");
+            return Redirect("~/Proyecto?id=" + idPredio);
+        }
+        [HttpPost]
+        public async Task<IActionResult> SendStatusSectionAsync(int idPredio, string nameFile, int estatus, string observaciones, string section)
+        {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            //predio.IdUser = user.Id;
+            //IdUser = 212;
+
+            var success = false;
+            success = await _proyectoRepository.UpdateEstatusSection(idPredio, estatus, observaciones, section, user.Id);
             if (!success)
             {
                 TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Ocurrio un error al registrar!");

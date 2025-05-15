@@ -22,5 +22,6 @@ namespace ConaviWeb.Data.Proyecto
         Task<Lineas> GetMedidasPresupuesto(int idPredio);
         Task<bool> UpdateEstatusProyEje(int idPredio, int estatus, string observaciones, int userId);
         Task<bool> UpdateEstatusWFile(string idPredio, string estatus, string nameFile, string observacionesFile, int userId);
+        Task<bool> UpdateEstatusSection(int idPredio, int estatus, string observaciones, string section, int userId);
     }
 }

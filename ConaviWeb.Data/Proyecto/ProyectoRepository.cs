@@ -67,9 +67,9 @@ namespace ConaviWeb.Data.Proyecto
             var db = DbConnection();
             var sql = @"
                         INSERT INTO prod_predios.propuesta_conceptual
-                        (superficie_terreno, superficie_desplante, superficie_donacion, superficie_equipamiento, superficie_construccion, superficie_restriccion, superficie_recreativa, superficie_areas_verdes, superficie_circulaciones_vehiculares, superficie_circulaciones_peatonales, cajones_estacionamiento, superficie_cajones_estacionamiento, total_viviendas, viviendas_unifamiliar, superficie_viviendas_unifamiliar, niveles_viviendas_unifamililar, viviendas_multifamiliar, superficie_viviendas_multifamiliar, niveles_viviendas_multifamiliar, viviendas_renta, superficie_viviendas_renta, niveles_vivienda_renta, estatus, observaciones, id_predio, id_usuario)
-                        VALUES (@SuperficieTerreno, @SuperficieDesplante, @SuperficieDonacion, @SuperficieEquipamiento, @SuperficieConstruccion, @SuperficieRestriccion, @SuperficieRecreativa, @SuperficieAreasverdes, @SuperficieCirculacionesVehiculares, @SuperficieCirculacionesPeatonales, @CajonesEstacionamiento, @SuperficieCajonesEstacionamiento, @TotalViviendas, @ViviendasUnifamiliar, @SuperficieViviendasUnifamiliar, @NivelesViviendasUnifamiliar, @ViviendasMultifamiliar, @SuperficieViviendasMultifamiliar, @NivelesViviendasMultifamiliar, @ViviendasRenta, @SuperficieViviendasRenta, @NivelesViviendaRenta, @Estatus, @Observaciones, @IdPredio, 212)
-                        ON DUPLICATE KEY UPDATE superficie_terreno = @SuperficieTerreno, superficie_desplante = @SuperficieDesplante, superficie_donacion = @SuperficieDonacion, superficie_equipamiento = @SuperficieEquipamiento, superficie_construccion = @SuperficieConstruccion, superficie_restriccion = @SuperficieRestriccion, superficie_recreativa = @SuperficieRecreativa, superficie_areas_verdes = @SuperficieAreasverdes, superficie_circulaciones_vehiculares = @SuperficieCirculacionesVehiculares, superficie_circulaciones_peatonales = @SuperficieCirculacionesPeatonales, cajones_estacionamiento = @CajonesEstacionamiento, superficie_cajones_estacionamiento = @SuperficieCajonesEstacionamiento, total_viviendas = @TotalViviendas, viviendas_unifamiliar = @ViviendasUnifamiliar, superficie_viviendas_unifamiliar = @SuperficieViviendasUnifamiliar, niveles_viviendas_unifamililar = @NivelesViviendasUnifamiliar, viviendas_multifamiliar = @ViviendasMultifamiliar, superficie_viviendas_multifamiliar = @SuperficieViviendasMultifamiliar, niveles_viviendas_multifamiliar = @NivelesViviendasMultifamiliar, viviendas_renta = @ViviendasRenta, superficie_viviendas_renta = @SuperficieViviendasRenta, niveles_vivienda_renta = @NivelesViviendaRenta, estatus = @Estatus, observaciones = @Observaciones, id_predio = @IdPredio, id_usuario = 212, fecha_update = NOW();
+                        (superficie_terreno, superficie_desplante, superficie_donacion, superficie_equipamiento, superficie_construccion, superficie_restriccion, superficie_recreativa, superficie_areas_verdes, superficie_circulaciones_vehiculares, superficie_circulaciones_peatonales, cajones_estacionamiento, superficie_cajones_estacionamiento, total_viviendas, viviendas_unifamiliar, superficie_viviendas_unifamiliar, niveles_viviendas_unifamililar, viviendas_multifamiliar, superficie_viviendas_multifamiliar, niveles_viviendas_multifamiliar, viviendas_renta, superficie_viviendas_renta, niveles_vivienda_renta, estatus, id_predio, id_usuario)
+                        VALUES (@SuperficieTerreno, @SuperficieDesplante, @SuperficieDonacion, @SuperficieEquipamiento, @SuperficieConstruccion, @SuperficieRestriccion, @SuperficieRecreativa, @SuperficieAreasverdes, @SuperficieCirculacionesVehiculares, @SuperficieCirculacionesPeatonales, @CajonesEstacionamiento, @SuperficieCajonesEstacionamiento, @TotalViviendas, @ViviendasUnifamiliar, @SuperficieViviendasUnifamiliar, @NivelesViviendasUnifamiliar, @ViviendasMultifamiliar, @SuperficieViviendasMultifamiliar, @NivelesViviendasMultifamiliar, @ViviendasRenta, @SuperficieViviendasRenta, @NivelesViviendaRenta, 1, @IdPredio, @IdUsuario)
+                        ON DUPLICATE KEY UPDATE superficie_terreno = @SuperficieTerreno, superficie_desplante = @SuperficieDesplante, superficie_donacion = @SuperficieDonacion, superficie_equipamiento = @SuperficieEquipamiento, superficie_construccion = @SuperficieConstruccion, superficie_restriccion = @SuperficieRestriccion, superficie_recreativa = @SuperficieRecreativa, superficie_areas_verdes = @SuperficieAreasverdes, superficie_circulaciones_vehiculares = @SuperficieCirculacionesVehiculares, superficie_circulaciones_peatonales = @SuperficieCirculacionesPeatonales, cajones_estacionamiento = @CajonesEstacionamiento, superficie_cajones_estacionamiento = @SuperficieCajonesEstacionamiento, total_viviendas = @TotalViviendas, viviendas_unifamiliar = @ViviendasUnifamiliar, superficie_viviendas_unifamiliar = @SuperficieViviendasUnifamiliar, niveles_viviendas_unifamililar = @NivelesViviendasUnifamiliar, viviendas_multifamiliar = @ViviendasMultifamiliar, superficie_viviendas_multifamiliar = @SuperficieViviendasMultifamiliar, niveles_viviendas_multifamiliar = @NivelesViviendasMultifamiliar, viviendas_renta = @ViviendasRenta, superficie_viviendas_renta = @SuperficieViviendasRenta, niveles_vivienda_renta = @NivelesViviendaRenta, id_predio = @IdPredio, id_usuario = 212, fecha_update = NOW();
                         ";
 
             var result = await db.ExecuteAsync(sql, new
@@ -97,7 +97,6 @@ namespace ConaviWeb.Data.Proyecto
                 SuperficieViviendasRenta = propuesta.SuperficieViviendasRenta,
                 NivelesViviendaRenta = propuesta.NivelesViviendasRenta,
                 Estatus = propuesta.Estatus,
-                Observaciones = propuesta.ObservacionesEstatus,
                 IdPredio = propuesta.IdPredio,
                 IdUsuario = propuesta.IdUser
             });
@@ -150,6 +149,64 @@ namespace ConaviWeb.Data.Proyecto
             });
             return result > 0;
         }
+        public async Task<bool> UpdateEstatusSection(int idPredio, int estatus, string observaciones, string section, int userId)
+        {
+            var sql = "";
+            switch (section)
+            {
+                case "1a":
+                    sql = @"
+                        UPDATE prod_predios.propuesta_conceptual set estatus = @Estatus, fecha_update = now(), observaciones = @Observaciones, id_usuario = @UserId
+                        WHERE id_predio = @IdPredio;
+                       ";
+                    break;
+                case "4a":
+                    sql = @"
+                        UPDATE prod_predios.presupuesto set estatus_section_4a = @Estatus, fecha_cambio_estatus = now(), observaciones_section_4a = @Observaciones, idUser = @UserId
+                        WHERE idPredio = @IdPredio;
+                       ";
+                    break;
+                case "4b":
+                    sql = @"
+                        UPDATE prod_predios.presupuesto set estatus_section_4b = @Estatus, fecha_cambio_estatus = now(), observaciones_section_4b = @Observaciones, idUser = @UserId
+                        WHERE idPredio = @IdPredio;
+                       ";
+                    break;
+                case "5a":
+                    sql = @"
+                        UPDATE prod_predios.presupuesto set estatus_section_5a = @Estatus, fecha_cambio_estatus = now(), observaciones_section_5a = @Observaciones, idUser = @UserId
+                        WHERE idPredio = @IdPredio;
+                       ";
+                    break;
+                case "6a":
+                    sql = @"
+                        UPDATE prod_predios.presupuesto set estatus_section_6a = @Estatus, fecha_cambio_estatus = now(), observaciones_section_6a = @Observaciones, idUser = @UserId
+                        WHERE idPredio = @IdPredio;
+                       ";
+                    break;
+                case "6b":
+                    sql = @"
+                        UPDATE prod_predios.presupuesto set estatus_section_6b = @Estatus, fecha_cambio_estatus = now(), observaciones_section_6b = @Observaciones, idUser = @UserId
+                        WHERE idPredio = @IdPredio;
+                       ";
+                    break;
+                default:
+                    break;
+            }
+            var db = DbConnection();
+            //var sql = @"
+            //            UPDATE prod_predios.presupuesto set  = @Estatus, fecha_cambio_estatus = now(), observaciones = @Observaciones, idUser = @UserId
+            //            WHERE idPredio = @IdPredio;
+            //           ";
+            var result = await db.ExecuteAsync(sql, new
+            {
+                Estatus = estatus,
+                Observaciones = observaciones,
+                UserId = userId,
+                IdPredio = idPredio
+            });
+            return result > 0;
+        }
         public async Task<bool> UpdateMedidasPresupuesto(Lineas ecos)
         {
             var db = DbConnection();
@@ -191,6 +248,11 @@ namespace ConaviWeb.Data.Proyecto
                             `cmb_obra_preventivas`,
                             `txt_obra_preventiva`,
                             `volumen_demolicion`,
+                            `estatus_section_4a`,
+                            `estatus_section_4b`,
+                            `estatus_section_5a`,
+                            `estatus_section_6a`,
+                            `estatus_section_6b`,
                             `idPredio`,
                             `idUser`)
                         VALUES(@cmb_ecotecnias,
@@ -229,6 +291,11 @@ namespace ConaviWeb.Data.Proyecto
                             @cmb_obra_preventivas,
                             @txt_obra_preventiva,
                             @volumen_demolicion,
+                            1,
+                            1,
+                            1,
+                            1,
+                            1,
                             @idPredio,
                             @idUser)
                         ON DUPLICATE KEY UPDATE
@@ -319,9 +386,10 @@ namespace ConaviWeb.Data.Proyecto
         {
             var db = DbConnection();
             var sql = @"
-                        SELECT id, cmb_ecotecnias, txt_acristalamiento, txt_mef_techo, txt_mef_muro, txt_reflec_techo, txt_reflec_muro, cmb_solar, txt_solar, cmb_inhodoro, cmb_regadera, cmb_llaves_bano, cmb_llaves_cocina, cmb_pluvial, txt_lamparas, txt_leds, txt_bombeo, cmb_tipocombustible, txt_tipocombustible, cmb_calentador, cmb_calentador_solar, cmb_estufa, txt_arbol, txt_reforz_agua, txt_obrpoz, txt_reforzdrenaje, cmb_trataprovagua, cmb_stmaguares, txt_refene, txt_lamsolac, txt_bomsol, cmb_sisfot, cmb_aerogenerador, cmb_motrices, cmb_obra_preventivas, txt_obra_preventiva, volumen_demolicion, estatus+0 estatus, txt_estatus, idPredio
-                        FROM prod_predios.presupuesto
-                        WHERE idPredio = @IdPredio;
+                        SELECT f.id, p.cmb_ecotecnias, p.txt_acristalamiento, p.txt_mef_techo, p.txt_mef_muro, p.txt_reflec_techo, p.txt_reflec_muro, p.cmb_solar, p.txt_solar, p.cmb_inhodoro, p.cmb_regadera, p.cmb_llaves_bano, p.cmb_llaves_cocina, p.cmb_pluvial, p.txt_lamparas, p.txt_leds, p.txt_bombeo, p.cmb_tipocombustible, p.txt_tipocombustible, p.cmb_calentador, p.cmb_calentador_solar, p.cmb_estufa, p.txt_arbol, p.txt_reforz_agua, p.txt_obrpoz, p.txt_reforzdrenaje, p.cmb_trataprovagua, p.cmb_stmaguares, p.txt_refene, p.txt_lamsolac, p.txt_bomsol, p.cmb_sisfot, p.cmb_aerogenerador, p.cmb_motrices, p.cmb_obra_preventivas, p.txt_obra_preventiva, p.volumen_demolicion, p.estatus_section_4a, p.observaciones_section_4a txt_estatus_section_4a, p.estatus_section_4b, p.observaciones_section_4b txt_estatus_section_4b, p.estatus_section_5a, p.observaciones_section_5a txt_estatus_section_5a, p.estatus_section_6a, p.observaciones_section_6a txt_estatus_section_6a, p.estatus_section_6b, p.observaciones_section_6b txt_estatus_section_6b, p.idPredio
+                        FROM prod_predios.formato_predio f
+                        LEFT JOIN prod_predios.presupuesto p ON p.idPredio = f.id
+                        WHERE f.id = @IdPredio;
                        ";
             return await db.QueryFirstOrDefaultAsync<Lineas>(sql, new { IdPredio = idPredio });
         }

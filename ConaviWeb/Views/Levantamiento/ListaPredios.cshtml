@@ -542,7 +542,6 @@
     <script type="text/javascript">
         var table;
         $(document).ready(function () {
-            //$(".breadcrumb").html("<li><i class='fa fa-home'></i></li><li><a href='/Levantamiento'>Inicio</a></li>");
             showTable();
             showFullTable();
             $('#showModalTrashPredio').on('show.bs.modal', function (e) {
@@ -603,7 +602,7 @@
                 "targets": 8,
                 "data": null,
                 "render": function (data, type, row) {
-                    return row.predioAptoVivienda == 1 ? 'Si' : 'No';
+                    return row.predioAptoVivienda == 1 ? 'Si' : row.predioAptoVivienda == 2 ? 'No' : '';
                 }
             },
             { "name": "Condiciones", "data": "observacionesPredioApto", "targets": 9 },

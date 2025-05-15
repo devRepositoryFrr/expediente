@@ -47,6 +47,18 @@ namespace ConaviWeb.Model.Proyecto
         public float? volumen_demolicion { get; set; }
         public int? estatus { get; set; }
         public string txt_estatus { get; set; }
+        public int? estatus_section_1a { get; set; }
+        public string txt_estatus_section_1a { get; set; }
+        public int? estatus_section_4a { get; set; }
+        public string txt_estatus_section_4a { get; set; }
+        public int? estatus_section_4b { get; set; }
+        public string txt_estatus_section_4b { get; set; }
+        public int? estatus_section_5a { get; set; }
+        public string txt_estatus_section_5a { get; set; }
+        public int? estatus_section_6a { get; set; }
+        public string txt_estatus_section_6a { get; set; }
+        public int? estatus_section_6b { get; set; }
+        public string txt_estatus_section_6b { get; set; }
         public string fecha_registro { get; set; }
         public string fecha_update { get; set; }
         public int idUser { get; set; }

@@ -100,7 +100,7 @@ namespace ConaviWeb.Controllers.Levantamiento
             predio = await _levantamientoRepository.GetFormatoLevantamiento(idPredio);
             if (predio == null)
             {
-                var alert = AlertService.ShowAlert(Alerts.Danger, "Id de Predio no encontrado");
+                var alert = AlertService.ShowAlert(Alerts.Danger, "Id de Predio no existente");
                 return Ok(alert);
             }
             return Ok(predio);
@@ -108,9 +108,6 @@ namespace ConaviWeb.Controllers.Levantamiento
         [HttpGet]
         public async Task<IActionResult> PrediosAdquisicion()
         {
-            //var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
-            //var inventario = await _expedienteRepository.GetInventarioControl(user.Cargo);
-
             IEnumerable<Predio> predios = new List<Predio>();
             predios = await _levantamientoRepository.GetPrediosAdquisicion();
 

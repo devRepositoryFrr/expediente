@@ -40,48 +40,49 @@
         <div class="row">
             <div class="col-sm-3">
                 <label for="idSedatu">ID</label>
-                <input type="text" id="idSedatu" class="form-control" asp-for="IdSedatu" />
+                <input type="text" id="idSedatu" class="form-control" asp-for="IdSedatu" disabled />
             </div>
             <div class="col-sm-9">
                 <label for="nombrePredio">Nombre del predio:</label>
-                <input type="text" id="nombrePredio" class="form-control" asp-for="NombrePredio" />
+                <input type="text" id="nombrePredio" class="form-control" asp-for="NombrePredio" disabled />
             </div>
         </div>
         <div class="row">
             <div class="col-sm-3 datepicker-group">
                 <label for="fecha_recorrido">Fecha de recorrido:</label>
                 <div class="input-group">
-                    <input id="fecha_recorrido" class="form-control" asp-for="FechaRecorrido" />
+                    <input id="fecha_recorrido" class="form-control" asp-for="FechaRecorrido" disabled />
                     <span class="input-group-text"><span class="fa fa-calendar" aria-hidden="true"></span></span>
                 </div>
             </div>
             <div class="col-sm-9">
                 <label for="kmz">KMZ</label>
-                <input type="text" id="kmz" asp-for="Kmz" class="form-control" />
+                <a href="" target="_blank" id="kmz" name="kmz" class="form-control"></a>
+                @* <input type="text" id="kmz" asp-for="Kmz" class="form-control" readonly /> *@
             </div>
         </div>
         <div class="row form-group">
             <div class="col-sm-12">
                 <label for="domicilio">Domicilio:</label>
-                <textarea class="form-control" id="domicilio" asp-for="Domicilio"></textarea>
+                <textarea class="form-control" id="domicilio" asp-for="Domicilio" disabled></textarea>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-sm-4">
                 <label>Estado:</label>
-                <select id="slctEstados" class="form-select" asp-for="CveEstado" asp-items="@ViewBag.EstadoCatalogo" data-val="true" data-val-required="Seleccione el estado" required onchange="getMunicipios(this.value)">
+                <select id="slctEstados" class="form-select" asp-for="CveEstado" asp-items="@ViewBag.EstadoCatalogo" data-val="true" data-val-required="Seleccione el estado" required onchange="getMunicipios(this.value)" disabled>
                     <option value="">--Seleccione--</option>
                 </select>
             </div>
             <div class="col-sm-4">
                 <label>Municipio:</label>
-                <select id="slctMunicipios" class="form-select" required onchange="getLocalidades(this.value)" asp-for="CveMunicipio">
+                <select id="slctMunicipios" class="form-select" required onchange="getLocalidades(this.value)" asp-for="CveMunicipio" disabled>
                     <option value="">--Seleccione--</option>
                 </select>
             </div>
             <div class="col-sm-4">
                 <label>Localidad:</label>
-                <select id="slctLocalidades" class="form-select" asp-for="CveLocalidad" required>
+                <select id="slctLocalidades" class="form-select" asp-for="CveLocalidad" required disabled>
                     <option value="">--Seleccione--</option>
                 </select>
             </div>
@@ -1454,7 +1455,7 @@
 <script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script type="text/javascript">
+    <script type="text/javascript">
         const urlParams = new URLSearchParams(window.location.search);
         const idPredio = urlParams.get('id');
         if (idPredio != null) {
@@ -1654,11 +1655,11 @@
                     $('#spinner').hide();
                     if (result.id != null) {
                         $("[name='Id']").val(result.id);
-                        $("[name='IdSedatu']").val(result.idSedatu);
+                        $("[name='IdSedatu']").val(result.id);
                         $("[name='NombrePredio']").val(result.nombrePredio);
                         $("#fecha_recorrido").val(result.fechaRecorrido);
                         $("#domicilio").val(result.domicilio);
-                        $("#kmz").val(result.kmz);
+                        $("#kmz").text(result.kmz).prop('href', result.kmz);
                         $("#slctEstados option[value=" + result.cveEstado + "]").prop("selected", true);
                         $("#slctEstados").trigger("change");
                         setTimeout(function () { $("#slctMunicipios option[value=" + result.cveMunicipio + "]").prop("selected", true); }, 500);

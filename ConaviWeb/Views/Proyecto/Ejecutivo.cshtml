@@ -515,7 +515,7 @@
     </div>
     <div class="col-md-3 text-center">
         <label for="EstatusSeccion1a">&nbsp;</label>
-        <select class="form-select" multiple title="Estatus" id="estatusSeccion1a" disabled>
+        <select class="form-select" multiple title="Estatus" id="EstatusSeccion1a" name="EstatusSeccion1a" disabled>
             <option value="1">Recibido</option>
             <option value="2">Validado</option>
             <option value="3">En corrección</option>
@@ -524,11 +524,11 @@
     </div>
     <div class="col-md-3 text-center">
         <label for="ObservacionesSeccion1a">&nbsp;</label>
-        <textarea id="ObservacionesSeccion1a" class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea>
+        <textarea id="ObservacionesSeccion1a" name="ObservacionesSecicon1a" class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea>
     </div>
     <div class="col-md-1">
         <label for="">&nbsp;</label><br />
-        <button class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this, '1a')" disabled>Guardar <span class="fa fa-save"></span></button>
+        <button type="button" id="btnSeccion1a" name="btnSeccion1a" class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this, '1a')" disabled>Guardar <span class="fa fa-save"></span></button>
     </div>
 </div>
 <hr />
@@ -828,7 +828,7 @@
     </div>
     <div class="row mb-2">
         <div class="col-md-12">
-            <h4>MECÁNICA DE SUELOS</h4>
+            <h3>MECÁNICA DE SUELOS</h3>
         </div>
     </div>
     <div class="row mb-3">
@@ -868,10 +868,10 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-tres" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
-            <label for="acreddro-file">Acreditación y validación por DRO</label>@* &nbsp;<span class="fa fa-info-circle pull-right" title="Texto de ayuda"></span> *@
+            <label for="acreddro-file">Acreditación y validación por DRO</label>
             <input type="file" class="form-control mb-3 fileejecutivo" id="acreddro-file" accept=".pdf" />
             <button type="button" id="btn-upload-pc" class="btn btn-primary form-control" onclick="UploadPCFile(this)">Cargar <span class="fa fa-upload"></span></button>
         </div>
@@ -896,7 +896,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-tres" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="acredvalid-file">Acreditación y validación por corresponsables</label>&nbsp;<span class="fa fa-info-circle pull-right" title="En caso de no aplicar cargar documento signado por el DRO donde se referencie la normativa para dicha condición."></span>
@@ -929,7 +929,7 @@
     </div>
     <div class="row mb-3">
         <div class="col-md-12">
-            <h4>MEDIDAS DE SUSTENTABILIDAD</h4>
+            <h4>Medidas de Sustentabilidad</h4>
             <p>Registra las medidas de sustentabilidad del proyecto, al seleccionar cada medida se habilita el campo para la captura de sus especificaciones.</p>
         </div>
     </div>
@@ -938,109 +938,60 @@
 <div class='full_presupuesto'>
     <div id="ecotecnias" class="col-md-12 panel panel-default pb-3">
         <div class="panel-body">
-            @* <label id='texto_ecotenias'>Ecotecnologías</label>
-             <div class="form-group-inline">
-                <div class="input-group">
-                    <span class="input-group-text">$</span>
-                    <input class="form-control well_combo apoyos monto_propuesta" type="number" id='txt_ecotecnia' name='txt_ecotecnia'>
-                </div>
-                <span class="help-block"></span>
-            </div>
-            <div class='row pb-3'>
-                <div class="form-group-inline">
-                    <label>Monto capturado <i id='txt_capturado_ecotecnia' class='text-danger'></i></label>
-                </div>
-            </div> *@
-            <div class="form-group well pb-3" id='well_ecotecnia1' style="text-align:left;">
+            <div class="form-group well" id='well_ecotecnia1' style="text-align:left;">
                 <div class="col-md-12 pb-3">
                     <h4>Envolvente térmica</h4>
                     <span class="help-block"></span>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-cuatro" id="check_acristal" name="cmb_ecotecnia" value="8" /> Acristalamiento con control solar</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_sombreado" name="txt_amt_sombreado" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_acristalamiento' name='txt_acristalamiento' min='0' max='50' placeholder='m2'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-cuatro" id="check_techo" name="cmb_ecotecnia" value="9" /> Material energéticamente eficiente en techo</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_techo" name="txt_amt_techo" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_techo' name='txt_techo' min='0' max='50' placeholder='m2'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-cuatro" id="check_muro" name="cmb_ecotecnia" value="10" /> Material energéticamente eficiente en muro</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_muro" name="txt_amt_muro" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_muro' name=txt_muro min='0' max='50' placeholder='m2'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-cuatro" id="check_reflec_techo" name="cmb_ecotecnia" value="11" /> Acabado reflectivo en techo</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_techo_reflectivo" name="txt_amt_techo_reflectivo" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_techo_reflectivo' name='txt_techo_reflectivo' min='0' max='50' placeholder='m2'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-cuatro" id="check_reflec_muro" name="cmb_ecotecnia" value="12" /> Acabado reflectivo en muro</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_muro_reflectivo" name="txt_amt_muro_reflectivo" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_muro_reflectivo' name='txt_muro_reflectivo' min='0' max='50' placeholder='m2'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-3'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-cuatro" id="check_dispositivos" name="cmb_ecotecnia" value="13" /> Dispositivos de control solar</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_solar" name="txt_amt_solar" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="col-md-4">
                         <div class="form-group">
                             <select class="form-select has_other mb-1 ecotecnias_values" id="cmb_solar" name="cmb_solar" aria-invalid="false">
@@ -1063,8 +1014,8 @@
                         &nbsp;
                     </div>
                     <div class="col-md-3 text-center">
-                        <label for="EstatusProyEje">&nbsp;</label>
-                        <select class="form-select" multiple title="Estatus de proyecto ejecutivo" id="estatusProyEje" name="estatusProyEje" disabled>
+                        <label for="EstatusSeccion4a">&nbsp;</label>
+                        <select class="form-select" multiple title="Estatus de proyecto ejecutivo" id="EstatusSeccion4a" name="EstatusSeccion4a" disabled>
                             <option value="1">Recibido</option>
                             <option value="2">Validado</option>
                             <option value="3">En corrección</option>
@@ -1072,12 +1023,12 @@
                         </select>
                     </div>
                     <div class="col-md-3 text-center">
-                        <label for="ObservacionesProyEje">&nbsp;</label>
-                        <textarea id="ObservacionesProyEje" name="ObservacionesProyEje" class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea>
+                        <label for="ObservacionesSeccion4a">&nbsp;</label>
+                        <textarea id="ObservacionesSeccion4a" name="ObservacionesSeccion4a" class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea>
                     </div>
                     <div class="col-md-1">
                         <label for="">&nbsp;</label><br />
-                        <button class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'4a')" disabled>Guardar <span class="fa fa-save"></span></button>
+                        <button type="button" id="btnSeccion4a" class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'4a')" disabled>Guardar <span class="fa fa-save"></span></button>
                     </div>
                 </div>
                 <hr />
@@ -1210,10 +1161,9 @@
                     </div>
                     <div class="col-md-1">
                         <label for="">&nbsp;</label><br />
-                        <button class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'4b')" disabled>Guardar <span class="fa fa-save"></span></button>
+                        <button type="button" id="btnSeccion4b" class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'4b')" disabled>Guardar <span class="fa fa-save"></span></button>
                     </div>
                 </div>
-                <hr />
                 <div class="row mb-3">
                     <div class="col-md-2 text-center">
                         <label>&nbsp;</label>
@@ -1307,7 +1257,7 @@
                     </div>
                     <div class="col-md-1">
                         <label for="">&nbsp;</label><br />
-                        <button class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'5a')" disabled>Guardar <span class="fa fa-save"></span></button>
+                        <button type="button" id="btnSeccion5a" class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'5a')" disabled>Guardar <span class="fa fa-save"></span></button>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -1330,8 +1280,6 @@
                         </select>
                     </div>
                     <div class="col-md-3 text-center">
-                        @* <label for="ObservacionesFile">&nbsp;</label>
-                        <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
                         <label for="ObservacionesFile">Observaciones</label>
                         <input id="observaciones-memcalc" type="file" class="form-control" accept=".pdf" disabled />
                     </div>
@@ -1360,8 +1308,6 @@
                         </select>
                     </div>
                     <div class="col-md-3 text-center">
-                        @* <label for="ObservacionesFile">&nbsp;</label>
-                        <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
                         <label for="ObservacionesFile">Observaciones</label>
                         <input id="observaciones-planosestruc" type="file" class="form-control" accept=".pdf" disabled />
                     </div>
@@ -1388,15 +1334,9 @@
                     </h4>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_inodoro" name="cmb_ecotecnia" value="1" /> Inodoro con grado ecológico</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_inhodoro" name="txt_amt_inhodoro" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_inhodoro" name="cmb_inhodoro" aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1409,15 +1349,9 @@
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_regadera" name="cmb_ecotecnia" value="2" /> Regadera con grado ecológico</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_regadera" name="txt_amt_regadera" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_regadera" name="cmb_regadera" aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1429,15 +1363,9 @@
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_llaves" name="cmb_ecotecnia" value="3" /> Llaves Ahorradoras en Baño</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_llaves_bano" name="txt_amt_llaves_bano" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_llaves_bano" name="cmb_llaves_bano" aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1451,15 +1379,9 @@
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_llaves2" name="cmb_ecotecnia" value="4" /> Llaves Ahorradoras en cocina</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_llaves_cocina" name="txt_amt_llaves_cocina" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_llaves_cocina" name="cmb_llaves_cocina" aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1475,34 +1397,16 @@
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-6 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_filtro" name="cmb_ecotecnia" value="5" /> Filtro de purificación de Agua</label>
                     </div>
-                    @* <div class="form-group col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_filtro" name="txt_amt_filtro" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                 </div>
                 <div class='row pb-2' id='scap0'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_pluvial" name="cmb_ecotecnia" value="18" /> Sistema de captación de agua pluvial</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_pluvial" name="txt_amt_pluvial" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input type="number" id="txt_pluvial" name="txt_pluvial" class="form-control ecotecnias_values" min="0" placeholder="Captura de volumen de almacenamiento (m³)" />
-                        @* <select class="form-select" id="cmb_pluvial" name="cmb_pluvial" aria-invalid="false">
-                            <option value="0">  Seleccionar  </option>
-                            <option value="6">Captación en cisterna por canaletas</option>
-                            <option value="7">Captación en pileta por canaletas</option>
-                            <option value="8">Captación en tinaco por canaletas</option>
-                        </select> *@
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -1512,7 +1416,7 @@
                     </h4>
                 </div>
                 <div class='row pb-3'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_dnj" name="cmb_ecotecnia" value="19" /> Redes separadas de aguas grises y negras</label>
                     </div>
                 </div>
@@ -1522,37 +1426,25 @@
                     </h4>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_flr" name="cmb_ecotecnia" value="6" /> Lámparas fluorescentes compactas autobalastradas</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_watts" name="txt_amt_lamparas" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_lamparas' name='txt_lamparas' min='0' max='50' placeholder='Cuantas'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_led" name="cmb_ecotecnia" value="7" /> Lámparas LED</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_leds" name="txt_amt_leds" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <input class="form-control ecotecnias_values" type="number" id='txt_leds' name='txt_leds' min='0' max='50' placeholder='Cuantas'>
                         <span class="help-block"></span>
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_bmb" name="cmb_ecotecnia" value="20" /> Bombeo eficiente</label>
                     </div>
                     <div class="form-group col-md-4">
@@ -1564,16 +1456,9 @@
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4">
-                        @* <label><input type="checkbox" id="check_cmb" name="cmb_ecotecnia" value="21" required /> Tipo de combustible</label> *@
+                    <div class="col-md-5">
                         <label>Tipo de combustible</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_calentador" name="txt_amt_calentador" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select has_other mb-1" id="cmb_tipocombustible" name="cmb_tipocombustible" required aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1586,15 +1471,9 @@
                     </div>
                 </div>
                 <div class='row pb-2'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_eficiente" name="cmb_ecotecnia" value="15" /> Calentador de gas eficiente</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_calentador" name="txt_amt_calentador" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_calentador" name=cmb_calentador aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1605,15 +1484,9 @@
                     </div>
                 </div>
                 <div class='row pb-2' id='csa0'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_solar" name="cmb_ecotecnia" value="17" /> Calentador solar de agua</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_calentador_solar" name="txt_amt_calentador_solar" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_calentador_solar" name=cmb_calentador_solar aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1624,15 +1497,9 @@
                     </div>
                 </div>
                 <div class='row pb-2' id='ee0'>
-                    <div class="col-md-4 checkbox">
+                    <div class="col-md-5 checkbox">
                         <label><input type="checkbox" class="seccion-seis" id="check_estufa" name="cmb_ecotecnia" value="16" /> Estufa ecológica</label>
                     </div>
-                    @* <div class="form-group col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input class="form-control" type="number" id="txt_amt_estufa" name="txt_amt_estufa" placeholder="Costo reportado en presupuesto">
-                        </div>
-                    </div> *@
                     <div class="form-group col-md-4">
                         <select class="form-select ecotecnias_values" id="cmb_estufa" name=cmb_estufa aria-invalid="false">
                             <option value="0">  Seleccionar  </option>
@@ -1644,32 +1511,36 @@
                 </div>
                 <br>
                 <div class="row pb-3">
-                    <div class="col-md-4 checkbox form-group">
+                    <div class="col-md-5 checkbox form-group">
                         <label><input type="checkbox" id="noecos" name="noecos" value="0" /> No se instaló ninguna ecotecnología</label>
                         <span class="help-block"></span>
                     </div>
                 </div>
-                <div>
+                <div class="row">
                     <div class="col-md-12"><h4>Evaluación Sustentable</h4></div>
-                    <div id="texto" style="width: 40%; display: inline-block;">
-                        Las medidas de sustentabilidad en la vivienda brindan condiciones de <strong>habitabilidad, disponibilidad de servicios y asequibilidad</strong> para las personas beneficiarias.
-                        <p></p>
-                        Esta escala te permite identificar qué tan sustentable es el proyecto propuesto con base en las medidas que integra.
-                        <p></p>
-                        La sección roja indica un proyecto poco sustentable, y el color verde corresponde a un proyecto sustentable.
+                    <div class="col-md-5">
+                        <div id="texto" style="display: inline-block;">
+                            Las medidas de sustentabilidad en la vivienda brindan condiciones de <strong>habitabilidad, disponibilidad de servicios y asequibilidad</strong> para las personas beneficiarias.
+                            <p></p>
+                            Esta escala te permite identificar qué tan sustentable es el proyecto propuesto con base en las medidas que integra.
+                            <p></p>
+                            La sección roja indica un proyecto poco sustentable, y el color verde corresponde a un proyecto sustentable.
+                        </div>
                     </div>
-                    <div style="display: inline-block;margin-left: 150px;">
-                        <div style="display:flex;"><div id="6" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><p></p><div class="bar" style="background: #33992c;height: 20px;width: 80px;"></div></div>
-                        <div style="display:flex;"><div id="5" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #90e533;height: 20px;width: 100px;"></div></div>
-                        <div style="display:flex;"><div id="4" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #c1e767;height: 20px;width: 120px;"></div></div>
-                        <div style="display:flex;"><div id="3" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #ffeb00;height: 20px;width: 140px;"></div></div>
-                        <div style="display:flex;"><div id="2" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #ffb100;height: 20px;width: 160px;"></div></div>
-                        <div style="display:flex;"><div id="1" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #ff7600;height: 20px;width: 180px;"></div></div>
-                        <div style="display:flex;"><div id="0" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: red;height: 20px;width: 200px;"></div></div>
+                    <div class="col-md-4">
+                        <div style="display: inline-block;">
+                            <div style="display:flex;"><div id="6" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><p></p><div class="bar" style="background: #33992c;height: 20px;width: 80px;"></div></div>
+                            <div style="display:flex;"><div id="5" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #90e533;height: 20px;width: 100px;"></div></div>
+                            <div style="display:flex;"><div id="4" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #c1e767;height: 20px;width: 120px;"></div></div>
+                            <div style="display:flex;"><div id="3" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #ffeb00;height: 20px;width: 140px;"></div></div>
+                            <div style="display:flex;"><div id="2" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #ffb100;height: 20px;width: 160px;"></div></div>
+                            <div style="display:flex;"><div id="1" class="hidden" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: #ff7600;height: 20px;width: 180px;"></div></div>
+                            <div style="display:flex;"><div id="0" style="line-height:20px;"><span class="fa fa-arrow-right" style="color: #28da1b; font-size: 18px;margin-left: -19px;"></span></div><div class="bar" style="background: red;height: 20px;width: 200px;"></div></div>
+                        </div>
                     </div>
                 </div>
                 <span class="help-block"></span>
-                <div class="row pb-3">
+                <div class="row">
                     <div class="col-md-5">
                         &nbsp;
                     </div>
@@ -1688,7 +1559,7 @@
                     </div>
                     <div class="col-md-1">
                         <label for="">&nbsp;</label><br />
-                        <button class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'6a')" disabled>Guardar <span class="fa fa-save"></span></button>
+                        <button type="button" id="btnSeccion6a" class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'6a')" disabled>Guardar <span class="fa fa-save"></span></button>
                     </div>
                 </div>
             </div>
@@ -1704,7 +1575,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_reforzamiento_agua" name="cmb_ecotecnia" value="22" /> Reforzamiento de red de agua potable</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1713,7 +1584,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_obrpoz" name="cmb_ecotecnia" value="23" /> Obras para disponibilidad de agua potable (pozos)</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1722,7 +1593,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_reforzdrenaje" name="cmb_ecotecnia" value="24" /> Reforzamiento de red de drenaje</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1731,7 +1602,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_trataprovagua" name="cmb_ecotecnia" value="25" /> Sistema de tratamiento y aprovechamiento de aguas grises</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1744,7 +1615,7 @@
                 </div>
             </div>
             <div class='row pb-3'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_stmaguares" name="cmb_ecotecnia" value="26" /> Sistema de tratamiento de aguas residuales</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1764,7 +1635,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_refene" name="cmb_ecotecnia" value="27" /> Reforzamiento de energía eléctrica</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1773,7 +1644,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_lamsolac" name="cmb_ecotecnia" value="28" /> Lámparas solares en áreas comunes</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1782,7 +1653,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_bomsol" name="cmb_ecotecnia" value="29" /> Bombeo solar</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1791,7 +1662,7 @@
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_sisfot" name="cmb_ecotecnia" value="30" /> Sistema fotovoltaico</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1799,13 +1670,12 @@
                         <option value="0">  Seleccionar  </option>
                         <option value="1">Con interconexión</option>
                         <option value="2">Sin interconexión</option>
-                        @* <option value="3">Días de respaldo</option> *@
                     </select>
                     <span class="help-block"></span>
                 </div>
             </div>
             <div class='row pb-2'>
-                <div class="col-md-4 checkbox">
+                <div class="col-md-5 checkbox">
                     <label><input type="checkbox" class="seccion-seis" id="check_argnrd" name="cmb_ecotecnia" value="31" /> Aerogenerador</label>
                 </div>
                 <div class="form-group col-md-4">
@@ -1813,7 +1683,6 @@
                         <option value="0">  Seleccionar  </option>
                         <option value="1">Con interconexión</option>
                         <option value="2">Sin interconexión</option>
-                        @* <option value="3">Días de respaldo</option> *@
                     </select>
                     <span class="help-block"></span>
                 </div>
@@ -1845,18 +1714,17 @@
                 </div>
                 <div class="col-md-1">
                     <label for="">&nbsp;</label><br />
-                    <button class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'6b')" disabled>Guardar <span class="fa fa-save"></span></button>
+                    <button type="button" id="btnSeccion6b" class="btn btn-sm btn-primary" onclick="SaveEstatusSeccion(this,'6b')" disabled>Guardar <span class="fa fa-save"></span></button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<hr>
 <div class="pb-3">
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="agua-file">Agua Potable</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada Memoria de cálculo en PDF y Memoria de cálculo infraestructura en PDF, planos en PDF y DWG correspondientes a Planta de conjunto, Planta baja, Planta niveles, Planta azotea, Modelos de vivienda, Crecimiento progresivo / adaptable, red de distribución, Conexión, Infraestructura, Espacios complementarios, Cortes, Isométricos y Detalles."></span>
@@ -1873,8 +1741,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-agua" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -1886,7 +1752,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="sanitario-file">Sanitario</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada Memoria de cálculo en PDF y Memoria de cálculo infraestructura en PDF, planos en PDF y DWG correspondientes a Planta de conjunto, Planta baja, Planta niveles, Planta azotea, Modelos de vivienda, Crecimiento progresivo / adaptable, Conducción y aprovechamiento de aguas grises, Conducción y desalojo de aguas residuales, Conexión, Infraestructura, Espacios complementarios, Cortes, Isométricos y Detalles."></span>
@@ -1903,8 +1769,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-sanitario" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -1916,7 +1780,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="pluvial-file">Pluvial</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada Memoria de cálculo en PDF y Memoria de cálculo infraestructura en PDF, planos en PDF y DWG correspondientes a Planta de conjunto, Planta baja, Planta niveles, Planta azotea, Modelos de vivienda, Crecimiento progresivo / adaptable, Conducción y aprovechamiento de agua pluvial, Infraestructura, Espacios complementarios, Cortes, Isométricos y detalles."></span>
@@ -1933,8 +1797,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-pluvial" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -1946,7 +1808,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="electrico-file">Eléctrico</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada Memoria de cálculo en PDF y Memoria de cálculo infraestructura en PDF, planos en PDF y DWG correspondientes a Planta de conjunto, Planta baja, Planta niveles, Planta azotea, Modelos de vivienda, Crecimiento progresivo / adaptable, Iluminación exterior, Red de distribución, Conexión, Infraestructura, Espacios complementarios, Cortes, Detalles, Diagramas unifilares, Cuadros de Carga."></span>
@@ -1963,8 +1825,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-electrico" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -1976,7 +1836,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control session-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control session-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="gas-file">Gas</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada Memoria de cálculo en PDF y Memoria de cálculo infraestructura en PDF, planos en PDF y DWG correspondientes a Planta de conjunto, Planta baja, Planta niveles, Planta azotea, Modelos de vivienda, Crecimiento progresivo / adaptable, Infraestructura, Espacios complementarios, Cortes, Isométricos y Detalles."></span>
@@ -1993,8 +1853,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-gas" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -2006,7 +1864,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-seis" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="infocomunicaciones-file">Información y Comunicaciones</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada Memoria Telefonía, Televisión, Internet en PDF y Memoria de cálculo infraestructura en PDF, planos en PDF y DWG correspondientes a Planta de conjunto, Planta baja, Planta niveles, Planta azotea, Modelos de vivienda, Crecimiento progresivo / adaptable, Red de distribución, Infraestructura, Conexión, Espacios complementarios, Cortes y Detalles."></span>
@@ -2023,8 +1881,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-infocomunicaciones" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -2042,7 +1898,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-siete" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="catconcep-file">Catálogo de conceptos</label>@* &nbsp;<span class="fa fa-info-circle pull-right" title="Texto de ayuda"></span> *@
@@ -2059,8 +1915,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-catconcep" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -2072,7 +1926,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-siete" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="manopermant-file">Manual de operación y mantenimiento</label>@* &nbsp;<span class="fa fa-info-circle pull-right" title="Texto de ayuda"></span> *@
@@ -2089,8 +1943,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-manopermant" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -2102,7 +1954,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-siete" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="reglasconviv-file">Reglas de convivencia</label>@* &nbsp;<span class="fa fa-info-circle pull-right" title="Texto de ayuda"></span> *@
@@ -2119,8 +1971,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-reglasconviv" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -2132,7 +1982,7 @@
     <div class="row mb-3">
         <div class="col-md-2 text-center">
             <label>&nbsp;</label>
-            <button id="btn-download-pc" class="btn btn-primary form-control" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
+            <button type="button" id="btn-download-pc" class="btn btn-primary form-control seccion-siete" disabled>Descargar <i class="fa fa-download" aria-hidden="true"></i></button>
         </div>
         <div class="col-md-3 text-center">
             <label for="regprop-file">Anexo memoria régimen de propiedad</label>&nbsp;<span class="fa fa-info-circle pull-right" title="Debe contener de manera organizada en PDF, DWG y TXT la información correspondiente a cada lote, unidad de vivienda y cajones de estacionamiento."></span>
@@ -2149,8 +1999,6 @@
             </select>
         </div>
         <div class="col-md-3 text-center">
-            @* <label for="ObservacionesFile">&nbsp;</label>
-            <textarea class="form-control" rows="4" placeholder="¿Por qué?" disabled></textarea> *@
             <label for="ObservacionesFile">Observaciones</label>
             <input id="observaciones-regprop" type="file" class="form-control" accept=".pdf" disabled />
         </div>
@@ -2248,7 +2096,7 @@
                 $("[name='NivelesViviendasUnifamiliar']").val($("#slc_niveles_vivienda_unifamiliar").val());
                 $("[name='NivelesViviendasMultifamiliar']").val($("#slc_niveles_vivienda_multifamiliar").val());
                 $("[name='NivelesViviendasRenta']").val($("#slc_niveles_vivienda_renta").val());
-
+                if(idPredio > 0)
                 return true;
             });
             $('#noecos').on('change', function () {
@@ -2349,17 +2197,6 @@
                     count(contador);
                 }
             });
-
-            // var check_arboles = document.getElementById("check_arboles");
-            // check_arboles.addEventListener("change", function () {
-            //     if (check_arboles.checked) {
-            //         contador += 7;
-            //         count(contador);
-            //     } else {
-            //         contador -= 7;
-            //         count(contador);
-            //     }
-            // });
 
             var check_inodoro = document.getElementById("check_inodoro");
             check_inodoro.addEventListener("change", function () {
@@ -2703,15 +2540,6 @@
                     $('#txt_bombeo').prop('disabled', true);
                     
                 }
-                // if ($.inArray("21", $('#ecotecnias input[name=cmb_ecotecnia]:checked').map(function () {
-                //     return $(this).val();
-                // }).get()) > -1) {
-                //     $('#cmb_tipocombustible').prop('disabled', false).trigger("change");
-                // } else {
-                //     $('#cmb_tipocombustible').val(0).prop('disabled', true).trigger("change");
-                    
-                // }
-                // if($('#ecotecnias').find('input[name=cmb_ecotecnia][value!=21]:checked').length > 0){
                 if($('input[name=cmb_ecotecnia]:checked').filter(function (){ return this.value!=14 && this.value<21 }).length > 0){
                     $('#noecos').prop('checked', false);
                     $('#noecos').trigger('change');
@@ -2943,8 +2771,6 @@
                 }
                 //$('#formPropuesta').valid();
             });
-            //$(".progress-bar").attr("aria-valuenow", porcentaje).css("width", porcentaje + '%').html(porcentaje + "%");
-            //getPercentage();
         }); //end document.ready
         function count (contador){
             if (contador == 0){
@@ -3053,8 +2879,8 @@
                                 $("#slc_niveles_vivienda_renta option[value=" + this + "]").prop("selected", true);
                             });
                         }
-                        $("#Estatus option[value=" + result.estatus + "]").prop("selected", true);
-                        $("[name='ObservacionesEstatus']").val(result.observacionesEstatus);
+                        $("#EstatusSeccion1a option[value=" + result.estatus + "]").prop("selected", true);
+                        $("#ObservacionesSeccion1a").val(result.observacionesEstatus);
                         //result.archivoPropuesta != null ? $("#btn-download-pc").prop("disabled", false).removeClass("disabled").on("click", function () { window.open('https://' + window.location.host + '/Levantamiento/doc/PrediosAdquisicion/' + idPredio + '/PropuestaConceptual/' + result.archivoPropuesta, '_blank').focus(); }) : '';
                         //$("[name='EstatusPropuesta'] option[value=" + result.claveEstatusPropuesta + "]").prop("selected", true);
                         //$("[name='ObservacionesPropuesta']").val(result.observacionesPropuesta);
@@ -3066,9 +2892,11 @@
                         //         $("#slc_niveles_vivienda option[value=" + this + "]").prop("selected", true);
                         //     });
                         // }
+                        $('#EstatusSeccion1a, #ObservacionesSeccion1a, #btnSeccion1a').prop('disabled',false);
                     } else {
                         $("#alert").html(result);
                         showAlerta();
+                        $(":button").prop('disabled', true);
                     }
                 }
             }).then(function (){
@@ -3093,7 +2921,6 @@
                     success: function (data) {
                         $('#spinner').hide();
                         $("#alert").html(data.message);
-                        //window.scrollTo(0,0);
                         GetFile(file[0].id);
                         showAlerta();
                     }
@@ -3116,17 +2943,6 @@
                 success: function (result) {
                     $('#spinner').hide();
                     if (result.data != null){
-                        if(nameFile == 'mecanica-file'){
-                            // porcentaje += 19;
-                            // $(".progress-bar").attr("aria-valuenow", porcentaje).css("width", porcentaje + '%').html(porcentaje + "%");
-                        }
-                        // if(nameFile == 'acreddro-file' || nameFile == 'acredvalid-file'){
-                        //     responsivas++;
-                        //     if(responsivas == 2){
-                        //         porcentaje+=
-                        //         $(".progress-bar").attr("aria-valuenow", porcentaje).css("width", porcentaje + '%').html(porcentaje + "%") : '';
-                        //     }
-                        // }
                         $("#" + nameFile).parent().parent().find("select, textarea, button, input[type=file]").prop("disabled", false);
                         $("#" + nameFile).parent().parent().find("button").first().prop("onclick", null).off("click");
                         $("#" + nameFile).parent().parent().find("button").first().prop("disabled", false).removeClass("disabled").on("click", function () { window.open('https://' + window.location.host + '/Levantamiento/doc/PrediosAdquisicion/' + idPredio + '/' + nameFile + '/' + result.data.descripcion, '_blank').focus(); });
@@ -3227,6 +3043,7 @@
                     );
                 }
             });
+            getPercentage();
         }
         var columnsEdificios = [
             { className: 'dt-center', targets: '_all' },
@@ -3271,17 +3088,16 @@
             });
         }
         function SaveEstatusSeccion(element, section){
-            // var nameFile = $(element).parent().parent().find(":file");
             var estatus = $(element).parent().parent().find("select option:selected").val();
             var observaciones = $(element).parent().parent().find("textarea").val();
             var data = new FormData();
             data.append("idPredio", idPredio);
-            data.append("nameFile", nameFile[0].id);
             data.append("estatus", estatus);
             data.append("observaciones", observaciones);
+            data.append("section", section);
             $.ajax({
                 type: "post",
-                url: "@Url.Action("SendStatus", "Proyecto")", // Url
+                url: "@Url.Action("SendStatusSection", "Proyecto")", // Url
                 data: data,
                 processData: false,
                 contentType: false,
@@ -3426,12 +3242,33 @@
                             $(ecos).each(function () {
                                 $("input[name=cmb_ecotecnia][value='" + this + "']").prop("checked", true).trigger('change');
                             });
-                            const ecosFilter = ecos.filter((eco) => eco != "14" && eco != "21");
-                            const isEco = (eco) => eco < 21;
-                            if(ecosFilter.every(isEco) && ecosFilter.length > 0){
-                                $('#noecos').prop('checked', false);
+                            const ecosFilter = ecos.filter((eco) => eco != "14" && eco < 21);
+                            if(ecosFilter.length > 0){
+                                $('#noecos').prop('checked', false).trigger('change');
                             }else{
                                 $('#noecos').prop('checked', true).trigger('change');
+                            }
+                            const ecos4aFilter = ecos.filter((eco) => eco >=8 && eco <= 13);
+                            if(ecos4aFilter.length > 0){
+                                $('#EstatusSeccion4a, #ObservacionesSeccion4a, #btnSeccion4a').prop('disabled', false);
+                                $('#EstatusSeccion4a [value='+ result.data.estatus_section_4a +']').prop('selected',true);
+                                $('#ObservacionesSeccion4a').val(result.data.txt_estatus_section_4a);
+                            }
+                            if(ecos.indexOf("14") != (-1) || result.data.cmb_motrices != null || (result.data.volumen_demolicion > 0 && result.data.volumen_demolicion != null)){
+                                $('#EstatusSeccion4b, #ObservacionesSeccion4b, #btnSeccion4b').prop('disabled', false);
+                                $('#EstatusSeccion4b [value='+ result.data.estatus_section_4b +']').prop('selected',true);
+                                $('#ObservacionesSeccion4b').val(result.data.txt_estatus_section_4b);
+                            }
+                            if(result.data.cmb_obra_preventivas != null){
+                                $('#EstatusSeccion5a, #ObservacionesSeccion5a, #btnSeccion5a').prop('disabled', false);
+                                $('#EstatusSeccion5a [value='+ result.data.estatus_section_5a +']').prop('selected',true);
+                                $('#ObservacionesSeccion5a').val(result.data.txt_estatus_section_5a);
+                            }
+                            const ecos6aFilter = ecos.filter((eco) => (eco >=1 && eco <= 7) || (eco >= 15 && eco <= 20));
+                            if(ecos6aFilter.length > 0){
+                                $('#EstatusSeccion6a, #ObservacionesSeccion6a, #btnSeccion6a').prop('disabled', false);
+                                $('#EstatusSeccion6a [value='+ result.data.estatus_section_6a +']').prop('selected',true);
+                                $('#ObservacionesSeccion6a').val(result.data.txt_estatus_section_6a);
                             }
                         }else{
                             $('#noecos').prop('checked', true);
@@ -3543,8 +3380,6 @@
                                 count(contador);
                             }
                         });
-                        // porcentaje+=19;
-                        // $(".progress-bar").attr("aria-valuenow", porcentaje).css("width", porcentaje + '%').html(porcentaje + "%");
                     } else {
                         $('.other_ecos').find('input[type="number"], input[type="text"]').each(function (){
                             this.id != 'volumen_demolicion' ? $(this).prop('disabled', true) : '';
@@ -3584,32 +3419,35 @@
         }
         function getPercentage(){
             let porcentaje = 0;
-            console.log('entra al getPercentage',porcentaje);
-            var s1=0, s2=0, s4=0, s4a=0, s4b=0, s5=0, s5a=0;
+            var s1=0, s2=0, s4=0, s4a=0, s4b=0, s5=0, s5a=0, s6=0, s6a=0, s7=0;
             $('.seccion-uno').each(function(e){
-                if(this.type == 'number' && (this.value == null || this.value == ''))   //si no están capturadas las superficies
+                if(this.type == 'number' && (this.value == null || this.value == ''))   //si no están capturadas todas las superficies, se incrementa
                     s1++;
-                if(this.type == 'select-multiple' && this.selectedOptions.length == 0){     //si no han seleccionado los niveles
+                if(this.type == 'select-multiple' && this.selectedOptions.length == 0){     //si no han seleccionado los niveles, se incrementa
                     s1++;
                 }
-                if(this.type == 'button' && this.disabled){     //si no están cargados los archivos del anteproyecto
+                if(this.type == 'button' && this.disabled){     //si no están cargados los archivos del anteproyecto, se incrementa
                     s1++;
                 }
             });
+            console.log($('#txt_total_viviendas').val(), $('#BuildingTotal').val());
+            if(parseInt($('#txt_total_viviendas').val()) != parseInt($('#BuildingTotal').val())){    //si no coincide el número total de viviendas, se incrementa
+                s1++;
+            }
             $('.seccion-dos').each(function(){
-                if(this.type == 'button' && this.disabled)  //si no está cargado el archivo de mecánica de suelos
+                if(this.type == 'button' && this.disabled)  //si no está cargado el archivo de mecánica de suelos, se incrementa
                     s2++;
             });
             $('.seccion-cuatro').each(function(){
-                if(this.type == 'checkbox' && this.name == 'cmb_ecotecnia' && this.checked && this.value != 14) //medidas de sustentabilidad - envolvente térmica
+                if(this.type == 'checkbox' && this.name == 'cmb_ecotecnia' && this.checked && this.value != 14) //si selecciona alguna medidas de sustentabilidad - envolvente térmica, se incrementa
                     s4a++;
-                if(this.type == 'checkbox' && this.name == 'cmb_ecotecnia' && !this.checked && this.value == 14)    //sembrado de árboles
+                if(this.type == 'checkbox' && this.name == 'cmb_ecotecnia' && !this.checked && this.value == 14)    //si no esta seleccionado la eco sembrado de árboles, se incrementa
                     s4++;
-                if(this.type == 'checkbox' && this.name == 'cmb_motriz' && this.checked)    //linea complementaria de accesibilidad(se incrementa al estar seleccionada)
+                if(this.type == 'checkbox' && this.name == 'cmb_motriz' && this.checked)    //si selecciona alguna eco en linea complementaria de accesibilidad, se incrementa
                     s4b++;
-                if(this.type == 'button' && this.disabled)  //si no está cargado el archivo de complemento arquitectónico
+                if(this.type == 'button' && this.disabled)  //si no está cargado el archivo de complemento arquitectónico, se incrementa
                     s4++;
-                if(this.type == 'number' && (isNaN(this.value) || this.value == ''))    //si no está capturado el volúmen de demolición
+                if(this.type == 'number' && (isNaN(this.value) || this.value == ''))    //si no está capturado el volúmen de demolición, se incrementa
                     s4++;
             });
             $('.seccion-cinco').each(function(){
@@ -3618,7 +3456,16 @@
                 if(this.type == 'button' && !this.disabled)  //si está cargado el archivo de memoria de calculo estructural y planos estructurales
                     s5++;
             });
-            console.log('s1',s1,'s2',s2,'s4',s4,'s4a',s4a,'s4b',s4b,'s5',s5,'s5a',s5a);
+            $('.seccion-seis').each(function(){
+                if(this.type == 'checkbox' && this.checked) //instalaciones - medidas de sustentabilidad, se incrementa si está seleccionado
+                    s6a++;
+                if(this.type == 'button' && this.disabled)  //si no están cargados los archivos de instalaciones se incrementa
+                    s6++;
+            });
+            $('.seccion-siete').each(function(){
+                if(this.type == 'button' && this.disabled)  //si no están cargados los archivos del apéndice, se incrementa
+                    s7++;
+            });
             if(s1 == 0)
                 porcentaje += 18;
             if(s2 == 0)
@@ -3627,8 +3474,11 @@
                 porcentaje += 15;
             if(s5 == 2 && s5a>0)
                 porcentaje += 19;
+            if(s6 == 0 && s6a>0)
+                porcentaje += 19;
+            if(s7 == 0)
+                porcentaje += 10;
             $(".progress-bar").attr("aria-valuenow", porcentaje).css("width", porcentaje+ '%').html(porcentaje + "%");
-            console.log('sale del getPercentage',porcentaje);
         }
     </script>
 
