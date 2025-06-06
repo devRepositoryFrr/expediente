@@ -33,7 +33,7 @@ namespace ConaviWeb.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Levantamiento");
+                return RedirectToAction("Index", "InventarioControl");
             }
 
             if (TempData.ContainsKey("Alert"))

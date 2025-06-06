@@ -1,0 +1,92 @@
+﻿@model ConaviWeb.Model.Expedientes.ExpedienteBibliohemerografico
+
+<!-- Modal -->
+<div class="modal fade" id="modalExpediente" tabindex="-1" role="dialog" aria-labelledby="modalExpediente" style="z-index:1041">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Registro de expediente para el inventario bibliohemerográfico</h4>
+            </div>
+            <form id="formInsertExpedienteBibliohemerografico" enctype="multipart/form-data" method="post" asp-controller="Bibliohemerografico" asp-action="InsertExpedienteBibliohemerografico">
+                <input type="hidden" id="hd_id_inventario_expediente" asp-for="IdInventario" value="@ViewBag.IdInv" />
+                <input type="hidden" id="hd_id_expediente" asp-for="Id" value="0" />
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">Número de ejemplar:</label>
+                            <input asp-for="Ejemplar" type="number" placeholder="0" class="form-control" min="1" />
+                        </div>
+
+                        @*<div class="col-md-4">
+                    <label class="control-label">Clave tipo documental:</label>
+                    <select id="" asp-for="IdTipoDocumental" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["CatTipoDoc"], "Id", "Clave"))">
+                        <option value="">--Seleccione--</option>
+                    </select>
+                </div>*@
+                        <div class="col-md-8">
+                            <label class="control-label">Clave tipo de soporte:</label>
+                            <select id="slcTipoSoporte" asp-for="IdTipoSoporte" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["Catalogo"], "Id", "Clave"))">
+                                <option value="">--Seleccione--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6">
+                            <label class="control-label">Título del libro:</label>
+                            <input type="text" id="titulo_libro" asp-for="Titulo" class="form-control" placeholder="título del libro..." />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Nombre del autor:</label>
+                            <input type="text" asp-for="Autor" id="nombre_autor" class="form-control" placeholder="nombre del autor..." />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Tema:</label>
+                            <input type="text" asp-for="Tema" id="tema" placeholder="tema..." class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="control-label">Editorial:</label>
+                            <input type="text" asp-for="Editorial" id="editorial" placeholder="editorial..." class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">Año:</label>
+                            @*<input type="number" asp-for="Anio" placeholder="Año..." class="form-control" min="2000" />*@
+                            <select id="slctAnio" asp-for="Anio" class="form-control">
+                                <option value="">--Seleccione--</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">ISBN/ISSN:</label>
+                            <input type="text" asp-for="IsbnIssn" id="asbn_issn" placeholder="ISBN/ISSN..." class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">Número de páginas:</label>
+                            <input type="number" asp-for="Paginas" id="paginas" placeholder="0" class="form-control" min="1" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">Número de volumen:</label>
+                            <input type="number" asp-for="Volumen" id="volumen" placeholder="0" class="form-control" min="1" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+                        <span class="fa fa-times"></span> Cerrar
+                    </button>
+                    <button type="submit" class="btn btn-sm btn-primary active">
+                        <span class="fa fa-paper-plane-o"></span> Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@*fin del formulario de expediente bibliohemerográfico*@
+
+<script>
+    $(document).ready(function () {
+        $("#formInsertExpedienteBibliohemerografico").submit(function (e) {
+
+        });
+    });
+</script>

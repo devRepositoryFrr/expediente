@@ -1,7 +1,5 @@
 using ConaviWeb.Data;
-using ConaviWeb.Data.Diagnostico;
-using ConaviWeb.Data.Levantamiento;
-using ConaviWeb.Data.Proyecto;
+using ConaviWeb.Data.Expedientes;
 using ConaviWeb.Data.Repositories;
 using ConaviWeb.Model.Common;
 using ConaviWeb.Services;
@@ -76,14 +74,12 @@ namespace ConaviWeb
             services.AddScoped<ISourceFileRepository, SourceFileRepository>();
             services.AddScoped<ISecurityTools, SecurityTools>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILevantamientoRepository, LevantamientoRepository>();
-            services.AddScoped<IProyectoRepository, ProyectoRepository>();
+            services.AddScoped<IExpedienteRepository, ExpedienteRepository>();
             var appSettingSection = Configuration.GetSection("AppSettings");
             //services.AddSingleton<HttpClient>();  Revisar el uso de esta inyección
             services.AddScoped<IProcessSignRepository, ProcessSignRepository>();
             services.AddScoped<IProcessSigningService, ProcessSigningService>();
             services.AddScoped<IProcessCancelService, ProcessCancelService>();
-            services.AddScoped<IDiagnosticoRepository, DiagnosticoRepository>();
             //JWT
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSetting>(appSettingsSection);
@@ -112,7 +108,7 @@ namespace ConaviWeb
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UsePathBase("/Levantamiento");
+            app.UsePathBase("/Expediente");
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
@@ -146,7 +142,7 @@ namespace ConaviWeb
 
                 if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
                         response.StatusCode == (int)HttpStatusCode.Forbidden)
-                    response.Redirect("/Levantamiento");
+                    response.Redirect("/Expediente");
                 return System.Threading.Tasks.Task.CompletedTask;
             });
 

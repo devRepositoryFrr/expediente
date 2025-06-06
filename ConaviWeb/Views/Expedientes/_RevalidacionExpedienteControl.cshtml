@@ -1,0 +1,29 @@
+﻿@model ConaviWeb.Model.Expedientes.Expediente
+
+<form id="formVoBoExpediente" enctype="multipart/form-data" method="post">
+    <div class="alert alert-danger" asp-validation-summary="ModelOnly"><button class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>
+    <div class='modal-header'>
+        <h4 id='titulo-modal' style="font-weight: 300">Revalidación expediente</h4>
+    </div>
+    <div class='modal-body'>
+        <input id="idExpediente" asp-for="Id" type="text" class="form-control" style="display:none;">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>¿Estás seguro de enviar a revalidación el expediente?</h3>
+            </div>
+            <div class="col-md-12">
+                <label for="txt_observaciones_revalidación">Observaciones:</label>
+                <input type="text" id="txt_observaciones_revalidacion" class="form-control" />
+                <label class="alert alert-danger" id="lbl_error"></label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+            <span class="fa fa-ban"></span> Cancelar
+        </button>
+        <button type="button" id="btn_reval" class="btn btn-sm btn-primary active">
+            <span class="fa fa-paper-plane-o"></span> Si, enviar
+        </button>
+    </div>
+</form>
