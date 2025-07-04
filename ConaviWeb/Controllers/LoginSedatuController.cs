@@ -53,7 +53,8 @@ namespace ConaviWeb.Controllers
             if (userResponse != null)
             {
                 userResponse.AccessToken = await _securityTools.GetToken(userResponse);
-                
+                userResponse.Modules = await _securityRepository.GetModules(Convert.ToInt32(userResponse.Rol), userResponse.Id, userRequest.IdSistema);
+
                 if (userResponse.AccessToken != null)
                 {
                     HttpContext.Session.SetObject("ComplexObject", userResponse);

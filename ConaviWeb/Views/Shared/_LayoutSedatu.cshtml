@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using ConaviWeb.Model
+@{
+    var modulos = ViewData["Modulos"];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -76,9 +80,21 @@
                         </div>
                         <div class="offcanvas-body navbar-dark bg-dark">
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                                <li class="nav-item dropdown">
-                                    <a href="@Url.Action("Index", "Levantamiento")" class="nav-link"><span class="fade fa-home" aria-hidden="true"></span>Inicio</a>
-                                </li>
+                                @* <li class="nav-item dropdown">
+                                    <a href="@Url.Action("Index", "InventarioControl")" class="nav-link"><span class="fade fa-home" aria-hidden="true"></span>Inicio</a>
+                                </li> *@
+                                @if (modulos != null)
+                                {
+                                    @foreach (var module in modulos as List<Module>)
+                                    {
+                                        <li>
+                                            @* <a href="@Url.Action(module.Action,module.Controller)" class="link-light link-offset-2 link-underline link-underline-opacity-0"> *@
+                                            <a href="/Expediente/Expediente/@module.Url" class="link-light link-offset-2 link-underline link-underline-opacity-0">
+                                                <p style="font-size:20px;" class="ic-modulos enlace"><i class="@module.Ico"></i> @module.Text</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
                             </ul>
                             <!--<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item dropdown">

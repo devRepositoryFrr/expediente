@@ -272,7 +272,7 @@
                         $("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
 
                         var urlTipo = "";
-                        urlTipo = "/InventarioControl/GetExpedientesControlByIdInv";
+                        urlTipo = "@Url.Action("GetExpedientesControlByIdInv", "InventarioControl")";
                         table = $('#tableExpedientesControl').DataTable({
                             "proccessing": true,
                             "serverSide": false,
@@ -336,9 +336,6 @@
 
                     // Escondemos el Ajax Loader
                     //$("#AjaxLoader").hide("slow");
-
-                    // Habilitamos el botón de Submit
-                    //$("#SubmitBtn").prop("disabled", false);
                 })
                 // Hacer algo siempre, haya sido exitosa o no.
                 .always(function () {
@@ -348,7 +345,7 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/InventarioControl/ExpedientesControl";
+            urlTipo = "@Url.Action("ExpedientesControl", "InventarioControl")";
             table = $('#tableExpedientesControl').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -400,9 +397,6 @@
                 "data": null,
                 "targets": 1,
                 "render": function (data, type, row) {
-                    //var fprimero = (new Date(row.fechaPrimeroAntiguo)).getFullYear();
-                    //var freciente = (new Date(row.fechaUltimoReciente)).getFullYear();
-                    //var periodo = freciente == fprimero ? fprimero : fprimero + '-' + freciente;
                     return row.codigo + '-' + row.consecutivo + '/' + row.periodo;
                 }
             },
@@ -430,7 +424,6 @@
                     return (fprimero.getFullYear() + '/' + (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day);
                 }
             },
-            //{ "name": "Estatus", "data": "estatus", "targets": 6 },
             {
                 "name": "Estatus",
                 "data": null,
@@ -443,9 +436,7 @@
                 "targets": 7,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="CaratulaControl?id=' + data.id + '" target="_blank" style="font-size: 20px;"><span class="fa fa-file-text-o" aria-hidden="true"></span></a><br>';
-                    //ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalVoBoExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="VoBo" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>' : '';
-                    //ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalRevalidacionExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Revalidación" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>' : '';
+                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="@Url.Action("Index","CaratulaControl")?id=' + data.id + '" target="_blank" style="font-size: 20px;"><span class="fa fa-file-text-o" aria-hidden="true"></span></a><br>';
                     if (row.esEditable == 'editable') {         //is editable for owner
                         ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación' || row.estatus == 'Edición para migrar') ? '<a data-exp-id="' + row.id + '" class="gold" type="button" title="Editar" data-toggle="modal" data-target="#modalExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-pencil-square-o" aria-hidden="true"></span></a><br><a data-exp-id="' + row.id + '" class="gold" type="button" title="Eliminar" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-trash-o" aria-hidden="true"></span></a><br><a data-exp-id=' + row.id + ' class="gold" type="button" title="Enviar a revisión" data-toggle="modal" data-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-check-square-o" aria-hidden="true"></span></a><br>' : '';
                         ret += (row.migradoTP == 0 && row.estatus == 'Aceptado') ? '<a data-exp-id="' + row.id + '" class="gold" type="button" title="Migrar a Inventario de Transferencia Primaria al Archivo de Concentración" data-toggle="modal" data-target="#showModalMigrarTP" style="font-size: 20px;"><span  style="cursor:pointer;" class="fa fa-share-square-o" aria-hidden="true"></span></a><br>' : '';
@@ -477,7 +468,7 @@
         function sendToFormat() {
             var id = $("#hd_id_inventario").val();
             if (!isNaN(id) && id>0)
-                window.open("/InventarioControl/ICFormato?id=" + id, "_blank");
+                window.open("@Url.Action("ICFormato","InventarioControl")?id=" + id, "_blank");
         }
     </script>
 }

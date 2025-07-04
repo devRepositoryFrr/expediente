@@ -125,7 +125,7 @@
                             @foreach (var module in Model as List<Module>)
                             {
 
-                                <a href="@module.Url">
+                                <a href="/Expediente/@module.Url.Remove(0,3)">
                                     <p style="font-size:20px;text-align:left; color:gray" class="ic-modulos enlace"><i class="@module.Ico"></i>@module.Text</p>
                                 </a>
                             }

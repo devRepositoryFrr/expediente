@@ -6,12 +6,11 @@
 <div id="general">
     <div class="row">
         <div class="col-md-5 center-block">
-            <img src="../img/encab2021.png" class="img-responsive" />
+            <img src="../img/logo_header25.png" class="img-responsive" />
         </div>
         <div class="col-md-7 text-right">
             <label>
                 SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />
-                COORDINACIÓN GENERAL DE ADMINISTRACIÓN<br />
                 DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />
                 DEPARTAMENTO DE UNIDADES DOCUMENTALES
             </label>
@@ -96,76 +95,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                1
-
-                            </td>
-                            <td>
-                                9C.3-01/2006
-                            </td>
-                            <td>
-                                Contrato con "Radio y televisión de Aguascalientes" para realizar campañas publicitarias de la CONAVI
-                            </td>
-                            <td>
-                                2006
-                            </td>
-                            <td>
-                                5
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                10
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                9C.3-02/2006
-                            </td>
-                            <td>
-                                Contrato con "Radio y televisión de Aguascalientes" para realizar la producción de material audiovisual para el Premio Nacional de Vivienda
-                            </td>
-                            <td>
-                                2006
-                            </td>
-                            <td>
-                                5
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                10
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                9C.1-01/2007
-                            </td>
-                            <td>
-                                Acuerdo por el que se establecen los Lineamientos Generales para la orientación,planeación, autorización, coordinación, supervición y evaluación de las estrategias, programas y las campañas de Comunicación Social.
-                            </td>
-                            <td>
-                                2007
-                            </td>
-                            <td>
-                                5
-                            </td>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                15
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </form>
@@ -248,7 +177,7 @@
                     $('#ftransferencia_inventario').text(result.fechaTransferencia != null ? result.fechaTransferencia.substring(8, 10) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(0, 4) : '');
 
                     var urlTipo = "";
-                    urlTipo = "/Inventario/GetExpedientesTPByIdInv";
+                    urlTipo = "@Url.Action("GetExpedientesTPByIdInv", "Inventario")";
                     table = $('#tableExpTP').DataTable({
                         "proccessing": true,
                         "serverSide": false,
@@ -348,7 +277,7 @@
             ventana.document.write('<html><head><title>InventarioTransferenciaPrimaria_id' + idInv + '</title><link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">');
             ventana.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
             ventana.document.write('<style type="text/css">@@page { size: landscape; margin: 20px;} body: {counter-reset: page,pages;}#mainTable{page-break-before: always;}table thead{counter-increment:page;}#mainHeader .pageHeader::before {counter-increment: pages;content: "Hoja " counter(page);}#mainHeader .pageHeader::after {content: " de " counter(pages) " del inventario";}</style></head><body style="font-size:10px !important;">');
-            ventana.document.write('<table style="font-size:10px;width:100%;" id="mainTable"><thead id="mainHeader"><tr><th colspan="8"><table style="font-size:10px;"><tr><th width="38%"><img src="../img/encab2021.png" style="width: 100%; height:100%;" /></th><th style="text-align: right;"><label style="text-align: right;">SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />COORDINACIÓN GENERAL DE ADMINISTRACIÓN<br />DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />DEPARTAMENTO DE UNIDADES DOCUMENTALES</label></th></tr></table></th></tr>');
+            ventana.document.write('<table style="font-size:10px;width:100%;" id="mainTable"><thead id="mainHeader"><tr><th colspan="8"><table style="font-size:10px;"><tr><th width="38%"><img src="../img/logo_header25.png" style="width: 100%; height:100%;" /></th><th style="text-align: right;"><label style="text-align: right;">SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />DEPARTAMENTO DE UNIDADES DOCUMENTALES</label></th></tr></table></th></tr>');
             ventana.document.write('<tr><th colspan="8" style="text-align:center;padding:10px;"><label>Inventario de Transferencia Primaria al Archivo de Concentración</label></th></tr>');
             ventana.document.write('<tr><th colspan="8" style="text-align:right;padding:5px;"><span class="pageHeader"></span></th></tr>');
             ventana.document.write('<tr><th colspan="8"><table width="100%" style="font-size:10px;"><tr><th><label>Nombre de la Unidad Administrativa generadora: </label></th><th><label>' + $('#unidadAdministrativa').text() + '</label></th></tr><tr><th><label for="felaboracion_inventario">Fecha de Elaboración del Inventario: ' + $('#felaboracion_inventario').text() + '</label></th><th><label>Fecha de transferencia al archivo de concentración: ' + $("#ftransferencia_inventario").text() + '</label></th></tr><tr><th><label>Nombre del responsable del archivo de trámite: </label></th><th><label>' + $("#responsableArchivo").text() + '</label></th></tr></table></th></tr>');
@@ -360,13 +289,13 @@
             for (var t = 0; t < tableRow.length; t++) {
                 ventana.document.write('<tr>' + tableRow[t].innerHTML + '</tr>');
             }
-            //for (var t = 0; t < 60; t++) {
+            // for (var t = 0; t < 60; t++) {
             //    ventana.document.write('<tr>' + tableRow[0].innerHTML + '</tr>');
-            //}
+            // }
             ventana.document.write('<tr><th colspan="8">&nbsp;</th></tr>');
             ventana.document.write('<tr><th colspan="8"><table id="table" class="text-center" style="font-size:10px;width:100%;font-size:10px;"><thead><tr><td style="width: 25%">Responsable de la custodia</td><td style="width: 25%">Entrega</td><td style="width: 25%">Recibe Responsable del Archivo de Concentración</td><td style="width: 25%">Vo.Bo. del Departamento de Unidades Documentales</td></tr><tr><td><br /><br /><br /><br />______________________________</td><td><br /><br /><br /><br />______________________________</td><td><br /><br /><br /><br />______________________________</td><td><br /><br /><br /><br />______________________________</td></tr><tr><td>' + $('#txt_name_resp').val() + '</td><td>' + $('#txt_name_entrega').val() + '</td><td>' + $('#txt_name_recibe').val() + '</td><td>' + $('#txt_name_vobo').val() +'</td></tr></thead></table></th></tr>');
             ventana.document.write('</tbody>');
-            ventana.document.write('</table></body>');
+            ventana.document.write('</table><\/body>');
             ventana.document.write('</html>');
             ventana.document.close();
             ventana.focus();

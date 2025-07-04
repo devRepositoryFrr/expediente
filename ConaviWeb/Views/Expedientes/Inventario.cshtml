@@ -158,7 +158,7 @@
                         //$("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
 
                         var urlTipo = "";
-                        urlTipo = "/Inventario/GetExpedientesTPByIdInv";
+                        urlTipo = "@Url.Action("GetExpedientesTPByIdInv","Inventario")";
                         table = $('#tableExpedientes').DataTable({
                             "proccessing": true,
                             "serverSide": false,
@@ -242,7 +242,7 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Inventario/ExpedientesTP";
+            urlTipo = "@Url.Action("ExpedientesTP","Inventario")";
             table = $('#tableExpedientes').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -312,7 +312,7 @@
                 "targets": 8,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="Caratula?id=' + data.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
+                    var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="@Url.Action("Index", "Caratula")?id=' + data.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
                     //ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalVoBoExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="VoBo" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>' : '';
                     //ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalRevalidacionExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Revalidación" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>' : '';
                     //if (row.esEditable == 'editable') {     //is editable by owner
@@ -336,7 +336,7 @@
         function sendToFormat() {
             var id = $("#hd_id_inventario").val();
             if (!isNaN(id) && id > 0)
-                window.open("/InventarioFto?id=" + id, "_blank");
+                window.open("@Url.Action("Index", "InventarioFto")?id=" + id, "_blank");
         }
 </script>
 }

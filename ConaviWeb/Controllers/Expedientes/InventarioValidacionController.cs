@@ -34,6 +34,7 @@ namespace ConaviWeb.Controllers.Expedientes
             var cat = await _expedienteRepository.GetCodigosExp();
             ViewData["Catalogo"] = cat;
             //if (user.Id == 212 || user.Id == 323)
+            ViewData["Modulos"] = user.Modules;
             int rol = (int)user.Rol;
             if (rol == 15)
                 ViewData["btnShowValidacion"] = true;

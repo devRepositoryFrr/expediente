@@ -45,6 +45,7 @@ namespace ConaviWeb.Controllers.Expedientes
             ViewBag.Ubicacion = inventario!=null ? inventario.Ubicacion : "";
             ViewBag.Peso = inventario!=null ? inventario.PesoElectronico : 0;
             ViewBag.Almacenamiento = inventario!=null ? inventario.Almacenamiento : "";
+            ViewData["Modulos"] = user.Modules;
             int rol = (int) user.Rol;
             //if (user.Id == 212 || user.Id == 323)
             if (rol == 15)
@@ -65,6 +66,8 @@ namespace ConaviWeb.Controllers.Expedientes
         }
         public IActionResult ICFormato()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            ViewData["Modulos"] = user.Modules;
             return View("../Expedientes/InventarioControlFto");
         }
         [HttpPost]

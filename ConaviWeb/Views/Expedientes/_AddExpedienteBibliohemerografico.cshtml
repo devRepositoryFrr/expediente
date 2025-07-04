@@ -18,12 +18,6 @@
                             <input asp-for="Ejemplar" type="number" placeholder="0" class="form-control" min="1" />
                         </div>
 
-                        @*<div class="col-md-4">
-                    <label class="control-label">Clave tipo documental:</label>
-                    <select id="" asp-for="IdTipoDocumental" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["CatTipoDoc"], "Id", "Clave"))">
-                        <option value="">--Seleccione--</option>
-                    </select>
-                </div>*@
                         <div class="col-md-8">
                             <label class="control-label">Clave tipo de soporte:</label>
                             <select id="slcTipoSoporte" asp-for="IdTipoSoporte" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["Catalogo"], "Id", "Clave"))">
@@ -50,7 +44,6 @@
                         </div>
                         <div class="col-md-3">
                             <label class="control-label">Año:</label>
-                            @*<input type="number" asp-for="Anio" placeholder="Año..." class="form-control" min="2000" />*@
                             <select id="slctAnio" asp-for="Anio" class="form-control">
                                 <option value="">--Seleccione--</option>
                             </select>

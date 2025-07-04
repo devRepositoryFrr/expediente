@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public string Text { get; set; }
         public string Url { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
         public string Ico { get; set; }
         public int Orden { get; set; }
     }

@@ -63,7 +63,7 @@ namespace ConaviWeb.Data.Repositories
             var sql = @"
                         SELECT id Id, descripcion Text, url Url, ico Ico, orden Orden
                         FROM  qa_adms_conavi.c_modulo cm 
-                        WHERE id_sistema = @IdSistema AND (FIND_IN_SET(@IdUser,usuarios) OR id_rol = @IdRol)";
+                        WHERE FIND_IN_SET(@IdUser,usuarios) OR id_rol = @IdRol";
 
             return await db.QueryAsync<Module>(sql, new { IdRol = idRol, IdSistema = idSistema ,IdUser = idUser });
         }

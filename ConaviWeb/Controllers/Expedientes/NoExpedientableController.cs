@@ -38,6 +38,7 @@ namespace ConaviWeb.Controllers.Expedientes
             //ViewBag.FechaElab = inventario != null ? inventario.FechaElaboracion.ToString("dd/MM/yyyy") : "";
             ViewBag.FechaElab = inventario != null ? inventario.FechaElaboracion : "";
             ViewBag.FechaTrans = inventario != null ? inventario.FechaTransferencia : "";
+            ViewData["Modulos"] = user.Modules;
             int rol = (int)user.Rol;
             if (rol == 15)
             {

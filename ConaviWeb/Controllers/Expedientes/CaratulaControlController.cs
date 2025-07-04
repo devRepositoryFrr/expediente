@@ -22,6 +22,8 @@ namespace ConaviWeb.Controllers.Expedientes
         }
         public IActionResult Index()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            ViewData["Modulos"] = user.Modules;
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
             return View("../Expedientes/CaratulaControl");
@@ -33,12 +35,12 @@ namespace ConaviWeb.Controllers.Expedientes
             caratula.IdUser = user.Id;
 
             var success = await _expedienteRepository.InsertCaratulaExpedienteIC(caratula);
-            if (!success)
+            if (success)
             {
                 TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Ocurrio un error al registrar la carátula");
             }
             TempData["Alert"] = AlertService.ShowAlert(Alerts.Success, "Registro de carátula exitoso!");
-            return Redirect("/CaratulaControl?id=" + caratula.IdExpediente);
+            return Redirect("CaratulaControl?id=" + caratula.IdExpediente);
         }
         [HttpPost]
         public async Task<IActionResult> GetCaratulaExpedienteControl([FromForm] int id, int legajo)

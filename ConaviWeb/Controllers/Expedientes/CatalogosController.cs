@@ -24,18 +24,24 @@ namespace ConaviWeb.Controllers.Expedientes
         }
         public IActionResult Index()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            ViewData["Modulos"] = user.Modules;
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
             return View("../Expedientes/Catalogos");
         }
         public IActionResult Areas()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            ViewData["Modulos"] = user.Modules;
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
             return View("../Expedientes/Areas");
         }
         public async Task<IActionResult> PuestosAsync()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            ViewData["Modulos"] = user.Modules;
             var catArea = await _expedientesRepository.GetAreas();
             ViewBag.AreaCatalogo = (new SelectList(catArea, "Id", "Clave"));
             if (TempData.ContainsKey("Alert"))
@@ -45,6 +51,7 @@ namespace ConaviWeb.Controllers.Expedientes
         public async Task<IActionResult> UsuariosAsync()
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            ViewData["Modulos"] = user.Modules;
             var idUserArea = await _expedientesRepository.GetIdUserArea(user.Area);
             var catArea = await _expedientesRepository.GetAreas();
             ViewBag.AreaCatalogo = (new SelectList(catArea, "Id", "Clave"));

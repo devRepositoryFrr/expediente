@@ -95,16 +95,6 @@
         </div>
     </div>
 </div>
-<!-- Modal SendVal Expediente -->
-@*<div class="modal fade fade-in" style="z-index:1041" id="showModalSendValExpediente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            @{
-                @await Html.PartialAsync("../Expedientes/_SendValExpedienteBiblio")
-            }
-        </div>
-    </div>
-</div>*@
 
 <script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
@@ -163,21 +153,21 @@
                             showAlert();
                         }
                     })
-                        // Se ejecuta si se produjo un error.
-                        .fail(function (xhr, status, error) {
-                            // Mostramos un mensaje de error.
-                            //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
+                    // Se ejecuta si se produjo un error.
+                    .fail(function (xhr, status, error) {
+                        // Mostramos un mensaje de error.
+                        //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
 
-                            // Escondemos el Ajax Loader
-                            //$("#AjaxLoader").hide("slow");
+                        // Escondemos el Ajax Loader
+                        //$("#AjaxLoader").hide("slow");
 
-                            // Habilitamos el botón de Submit
-                            //$("#SubmitBtn").prop("disabled", false);
-                        })
-                        // Hacer algo siempre, haya sido exitosa o no.
-                        .always(function () {
+                        // Habilitamos el botón de Submit
+                        //$("#SubmitBtn").prop("disabled", false);
+                    })
+                    // Hacer algo siempre, haya sido exitosa o no.
+                    .always(function () {
 
-                        });
+                    });
                     //$(e.currentTarget).find('#idSerie').val(bookId);
                 }
             });
@@ -198,13 +188,10 @@
                         $('#responsableAT').val(result.nombreResponsableAT);
                         $('#ftransferencia_biblio').val(result.fechaTransferencia != null ? result.fechaTransferencia.substring(0, 4) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(8, 10) : '');
                         $('#felaboracion_inventario_biblio').val(result.fechaElaboracion != null ? result.fechaElaboracion.substring(0, 4) + '/' + result.fechaElaboracion.substring(5, 7) + '/' + result.fechaElaboracion.substring(8, 10) : '');
-                        //$("#btn_fto").prop('disabled', false);
-                        //$("#btn_add_exp").prop('disabled', false);
                         $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de acervo blibliohemerográfico" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
                         $("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
-
                         var urlTipo = "";
-                        urlTipo = "/Bibliohemerografico/GetExpedientesBiblioByIdInv";
+                        urlTipo = "@Url.Action("GetExpedientesBiblioByIdInv", "Bibliohemerografico")";
                         table = $('#tableExpedientes').DataTable({
                             "proccessing": true,
                             "serverSide": false,
@@ -283,7 +270,7 @@
         });
         function showTable() {
             var urlTipo = "";
-            urlTipo = "/Bibliohemerografico/ExpedientesBibliohemerograficos";
+            urlTipo = "@Url.Action("ExpedientesBibliohemerograficos", "Bibliohemerografico")";
             table = $('#tableExpedientes').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -352,13 +339,9 @@
                 "targets": 11,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    /*var ret = '<span style="cursor:pointer;" title="Carátula" class="glyphicon glyphicon-file" aria-hidden="true" onclick="location.href=\'CaratulaControl?id='+ data.id +'\'"></span>';*/
                     var ret = "";
                     if (row.esEditable == 'editable') {
                         ret += (row.estatus == 'Registro') ? '<a data-exp-id="' + row.id + '" class="gold" type="button" title="Editar" data-toggle="modal" data-target="#modalExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-pencil-square-o" aria-hidden="true"></span></a><br><a data-exp-id=' + row.id + ' class="gold" type="button" title="Eliminar" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" class="fa fa-trash-o" aria-hidden="true"></span></a>' : '';
-                        //ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación') ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Enviar a revisión" class="glyphicon glyphicon-check" aria-hidden="true"></span></a>' : '';
-                        //ret += (row.estatus == 'Revisión') ? '<span style="color: #b8925f;" title="Enviado a revisión" class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></a>' : '';
-                        //ret += (row.estatus == 'Aceptado') ? '<span style="color: #b8925f;" title="Validado" class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>' : '';
                     }
                     return ret;
                 },
@@ -392,7 +375,7 @@
         function sendToFormat() {
             var id = $("#hd_id_inventario").val();
             if (!isNaN(id) && id > 0)
-                window.open("/BibliohemerograficoFto?id=" + id, "_blank");
+                window.open("@Url.Action("Index", "BibliohemerograficoFto")?id=" + id, "_blank");
         }
     </script>
 }

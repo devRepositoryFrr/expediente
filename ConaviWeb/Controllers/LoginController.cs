@@ -81,7 +81,8 @@ namespace ConaviWeb.Controllers
             HttpContext.Session.Clear();
             HttpContext.Session.Remove("Token");
             HttpContext.Session.Remove("ComplexObject");
-            return RedirectToAction("Index","Inicio");
+            //return RedirectToAction("Index","Inicio");
+            return RedirectToAction("Index","LoginSedatu");
         }
 
         [Authorize]
