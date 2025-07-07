@@ -499,7 +499,7 @@ namespace ConaviWeb.Data.Expedientes
                         join prod_control_exp.cat_areas ca on cp.id_area = ca.id
                         join (select ROW_NUMBER() over(order by ets.fecha_ultimo, ets.id) NoProg, ROW_NUMBER() over(partition by year(ets.fecha_ultimo) order by ets.fecha_ultimo, ets.id) Consecutivo, ets.id from prod_control_exp.expediente_control ets where ets.id_inventario_control = (select id_inventario_control from prod_control_exp.expediente_control where id = @Id) AND ets.migrado_tp = 0 AND ets.migrado_ne = 0 ORDER BY ets.fecha_ultimo, ets.id) cons on ec.id = cons.id
                         left join prod_control_exp.caratula crt on ec.id = crt.id_expediente_control and legajo = @Legajo
-                        left join qa_adms_conavi.usuario u on crt.id_user_captura = u.id
+                        left join prod_control_exp.usuario u on crt.id_user_captura = u.id
                         where ec.id = @Id";
 
             return await db.QueryFirstOrDefaultAsync<Caratula>(sql, new { Id = id, Legajo = legajo, IdUser = idUser });
@@ -608,9 +608,7 @@ namespace ConaviWeb.Data.Expedientes
         }
         public async Task<bool> UpdateExpedienteBibliohemerografico(ExpedienteBibliohemerografico expediente)
         {
-
             var db = DbConnection();
-
             var sql = @"
                         UPDATE prod_control_exp.expediente_bibliohemerografico SET numero_ejemplar = @Ejemplar, id_tipo_soporte = @IdSoporte, titulo_del_libro = @Titulo, nombre_autor = @Autor, tema = @Tema, editorial = @Editorial, anio = @Anio, isbn_issn = @Isbn, numero_paginas = @Paginas, numero_volumen = @Volumen, id_user = @IdUser
                         WHERE id = @Id;";
@@ -973,8 +971,8 @@ namespace ConaviWeb.Data.Expedientes
             var db = DbConnection();
             var sql = @"
                         select u.id Id, concat(u.nombre, ' ', u.primer_apellido, ' ', u.segundo_apellido) Name, u.usuario SUser, ca.descripcion Signer, u.cargo Position, u.numero_empleado EmployeeNumber, u.rfc RFC, u.activo Active
-                        from qa_adms_conavi.usuario u
-                        join qa_adms_conavi.c_area ca on u.id_area = ca.id
+                        from prod_control_exp.usuario u
+                        join prod_control_exp.c_area ca on u.id_area = ca.id
                         where u.id_rol in (15,16) and u.id <> 212
                         order by u.id;";
             return await db.QueryAsync<User>(sql, new { });
@@ -986,12 +984,12 @@ namespace ConaviWeb.Data.Expedientes
             if (usuario.Id == 0)
             {
                 sql = @"
-                        INSERT INTO qa_adms_conavi.usuario (nombre, primer_apellido, segundo_apellido, usuario, password, id_rol, cargo, numero_empleado, rfc, grado_academico, id_area, email, update_pass) VALUES(upper(@Nombre), upper(@PApellido), upper(@SApellido), @UserName, sha2(@Password,256), if(@Rol = 1, 15, 16), @Cargo, @NumEmpleado, upper(@RFC), upper(@GradoAcademico), @IdArea, lower(@Email), b'0');";
+                        INSERT INTO prod_control_exp.usuario (nombre, primer_apellido, segundo_apellido, usuario, password, id_rol, cargo, numero_empleado, rfc, grado_academico, id_area, email, update_pass) VALUES(upper(@Nombre), upper(@PApellido), upper(@SApellido), @UserName, sha2(@Password,256), if(@Rol = 1, 15, 16), @Cargo, @NumEmpleado, upper(@RFC), upper(@GradoAcademico), @IdArea, lower(@Email), b'0');";
             }
             else
             {
                 sql = @"
-                        UPDATE qa_adms_conavi.usuario SET nombre = upper(@Nombre), primer_apellido = upper(@PApellido), segundo_apellido = upper(@SApellido), id_area = @IdArea, usuario = @UserName, cargo = @Cargo, numero_empleado = @NumEmpleado, rfc = upper(@RFC), grado_academico = upper(@GradoAcademico), email = lower(@Email), id_rol = if(@Rol = 1, 15, 16)";
+                        UPDATE prod_control_exp.usuario SET nombre = upper(@Nombre), primer_apellido = upper(@PApellido), segundo_apellido = upper(@SApellido), id_area = @IdArea, usuario = @UserName, cargo = @Cargo, numero_empleado = @NumEmpleado, rfc = upper(@RFC), grado_academico = upper(@GradoAcademico), email = lower(@Email), id_rol = if(@Rol = 1, 15, 16)";
                 if (!String.IsNullOrEmpty(usuario.Password))
                 {
                     sql += @", password = sha2(@Password,256)";
@@ -1024,7 +1022,7 @@ namespace ConaviWeb.Data.Expedientes
 
             var sql = @"
                         select id Id, nombre Name, primer_apellido LName, segundo_apellido SLName, usuario SUser, if(id_rol=15,1,2) Rol, cargo Position, id_area IdSystem, numero_empleado EmployeeNumber, rfc RFC, grado_academico Degree, email Email
-                        from qa_adms_conavi.usuario
+                        from prod_control_exp.usuario
                         where id = @Id";
 
             return await db.QueryFirstOrDefaultAsync<User>(sql, new { Id = id });
@@ -1034,7 +1032,7 @@ namespace ConaviWeb.Data.Expedientes
             var db = DbConnection();
 
             var sql = @"
-                        UPDATE qa_adms_conavi.usuario
+                        UPDATE prod_control_exp.usuario
                         SET
                         activo = 1
                         WHERE id = @IdUsuario;";
@@ -1050,7 +1048,7 @@ namespace ConaviWeb.Data.Expedientes
             var db = DbConnection();
 
             var sql = @"
-                        UPDATE qa_adms_conavi.usuario
+                        UPDATE prod_control_exp.usuario
                         SET
                         activo = 2
                         WHERE id = @IdUsuario;";

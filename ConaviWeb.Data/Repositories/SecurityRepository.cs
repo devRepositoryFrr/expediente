@@ -33,9 +33,9 @@ namespace ConaviWeb.Data.Repositories
                         SELECT u.id AS Id, concat(nombre,' ',primer_apellido,' ',segundo_apellido) Name, usuario AS SUser, id_rol AS Rol, id_sistema AS Sistema,
                         controlador Controller,
                         u.cargo Cargo, u.numero_empleado NuEmpleado, ca.descripcion Area, clave_nivel CvNivel, update_pass UpdatePass, email Email
-                        FROM qa_adms_conavi.usuario u 
-                        LEFT JOIN qa_adms_conavi.c_area ca ON ca.id = u.id_area
-                        LEFT JOIN qa_adms_conavi.c_sistema cs ON cs.id = u.id_sistema
+                        FROM prod_control_exp.usuario u
+                        LEFT JOIN prod_control_exp.c_area ca ON ca.id = u.id_area
+                        LEFT JOIN prod_control_exp.c_sistema cs ON cs.id = u.id_sistema
                         WHERE usuario = @SUser AND password = @Password AND activo = 1";
 
             return await db.QueryFirstOrDefaultAsync<UserResponse>(sql, new { login.SUser, login.Password });
@@ -62,7 +62,7 @@ namespace ConaviWeb.Data.Repositories
 
             var sql = @"
                         SELECT id Id, descripcion Text, url Url, ico Ico, orden Orden
-                        FROM  qa_adms_conavi.c_modulo cm 
+                        FROM  prod_control_exp.c_modulo cm 
                         WHERE FIND_IN_SET(@IdUser,usuarios) OR id_rol = @IdRol";
 
             return await db.QueryAsync<Module>(sql, new { IdRol = idRol, IdSistema = idSistema ,IdUser = idUser });
@@ -97,7 +97,7 @@ namespace ConaviWeb.Data.Repositories
             var db = DbConnection();
 
             var sql = @"
-                        CALL qa_adms_conavi.sp_create_user_sisevive(@Name, @LName, @SLName, @SUser, @Password, @Email);";
+                        CALL prod_control_exp.sp_create_user_sisevive(@Name, @LName, @SLName, @SUser, @Password, @Email);";
 
             var result = await db.ExecuteAsync(sql, new { 
                 userRequest.SUser, userRequest.Name, userRequest.LName, userRequest.SLName, userRequest.Password, userRequest.Email });
@@ -111,12 +111,12 @@ namespace ConaviWeb.Data.Repositories
             if (idSystem != 0)
             {
                 sql = @"
-                        SELECT id Id, descripcion Descripcion FROM qa_adms_conavi.c_sistema where id = @IdSystem;";
+                        SELECT id Id, descripcion Descripcion FROM prod_control_exp.c_sistema where id = @IdSystem;";
             }
             else
             {
                 sql = @"
-                        SELECT id Id, descripcion Descripcion FROM qa_adms_conavi.c_sistema where descripcion = @NameSytem;";
+                        SELECT id Id, descripcion Descripcion FROM prod_control_exp.c_sistema where descripcion = @NameSytem;";
             }
             return await db.QueryAsync<Catalogo>(sql, new { NameSytem = nameSystem , IdSystem = idSystem });
         }
@@ -126,7 +126,7 @@ namespace ConaviWeb.Data.Repositories
             var db = DbConnection();
 
             var sql = @"
-                        UPDATE qa_adms_conavi.usuario
+                        UPDATE prod_control_exp.usuario
                             SET password = sha2(@password,256),
                                 update_pass = 0
                         WHERE id = @idUser;";
@@ -145,7 +145,7 @@ namespace ConaviWeb.Data.Repositories
 
             var sql = @"
                         SELECT id Id, descripcion Descripcion, ico Ico
-                        FROM qa_adms_conavi.c_sistema";
+                        FROM prod_control_exp.c_sistema";
 
             return await db.QueryAsync<Catalogo>(sql, new { });
         }
