@@ -1,8 +1,7 @@
 ﻿@model ConaviWeb.Model.User
-<script src="~/js/jquery-1.11/jquery.min.js" type="text/javascript"></script>
 
 <form id="formUpdateUsuario" enctype="multipart/form-data" method="post" asp-controller="Catalogos" asp-action="UpdateUsuario">
-    <div class="alert alert-danger" asp-validation-summary="ModelOnly"><button class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>
+    <div class="alert alert-danger" asp-validation-summary="ModelOnly"><button class="close" data-bs-dismiss="alert" aria-hidden="true">&times;</button></div>
     <div class='modal-header'>
         <h4 id='titulo-modal' style="font-weight: 300">Registro de usuario</h4>
     </div>
@@ -32,7 +31,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="lbl_area">Area:</label>
-                    <select asp-for="IdSystem" id="lbl_area" class="form-control" asp-items="@ViewBag.AreaCatalogo" required>
+                    <select asp-for="IdSystem" id="lbl_area" class="form-select" asp-items="@ViewBag.AreaCatalogo" required>
                         <option value="">--Seleccione--</option>
                     </select>
                 </div>
@@ -42,7 +41,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="lbl_cargo">Cargo:</label>
-                    <select asp-for="Position" id="lbl_cargo" class="form-control" asp-items="@ViewBag.CargoCatalogo" required>
+                    <select asp-for="Position" id="lbl_cargo" class="form-select" asp-items="@ViewBag.CargoCatalogo" required>
                         <option value="">--Seleccione--</option>
                     </select>
                 </div>
@@ -68,8 +67,8 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <label for="lbl_email"><span class="fa fa-envelope-o" aria-hidden="true"></span></label>
-                <input type="text" id="lbl_email" asp-for="Email" class="form-control" required />
+                <label for="lbl_email"><span class="fa fa-envelope-o" aria-hidden="true" title="Correo electrónico"></span></label>
+                <input type="text" id="lbl_email" asp-for="Email" class="form-control" title="Correo electrónico" required />
             </div>
             <div class="col-md-4">
                 <div class="form-group">
@@ -88,7 +87,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="slc_rol">Tipo de usuario: </label>
-                    <select id="slc_rol" asp-for="Rol" class="form-control">
+                    <select id="slc_rol" asp-for="Rol" class="form-select">
                         <option value="1">Administrador</option>
                         <option value="2" selected>Operador</option>
                     </select>
@@ -97,7 +96,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
             <span class="fa fa-times" aria-hidden="true"></span> Cancelar
         </button>
         <button type="submit" class="btn btn-primary btn-sm">

@@ -7,14 +7,16 @@
     <div class="row form-group">
         <div class="col-md-8">
             <label class="control-label">Unidad Administrativa:</label>
-            <select asp-for="IdPuesto" id="slctPuesto" class="form-control" asp-items="@ViewBag.AreaCatalogo" required>
+            <select asp-for="IdPuesto" id="slctPuesto" class="form-select" asp-items="@ViewBag.AreaCatalogo" required>
                 <option value="">--Seleccione--</option>
             </select>
         </div>
-        <div class="col-md-4 datepicker-group">
+        <div class="col-md-4">
             <label for="felaboracion_inventario_nexp">Fecha de Elaboración:</label>
-            <input type="text" asp-for="FechaElaboracion" id="felaboracion_inventario_nexp" value="@ViewBag.FechaElab" class="form-control" placeholder="aaaa/mm/dd" disabled required />
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <div class="form-group datepicker-group">
+                <input type="text" asp-for="FechaElaboracion" id="felaboracion_inventario_nexp" value="@ViewBag.FechaElab" class="form-control" placeholder="aaaa/mm/dd" disabled required />
+                <span class="bootstrap-icons" aria-hidden="true"><i class="bi bi-calendar"></i></span>
+            </div>
         </div>
     </div>
     <div class="row form-group">
@@ -22,15 +24,17 @@
             <label class="control-label" for="text_responsableAT">Nombre del responsable del archivo de trámite:</label>
             <input type="text" asp-for="NombreResponsableAT" id="text_responsableAT" class="form-control" value="@ViewBag.NombreR" disabled required />
         </div>
-        <div class="col-md-4 datepicker-group">
+        <div class="col-md-4">
             <label for="ftransferencia_inventario_nexp">Fecha de transferencia:</label>
-            <input type="text" asp-for="FechaTransferencia" id="ftransferencia_inventario_nexp" value="@ViewBag.FechaTrans" class="form-control" placeholder="aaaa/mm/dd" readonly />
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <div class="form-group datepicker-group">
+                <input type="text" asp-for="FechaTransferencia" id="ftransferencia_inventario_nexp" value="@ViewBag.FechaTrans" class="form-control" placeholder="aaaa/mm/dd" readonly />
+                <span class="bootstrap-icons" aria-hidden="true"><i class="bi bi-calendar"></i></span>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12" id="div_btns_inv">
-            <button type="submit" id="btn_save_inv" class="btn btn-default btn-sm pull-right active">
+            <button type="submit" id="btn_save_inv" class="btn btn-secondary btn-sm pull-right active">
                 <span class="fa fa-save"></span> Guardar
             </button>
             <button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de Documentación no Expedientable transferible al Archivo de Concentración" onclick="sendToFormat()">
@@ -41,12 +45,12 @@
 </form>
 @*formulario de expediente de documentacion no expedientabale*@
 
-<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
+@* <script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script> *@
 <script>
     $(document).ready(function () {
         $('#ftransferencia_inventario_nexp').datepicker({
             dateFormat: 'yy/mm/dd',
-            changeYear: true
+            // changeYear: true
         });
         $("#formInsertInventarioNoExpedientable").submit(function (e) {
             const fecha1 = new Date($("#felaboracion_inventario_nexp").val());

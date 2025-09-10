@@ -1,7 +1,7 @@
 ﻿@model ConaviWeb.Model.Expedientes.SerieDocumental
 
 <form id="formActivarSerieDoc" enctype="multipart/form-data" method="post" asp-controller="Catalogos" asp-action="DesactivarSerieDoc">
-    <div class="alert alert-danger" asp-validation-summary="ModelOnly"><button class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>
+    <div class="alert alert-danger" asp-validation-summary="ModelOnly"><button class="close" data-bs-dismiss="alert" aria-hidden="true">&times;</button></div>
     <div class='modal-header'>
         <h4 id='titulo-modal' style="font-weight: 300">Desactivar Serie Documental</h4>
     </div>
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">
+        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
             <span class="fa fa-times" aria-hidden="true"></span> Cancelar
         </button>
         <button type="submit" class="btn btn-sm btn-primary active">

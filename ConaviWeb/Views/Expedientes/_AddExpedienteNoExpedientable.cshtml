@@ -5,7 +5,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Alta de expediente no expedientable</h4>
             </div>
             <form id="formInsertExpedienteNoExpedientable" enctype="multipart/form-data" method="post" asp-controller="NoExpedientable" asp-action="InsertExpedienteNoExpedientable">
@@ -14,19 +14,19 @@
                     <div class="row form-group">
                         <div class="col-md-4">
                             <label class="control-label" for="slctTipoDocumental">Clave tipo documental:</label>
-                            <select asp-for="IdTipoDocumental" id="slctTipoDocumental" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["CatTipoDoc"], "Id", "Clave"))">
+                            <select asp-for="IdTipoDocumental" id="slctTipoDocumental" class="form-select" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["CatTipoDoc"], "Id", "Clave"))">
                                 <option value="">--Seleccione--</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="control-label" for="slctTipoSoporte">Clave tipo de soporte:</label>
-                            <select asp-for="IdTipoSoporte" id="slctTipoSoporte" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["Catalogo"], "Id", "Clave"))">
+                            <select asp-for="IdTipoSoporte" id="slctTipoSoporte" class="form-select" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["Catalogo"], "Id", "Clave"))">
                                 <option value="">--Seleccione--</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label class="control-label" for="text_clave_interna">Clave interna:</label>
-                            <select id="slctClaveExp" asp-for="IdClaveInterna" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["ClaveInterna"], "Id", "Clave"))">
+                            <select id="slctClaveExp" asp-for="IdClaveInterna" class="form-select" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["ClaveInterna"], "Id", "Clave"))">
                                 <option value="">--Seleccione--</option>
                             </select>
                         </div>
@@ -37,10 +37,12 @@
                             <label class="control-label" for="text_partes">Número de partes:</label>
                             <input type="number" asp-for="Partes" id="text_partes" placeholder="0" class="form-control" min="1" />
                         </div>
-                        <div class="col-md-4 datepicker-group">
+                        <div class="col-md-4">
                             <label class="control-label" for="felaboracion_nexp">Fecha de Elaboración</label>
-                            <input type="text" asp-for="FechaElaboracion" class="form-control" id="felaboracion_nexp" readonly placeholder="yyyy/mm/dd"/>
-                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            <div class="form-group datepicker-group">
+                                <input type="text" asp-for="FechaElaboracion" class="form-control" id="felaboracion_nexp" readonly placeholder="yyyy/mm/dd"/>
+                                <span class="bootstrap-icons" aria-hidden="true"><i class="bi bi-calendar"></i></span>
+                            </div>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -55,7 +57,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Agregar</button>
                 </div>
             </form>
@@ -75,7 +77,7 @@
             onClose: function () {
                 $(document).on('focusin.bs.modal');
             },
-            changeYear: true
+            // changeYear: true
         });
         $("#formInsertExpedienteNoExpedientable").submit(function (e) {
 

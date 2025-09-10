@@ -10,21 +10,17 @@
 <div class="row">
     <div class="col-md-4">
         <label for="slcInventario">Tipo de inventario:</label>
-        <select id="slcInventario" class="form-control">
+        <select id="slcInventario" class="form-select">
             <option value="" disabled>- Seleccione -</option>
             <option value="1" selected>Inventario de control</option>
         </select>
     </div>
     <div class="col-md-4">
         <label for="slcArea">Unidad Administrativa Generadora:</label>
-        <select id="slcArea" class="form-control" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["AreaCatalogo"], "IdPuesto", "Puesto"))" onchange="getExpedientes()">
+        <select id="slcArea" class="form-select" asp-items="@(new SelectList((System.Collections.IEnumerable)ViewData["AreaCatalogo"], "IdPuesto", "Puesto"))" onchange="getExpedientes()">
             <option value="" disabled selected>- Seleccione -</option>
         </select>
     </div>
-    @*<div class="col-md-4">
-        <label for="btn_get_expedientes">&nbsp;</label>
-        <button id="btn_get_expedientes" onclick="getExpedientes()" class="btn-primary form-control" title="Aceptar">Aceptar</button>
-    </div>*@
 </div>
 <div class="row">
     <div class="col-md-12" id="alertAjax">
@@ -83,7 +79,7 @@
 </div>
 
 @* Modal VoBo Expediente Control *@
-<div class="modal fade fade-in" style="z-index:1041" id="showModalVoBoExpedienteControl" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade fade-in" style="z-index:1041" id="showModalVoBoExpedienteControl" data-bs-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             @{
@@ -93,7 +89,7 @@
     </div>
 </div>
 @* Modal Revalidacion Expediente Control *@
-<div class="modal fade fade-in" style="z-index:1041" id="showModalRevalidacionExpedienteControl" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade fade-in" style="z-index:1041" id="showModalRevalidacionExpedienteControl" data-bs-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             @{
@@ -103,14 +99,7 @@
     </div>
 </div>
 <hr />
-@*<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>*@
 
-<!-- DataTables local-->
-@*<link href="/js/datatable2/datatables.min.css" rel="stylesheet" type="text/css" />
-    <script src="../js/datatable2/datatables.min.js" type="text/javascript"></script>*@
-<!-- Datatables CDN -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 <style type="text/css">
     .modal-lg {
         max-width: 1100px; width: 100%;
@@ -190,12 +179,6 @@
                     .fail(function (xhr, status, error) {
                         // Mostramos un mensaje de error.
                         //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
-
-                        // Escondemos el Ajax Loader
-                        //$("#AjaxLoader").hide("slow");
-
-                        // Habilitamos el botón de Submit
-                        //$("#SubmitBtn").prop("disabled", false);
                     })
                     // Hacer algo siempre, haya sido exitosa o no.
                     .always(function () {
@@ -250,53 +233,6 @@
                     getExpedientes();
                 });
             });
-            @*$("#btn_vobo_bb").on("click", function (e) {
-                // Deshabilitamos el botón de Submit
-                $("#btn_vobo_bb").prop("disabled", true);
-                var id_exp = $("#showModalVoBoExpedienteBiblio").find("#idExpediente").val();
-                var formData = new FormData();
-                formData.append("idExp", id_exp);
-                $.ajax({
-                    url: "@Url.Action("VoBoExpedienteBiblio", "InventarioValidacion")", // Url
-                    type: 'post',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                })
-                // Se ejecuta si todo fue bien.
-                .done(function (result) {
-                    //console.log(result);
-                    if (result != null) {
-                        // Habilitamos el botón de Submit
-                        $("#btn_vobo_bb").prop("disabled", false);
-                        // Mostramos un mensaje de éxito.
-                        $("#alertAjax").append(result);
-                        showAlert();
-                        $("#showModalVoBoExpedienteBiblio").modal('toggle');
-                    } else {
-                        // Mostramos un mensaje de error.
-                        $("#alertAjax").append(result);
-                        // Habilitamos el botón de Submit
-                        $("#btn_vobo_bb").prop("disabled", false);
-                        showAlert();
-                        $("#showModalVoBoExpedienteBiblio").modal('toggle');
-                    }
-                })
-                // Se ejecuta si se produjo un error.
-                .fail(function (xhr, status, error) {
-                    // Habilitamos el botón de Submit
-                    $("#btn_vobo_bb").prop("disabled", false);
-                })
-                // Hacer algo siempre, haya sido exitosa o no.
-                .always(function () {
-                    showAlert();
-                    $('body,html').animate({
-                        scrollTop: 100
-                    }, 600);
-                    getExpedientes();
-                });
-            });*@
             $("#btn_reval").on("click", function (e) {
                 // Deshabilitamos el botón de Submit
                 $("#btn_reval").prop("disabled", true);
@@ -352,53 +288,6 @@
                     getExpedientes();
                 });
             });
-            @*$("#btn_reval_bb").on("click", function (e) {
-                // Deshabilitamos el botón de Submit
-                $("#btn_reval_bb").prop("disabled", true);
-                var id_exp = $("#showModalRevalidacionExpedienteBiblio").find("#idExpediente").val();
-                var formData = new FormData();
-                formData.append("idExp", id_exp);
-                $.ajax({
-                    url: "@Url.Action("RevalidacionExpedienteBiblio", "InventarioValidacion")", // Url
-                    type: 'post',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: formData,
-                })
-                // Se ejecuta si todo fue bien.
-                .done(function (result) {
-                    //console.log(result);
-                    if (result != null) {
-                        // Habilitamos el botón de Submit
-                        $("#btn_reval_bb").prop("disabled", false);
-                        // Mostramos un mensaje de éxito.
-                        $("#alertAjax").append(result);
-                        showAlert();
-                        $("#showModalRevalidacionExpedienteBiblio").modal('toggle');
-                    } else {
-                        // Mostramos un mensaje de error.
-                        $("#alertAjax").append(result);
-                        // Habilitamos el botón de Submit
-                        $("#btn_reval_bb").prop("disabled", false);
-                        showAlert();
-                        $("#showModalRevalidacionExpedienteBiblio").modal('toggle');
-                    }
-                })
-                // Se ejecuta si se produjo un error.
-                .fail(function (xhr, status, error) {
-                    // Habilitamos el botón de Submit
-                    $("#btn_reval_bb").prop("disabled", false);
-                })
-                // Hacer algo siempre, haya sido exitosa o no.
-                .always(function () {
-                    showAlert();
-                    $('body,html').animate({
-                        scrollTop: 100
-                    }, 600);
-                    getExpedientes();
-                });
-            });*@
         });
         function getExpedientes() {
             $("#slcInventario, #slcArea").removeClass("alert-danger");
@@ -474,102 +363,6 @@
             });
             //tableControl.buttons().container().appendTo($('.col-sm-6:eq(0)', tableControl.table().container()));
         }
-        @*function showTableBiblio() {
-            var urlTipo = "";
-            $("#divtableExpedientesControl").hide();
-            //const tipo = $('#slcInventario option:selected').val();
-            const idArea = $('#slcArea option:selected').val();
-            urlTipo = "/InventarioValidacion/GetExpedientesBiblio";
-            $('#divtableExpedientes').show();
-            //table.destroy();
-            //$('#' + tableName).empty();
-            var table = $('#tableExpedientes').DataTable({
-                "proccessing": true,
-                "serverSide": false,
-                "ajax": {
-                    url: urlTipo,
-                    type: 'POST',
-                    headers: {
-                        'RequestVerificationToken': $('@Html.AntiForgeryToken()').val(),
-                        'slcArea' : idArea
-                    },
-                    complete: function () {
-                        $("#spinner").hide();
-                    }
-                },
-                "columnDefs": columns,
-                "order": [[0, "desc"]],
-                "autoWidth": true,
-                "destroy": true,
-                "scrollY": true,
-                "scrollCollapse": true,
-                "paging": true,
-                "info": true,
-                //"dom" : "Blfrtip",
-                "buttons": ['excel'],
-                "scrollX": true,
-                "fixedColumns": true,
-                "ordering": false,
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    }
-                }
-            });
-            //table.buttons().container().appendTo($('.col-sm-6:eq(0)', table.table().container()));
-        }*@
-        //var columns = [
-        //    { "name": "NoProg", "data": "noProg", "targets": 0 },
-        //    { "name": "Ejemplar", "data": "ejemplar", "targets": 1 },
-        //    //{ "name": "TipoSoporte", "data": "soporte", "targets": 2 },
-        //    {
-        //        "name": "TipoSoporte",
-        //        "data": null,
-        //        "targets": 2,
-        //        "render": function (data, type, row) {
-        //            return row.claveSoporte + '-' + row.noProg + '/' + row.anio;
-        //        }
-        //    },
-        //    { "name": "Titulo", "data": "titulo", "targets": 3 },
-        //    { "name": "Autor", "data": "autor", "targets": 4 },
-        //    { "name": "Tema", "data": "tema", "targets": 5 },
-        //    { "name": "Editorial", "data": "editorial", "targets": 6 },
-        //    { "name": "Anio", "data": "anio", "targets": 7 },
-        //    { "name": "IsbnIssn", "data": "isbnIssn", "targets": 8 },
-        //    { "name": "Paginas", "data": "paginas", "targets": 9 },
-        //    { "name": "Volumen", "data": "volumen", "targets": 10 },
-        //    {
-        //        "targets": 11,
-        //        "data": null,
-        //        "render": function (data, type, row, meta) {
-        //            var ret = "";
-        //            //var ret = '<a style="cursor:pointer;" class="gold" title="Carátula" href="CaratulaControl?id=' + data.id + '" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span></a>';
-        //            ret += '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalVoBoExpedienteBiblio" style="font-size:20px;"><span style="cursor:pointer;" title="VoBo" class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>';
-        //            ret += '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalRevalidacionExpedienteBiblio" style="font-size:20px;"><span style="cursor:pointer;" title="Revalidación" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>';
-        //            //if (row.esEditable == 'editable') {
-        //            //    ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación') ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalTrashExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Eliminar" class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Enviar a revisión" class="glyphicon glyphicon-check" aria-hidden="true"></span></a>' : '';
-        //            //}
-        //            return ret;
-        //        },
-        //        "sortable": false,
-        //        "className": 'text-center'
-        //    },
-        //];
         var columnsControl = [
             { "name": "NoProg", "data": "noProg", "targets": 0 },
             //{ "name": "Codigo", "data": "codigo", "targets": 1 },
@@ -612,12 +405,12 @@
                 "render": function (data, type, row, meta) {
                     //var ret= "";
                     var ret = '<a style="cursor:pointer; font-size:20px;" class="gold" title="Carátula" href="@Url.Action("Index","CaratulaControl")?id=' + row.id + '" target="_blank"><span class="fa fa-file-text-o" aria-hidden="true"></span></a>';
-                    ret += '<a data-exp-id="' + row.id + '" class="gold" type="button" title="Vista general" data-toggle="modal" data-target="#modalExpediente" style="cursor:pointer; font-size:20px;"><span title="Detalles" class="fa fa-search-plus" aria-hidden="true"></span></a><br>';
-                    ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalVoBoExpedienteControl" style="font-size:20px; cursor:pointer;"><span title="VoBo" class="fa fa-check-circle-o" aria-hidden="true"></span></a>' : '';
-                    ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalRevalidacionExpedienteControl" style="cursor:pointer; font-size:20px;"><span title="Revalidación" class="fa fa-times-circle-o" aria-hidden="true"></span></a>' : '';
-                    if (row.esEditable == 'editable') {
-                        ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación') ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalTrashExpediente" style="cursor:pointer; font-size:20px;"><span title="Eliminar" class="glyphicon glyphicon-trash" aria-hidden="true"></span></a><a data-exp-id=' + row.id + ' class="gold" type="button" data-toggle="modal" data-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Enviar a revisión" class="glyphicon glyphicon-check" aria-hidden="true"></span></a>' : '';
-                    }
+                    ret += '<a data-exp-id="' + row.id + '" class="gold" type="button" title="Vista general" data-bs-toggle="modal" data-bs-target="#modalExpediente" style="cursor:pointer; font-size:20px;"><span title="Detalles" class="fa fa-search-plus" aria-hidden="true"></span></a><br>';
+                    ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-bs-toggle="modal" data-bs-target="#showModalVoBoExpedienteControl" style="font-size:20px; cursor:pointer;"><span title="VoBo" class="fa fa-check-circle-o" aria-hidden="true"></span></a>' : '';
+                    ret += row.estatus == 'Revisión' ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-bs-toggle="modal" data-bs-target="#showModalRevalidacionExpedienteControl" style="cursor:pointer; font-size:20px;"><span title="Revalidación" class="fa fa-times-circle-o" aria-hidden="true"></span></a>' : '';
+                    // if (row.esEditable == 'editable') {
+                    //     ret += (row.estatus == 'Registro' || row.estatus == 'Revalidación') ? '<a data-exp-id=' + row.id + ' class="gold" type="button" data-bs-toggle="modal" data-bs-target="#showModalTrashExpediente" style="cursor:pointer; font-size:20px;"><span title="Eliminar" class="fa fa-trash" aria-hidden="true"></span></a><a data-exp-id=' + row.id + ' class="gold" type="button" data-bs-toggle="modal" data-bs-target="#showModalSendValExpediente" style="font-size:20px;"><span style="cursor:pointer;" title="Enviar a revisión" class="fa fa-check" aria-hidden="true"></span></a>' : '';
+                    // }
                     return ret;
                 },
                 "sortable": false,

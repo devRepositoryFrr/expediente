@@ -47,7 +47,7 @@
     </div>
 </div>
 <br />
-<button id="btn_add_puesto" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalEdit">
+<button id="btn_add_puesto" class="btn btn-secondary btn-sm pull-right" data-bs-toggle="modal" data-bs-target="#modalEdit">
     <span class="fa fa-plus"></span> Agregar cargo
 </button>
 
@@ -83,9 +83,6 @@
         </div>
     </div>
 </div>
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -199,9 +196,9 @@
                 "targets": 3,
                 "data": null,
                 "render": function (data, type, row, meta) {
-                    var ret = '<a data-book-id="' + row.idPuesto +'" title="Editar" class="gold" data-toggle="modal" data-target="#modalEdit" style="cursor:pointer; font-size:20px;"><span class="fa fa-pencil-square-o"></span></a>';
-                    if (row.estatus == 'activo') ret += '<br><a class="gold" data-book-id="' + row.idPuesto +'" title="Desactivar" data-toggle="modal" data-target="#modalDesactivar" style="cursor:pointer; font-size:20px;"><span class="fa fa-eye-slash"></span></a>';
-                    else ret += '<br><a class="gold" data-book-id="' + row.idPuesto +'" data-toggle="modal" data-target="#modalActivar" style="cursor:pointer; font-size:20px;" title="Activar"><span class="fa fa-eye"></span></a>';
+                    var ret = '<a data-book-id="' + row.idPuesto +'" title="Editar" class="gold" data-bs-toggle="modal" data-bs-target="#modalEdit" style="cursor:pointer; font-size:20px;"><span class="fa fa-pencil-square-o"></span></a>';
+                    if (row.estatus == 'activo') ret += '<br><a class="gold" data-book-id="' + row.idPuesto +'" title="Desactivar" data-bs-toggle="modal" data-bs-target="#modalDesactivar" style="cursor:pointer; font-size:20px;"><span class="fa fa-eye-slash"></span></a>';
+                    else ret += '<br><a class="gold" data-book-id="' + row.idPuesto +'" data-bs-toggle="modal" data-bs-target="#modalActivar" style="cursor:pointer; font-size:20px;" title="Activar"><span class="fa fa-eye"></span></a>';
                     return ret;
                 },
                 "sortable": false,

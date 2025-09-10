@@ -14,13 +14,16 @@
     <title>@ViewData["Title"] - CONAVI</title>
 
     <link rel="shortcut icon" href="https://framework-gb.cdn.gob.mx/favicon.ico">
-    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+    <link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--manu-->
     @*<link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.13.0/css/pro.min.css" type="text/css">*@
     @*JQuery*@
     <script src="~/js/jquery-1.11/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
+    <!--Datatables-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -31,9 +34,7 @@
 
         });
 
-    $(document).ready(function () {
-
-
+        $(document).ready(function () {
             $(".parent").click(function () {
                 $(".multi-collapse").collapse('hide');
             });
@@ -55,6 +56,53 @@
             $('.nav-tabs a[href="#' + tab + '"]').tab('show');
         }
     </script>
+    <style>
+        .colofon {
+            position: relative;
+            background-color: #343a40;
+            background: url("../../img/bg-colofon_2021.jpg") no-repeat center center;
+            background-image: url("../../img/bg-colofon_2021.jpg");
+            background-position-x: center;
+            background-position-y: center;
+            background-size: cover;
+            background-attachment: initial;
+            background-origin: initial;
+            background-clip: initial;
+            background-color: #343a40;
+            background-size: auto;
+            background-size: cover;
+            padding-top: 7rem;
+            padding-bottom: 7rem;
+        }
+        .lead {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 200;
+            line-height: 1.6em;
+        }
+        .form-select{
+            font-size: inherit;
+        }
+        .navbar-brand{
+            margin-right: 38rem;
+        }
+        .navbar-brand img {
+            content: url("/img/Nvo.-Sedatu-Conavi-B.png");
+        }
+        .menu {
+            padding-top: 0px;
+        }
+        .navbar-default, .footer {
+            background-color: #6E0D2E;
+        }
+        .img-footer {
+            height: 40px;
+            width: 100%;
+        }
+        .logos {
+            margin-top: 0px !important;
+        }
+    </style>
     @*Bootstrap*@
     @*<environment include="Development">
             <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -67,7 +115,7 @@
     @*SNIIV*@
     <link href="~/css/style1.css" rel="stylesheet" type="text/css" />
     @*NavBarConavi*@
-    <link href="~/css/cssConavi/navbar.css" rel="stylesheet" type="text/css" />
+    @* <link href="~/css/cssConavi/navbar.css" rel="stylesheet" type="text/css" /> *@
     @*ContentConavi*@
     <link href="~/css/cssConavi/content.css" rel="stylesheet" type="text/css" />
     @*AlertConavi*@
@@ -148,7 +196,9 @@
         </div>
     </div>
 
-    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+    <script src="https://framework-gb.cdn.gob.mx/gm/v3/assets/js/gobmx.js"></script>
+    <!--Datepicker-->
+    <script src="https://framework-gb.cdn.gob.mx/gm/v3/assets/js/jquery-ui-datepicker.js"></script>
     <!--<environment include="Development">-->
     @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
     <!--<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>

@@ -6,14 +6,16 @@
     <div class="row form-group">
         <div class="col-md-8">
             <label class="control-label">Unidad Administrativa:</label>
-            <select asp-for="IdPuesto" id="slctPuesto" class="form-control" asp-items="@ViewBag.AreaCatalogo" required>
+            <select asp-for="IdPuesto" id="slctPuesto" class="form-select" asp-items="@ViewBag.AreaCatalogo" required>
                 <option value="">--Seleccione--</option>
             </select>
         </div>
-        <div class="col-md-4 datepicker-group">
+        <div class="col-md-4">
             <label for="felaboracion_inventario_biblio">Fecha de elaboración del Inventario:</label>
-            <input type="text" id="felaboracion_inventario_biblio" asp-for="FechaElaboracion" value="@ViewBag.FechaElab" class="form-control" placeholder="aaaa/mm/dd" readonly required />
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <div class="form-group datepicker-group">
+                <input type="text" id="felaboracion_inventario_biblio" asp-for="FechaElaboracion" value="@ViewBag.FechaElab" class="form-control" placeholder="aaaa/mm/dd" readonly required />
+                <span class="bootstrap-icons" aria-hidden="true"><i class="bi bi-calendar"></i></span>
+            </div>
         </div>
     </div>
     <div class="row form-group">
@@ -21,10 +23,12 @@
             <label class="control-label">Nombre del responsable del archivo de trámite:</label>
             <input type="text" id="responsableAT" asp-for="NombreResponsableAT" class="form-control" value="@ViewBag.NombreResponsable" required />
         </div>
-        <div class="col-md-4 datepicker-group">
+        <div class="col-md-4">
             <label for="ftransferencia_biblio">Fecha de transferencia:</label>
-            <input type="text" id="ftransferencia_biblio" asp-for="FechaTransferencia" value="@ViewBag.FechaTrans" class="form-control" placeholder="aaaa/mm/dd" readonly />
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            <div class="form-group datepicker-group">
+                <input type="text" id="ftransferencia_biblio" asp-for="FechaTransferencia" value="@ViewBag.FechaTrans" class="form-control" placeholder="aaaa/mm/dd" readonly />
+                <span class="bootstrap-icons" aria-hidden="true"><i class="bi bi-calendar"></i></span>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -39,12 +43,12 @@
     </div>
 </form>
 
-<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
+@* <script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script> *@
 <script>
     $(document).ready(function () {
         $('#ftransferencia_biblio, #felaboracion_inventario_biblio').datepicker({
             dateFormat: 'yy/mm/dd',
-            changeYear: true
+            // changeYear: true
         });
         $("#formInsertInventarioBibliohemerografico").submit(function (e) {
             const fecha1 = new Date($("#felaboracion_inventario_biblio").val());
