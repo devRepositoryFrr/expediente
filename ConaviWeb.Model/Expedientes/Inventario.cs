@@ -25,7 +25,7 @@ namespace ConaviWeb.Model.Expedientes
         //[DataType(DataType.Date)]
         public string FechaEntrega { get; set; }
         public string Ubicacion { get; set; }
-        public float PesoElectronico { get; set; }
+        public string PesoElectronico { get; set; }
         public string Almacenamiento { get; set; }
     }
 }

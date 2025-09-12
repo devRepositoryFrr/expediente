@@ -110,13 +110,13 @@ a:hover, a:focus {
     width: 100%;
     /* Set the fixed height of the footer here */
     /* height: 100px; */
-    background-color: #13322B; /*#393c3e; /* ; /*#393c3e;*/
+    /*background-color: #13322B;*/ /*#393c3e; /* ; /*#393c3e;*/
     color: #ddd;
 }
-    .footer > .container {
-        padding-right: 10%;
-        padding-left: 10%;
-    }
+.footer > .container {
+    padding-right: 10%;
+    padding-left: 10%;
+}
 
 .contacto {
     color: #B38E5D;
@@ -203,25 +203,25 @@ navbar navbar-inverse navbar-fixed-top {
     width: 100% !important;
 }*/
 .main-footer {
-    background-color: #13322B;
+    /*background-color: #13322B;
     min-height: 56px;
     color: #FFF;
     padding: 0px 0 0px;
     text-align: left;
     font-weight: 300;
-    position: absolute !important;
+    position: absolute !important;*/
     /*bottom: 0 !important;*/
-    width: 100% !important;
+    /*width: 100% !important;*/
 }
 
 .main-footer .list-info {
-        line-height: auto;
+        /*line-height: auto;*/
         /* background-color: #12322B; */
         /* background-image: url(https://framework-gb.cdn.gob.mx/landing/img/fondofooter3.svg); */
-        color: white;
+        /*color: white;
         background-size: cover;
         background-position: bottom;
-        padding: 30px 10px 10px;
+        padding: 30px 10px 10px;*/
         /* margin-bottom: 30px; */
 }
 

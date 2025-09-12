@@ -43,7 +43,7 @@ namespace ConaviWeb.Controllers.Expedientes
             ViewBag.FechaElab = inventario!=null ? inventario.FechaElaboracion : "";
             ViewBag.FechaEnt = inventario!=null ? inventario.FechaEntrega : "";
             ViewBag.Ubicacion = inventario!=null ? inventario.Ubicacion : "";
-            ViewBag.Peso = inventario!=null ? inventario.PesoElectronico : 0;
+            ViewBag.Peso = inventario!=null ? inventario.PesoElectronico : "0";
             ViewBag.Almacenamiento = inventario!=null ? inventario.Almacenamiento : "";
             ViewData["Modulos"] = user.Modules;
             int rol = (int) user.Rol;

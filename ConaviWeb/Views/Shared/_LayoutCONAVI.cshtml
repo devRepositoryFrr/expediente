@@ -19,11 +19,14 @@
     <!--manu-->
     @*<link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.13.0/css/pro.min.css" type="text/css">*@
     @*JQuery*@
-    <script src="~/js/jquery-1.11/jquery.min.js" type="text/javascript"></script>
+    @* <script src="~/js/jquery-1.11/jquery.min.js" type="text/javascript"></script> *@
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.js"></script>
     <!--Datatables-->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    @* <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script> *@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css">
+    <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -71,14 +74,14 @@
             background-color: #343a40;
             background-size: auto;
             background-size: cover;
-            padding-top: 7rem;
-            padding-bottom: 7rem;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
         }
         .lead {
             margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: 200;
-            line-height: 1.6em;
+            font-size: 16px;
+            /* font-weight: 200; */
+            /* line-height: 1.6em; */
         }
         .form-select{
             font-size: inherit;
@@ -93,7 +96,7 @@
             padding-top: 0px;
         }
         .navbar-default, .footer {
-            background-color: #6E0D2E;
+            /* background-color: #6E0D2E; */
         }
         .img-footer {
             height: 40px;
@@ -187,11 +190,13 @@
     <br />
     <br />
     <div id="colofon" class="colofon red-text text-center">
-        <div class="row row-fixed">
-            <div class="col-lg-12 my-auto showcase-text">
-                <p class="lead mb-0 p-center">
-                    Avenida H. Escuela Naval Militar, número 669, piso 2 y 3, Colonia Presidentes Ejidales 1ra. Sección, Alcaldía Coyoacán, C.P. 04470, Ciudad de México.<br>Teléfono: 55.91.38.99.91<br>Opción 1<br>atencionciudadana@conavi.gob.mx
-                </p>
+        <div class="container">
+            <div class="row row-fixed">
+                <div class="col-lg-12 my-auto showcase-text">
+                    <p class="lead mb-0 p-center">
+                        Avenida H. Escuela Naval Militar, número 669, piso 2 y 3, Colonia Presidentes Ejidales 1ra. Sección, Alcaldía Coyoacán, C.P. 04470, Ciudad de México.<br>Teléfono: 55.91.38.99.91<br>Opción 1<br>atencionciudadana@conavi.gob.mx
+                    </p>
+                </div>
             </div>
         </div>
     </div>

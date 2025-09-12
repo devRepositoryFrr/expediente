@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-4">
             <label class="control-label">Tamaño de documentos electrónicos(MB):</label>
-            <input type="number" class="form-control" asp-for="PesoElectronico" value="@ViewBag.Peso" min="0" />
+            <input type="text" class="form-control" asp-for="PesoElectronico" value="@ViewBag.Peso"/>
         </div>
         <div class="col-md-4">
             <label class="control-label">Almacenados en:</label>
@@ -70,6 +70,13 @@
                 showAlert();
                 return false;
             }
+            let peso = $("[name=PesoElectronico]").val();
+            if(isNaN(peso) || peso<0){
+                $("#alertAjax").append("<div class='alertaOp alert alert-warning' id='alerta'>Valor incorrecto en el campo <i>Tamaño de documentos electrónicos</i>!</div>");
+                showAlert();
+                $("[name=PesoElectronico]").focus();
+                return false;
+            } 
         });
     });
 </script>
