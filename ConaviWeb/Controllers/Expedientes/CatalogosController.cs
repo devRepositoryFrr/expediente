@@ -22,10 +22,12 @@ namespace ConaviWeb.Controllers.Expedientes
         {
             _expedientesRepository = expedientesRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
             ViewData["Modulos"] = user.Modules;
+            var catSecciones = await _expedientesRepository.GetSecciones();
+            ViewBag.Secciones = (new SelectList(catSecciones, "Id", "Clave"));
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
             return View("../Expedientes/Catalogos");

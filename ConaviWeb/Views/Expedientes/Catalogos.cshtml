@@ -180,6 +180,7 @@
                         $('#TecSelC').val(result.tecSelC);
                         $('#TecSelM').val(result.tecSelM);
                         $('#Observaciones').val(result.observaciones);
+                        $('#slctIdSeccion [value='+result.idSeccion+']').prop("selected",true);
                     })
                     // Se ejecuta si se produjo un error.
                     .fail(function (xhr, status, error) {

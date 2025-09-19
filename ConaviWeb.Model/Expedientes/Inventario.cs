@@ -27,5 +27,7 @@ namespace ConaviWeb.Model.Expedientes
         public string Ubicacion { get; set; }
         public string PesoElectronico { get; set; }
         public string Almacenamiento { get; set; }
+        public string Secciones { get; set; }
+        public string Series { get; set; }
     }
 }

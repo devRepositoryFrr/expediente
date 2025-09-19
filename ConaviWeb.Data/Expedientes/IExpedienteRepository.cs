@@ -20,6 +20,7 @@ namespace ConaviWeb.Data.Expedientes
         Task<IEnumerable<Catalogo>> GetCodigosExp();
         Task<IEnumerable<Catalogo>> GetTiposSoporte();
         Task<IEnumerable<Catalogo>> GetTiposDocumentales();
+        Task<IEnumerable<Catalogo>> GetSecciones();
         Task<IEnumerable<SerieDocumental>> GetSeries();
         Task<SerieDocumental> GetSerieDocumental(int id);
         Task<bool> UpdateSerieDocCat(SerieDocumental serie);

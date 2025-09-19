@@ -34,7 +34,7 @@ namespace ConaviWeb.Data.Repositories
                         controlador Controller,
                         u.cargo Cargo, u.numero_empleado NuEmpleado, ca.descripcion Area, clave_nivel CvNivel, update_pass UpdatePass, email Email
                         FROM prod_control_exp.usuario u
-                        LEFT JOIN prod_control_exp.c_area ca ON ca.id = u.id_area
+                        LEFT JOIN prod_control_exp.cat_areas ca ON ca.id = u.id_area
                         LEFT JOIN prod_control_exp.c_sistema cs ON cs.id = u.id_sistema
                         WHERE usuario = @SUser AND password = @Password AND activo = 1";
 

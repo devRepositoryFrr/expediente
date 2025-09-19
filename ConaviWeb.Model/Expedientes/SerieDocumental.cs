@@ -21,6 +21,7 @@ namespace ConaviWeb.Model.Expedientes
         public string TecSelC { get; set; }
         public string TecSelM { get; set; }
         public string Observaciones { get; set; }
+        public int IdSeccion { get; set; }
         public string estatus { get; set; }
     }
 }

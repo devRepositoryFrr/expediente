@@ -266,7 +266,7 @@
                         $('#Ubicacion').val(result.ubicacion);
                         $('#PesoElectronico').val(parseFloat(result.pesoElectronico));
                         $('#Almacenamiento').val(result.almacenamiento);
-                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de acervo blibliohemerográfico" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
+                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario para el control del acervo documental en los archivos de trámite" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
                         $("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-secondary btn-sm pull-right" data-bs-toggle="modal" data-bs-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
 
                         var urlTipo = "";

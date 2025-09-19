@@ -66,6 +66,14 @@ namespace ConaviWeb.Data.Expedientes
                         ";
             return await db.QueryAsync<Catalogo>(sql, new { });
         }
+        public async Task<IEnumerable<Catalogo>> GetSecciones()
+        {
+            var db = DbConnection();
+            var sql = @"
+                        SELECT id Id, CONCAT(codigo,' - ',descripcion) Clave FROM prod_control_exp.cat_secciones WHERE estatus = 1 ORDER BY id;
+                        ";
+            return await db.QueryAsync<Catalogo>(sql, new { });
+        }
         public async Task<IEnumerable<SerieDocumental>> GetSeries()
         {
             var db = DbConnection();
@@ -89,7 +97,7 @@ namespace ConaviWeb.Data.Expedientes
                         vig_doc_val_a VigDocA, vig_doc_val_l VigDocL, vig_doc_val_fc VigDocFC,
                         vig_doc_pla_con_at PlazoConAT, vig_doc_pla_con_ac PlazoConAC, (vig_doc_pla_con_at + vig_doc_pla_con_ac) PlazoConTot,
                         tec_sel_e TecSelE, tec_sel_c TecSelC, tec_sel_m TecSelM,
-                        observaciones Observaciones, estatus
+                        observaciones Observaciones, estatus, id_seccion IdSeccion
                         from prod_control_exp.cat_serie_documental
                         where id = @Id";
 
@@ -103,7 +111,7 @@ namespace ConaviWeb.Data.Expedientes
             {
                 sql = @"
                         INSERT INTO prod_control_exp.cat_serie_documental(codigo,descripcion,vig_doc_val_a,vig_doc_val_l,vig_doc_val_fc, vig_doc_pla_con_at, vig_doc_pla_con_ac, vig_doc_pla_con_tot,tec_sel_e, tec_sel_c, tec_sel_m, observaciones,id_seccion)
-                        VALUES(@Codigo,@Descripcion,@VigDocValA,@VigDocValL,@VigDocValFC,@VigDocPlaConAt,@VigDocPlaConAC,@VigDocPlaConAt + @VigDocPlaConAC,@TecSelE,@TecSelC,@TecSelM,@Observaciones,1);";
+                        VALUES(@Codigo,@Descripcion,@VigDocValA,@VigDocValL,@VigDocValFC,@VigDocPlaConAt,@VigDocPlaConAC,@VigDocPlaConAt + @VigDocPlaConAC,@TecSelE,@TecSelC,@TecSelM,@Observaciones,@IdSeccion);";
             }
             else
             {
@@ -121,7 +129,8 @@ namespace ConaviWeb.Data.Expedientes
                         tec_sel_e = @TecSelE, 
                         tec_sel_c = @TecSelC, 
                         tec_sel_m = @TecSelM, 
-                        observaciones = @Observaciones
+                        observaciones = @Observaciones,
+                        id_seccion = @IdSeccion
                         WHERE id = @IdSerieDoc;";
             }
             var result = await db.ExecuteAsync(sql, new
@@ -137,6 +146,7 @@ namespace ConaviWeb.Data.Expedientes
                 TecSelC = serie.TecSelC,
                 TecSelM = serie.TecSelM,
                 Observaciones = serie.Observaciones,
+                IdSeccion = serie.IdSeccion,
                 IdSerieDoc = serie.Id
             });
             return result > 0;
@@ -294,7 +304,7 @@ namespace ConaviWeb.Data.Expedientes
             var db = DbConnection();
 
             var sql = @"
-                        select itr.id Id, itr.id_puesto IdPuesto, ca.descripcion NombreUnidadAdministrativa, cp.descripcion NombrePuesto, itr.responsable_archivo_tramite NombreResponsableAT, date_format(itr.fecha_elaboracion,'%Y/%m/%d') FechaElaboracion, date_format(itr.fecha_entrega,'%Y/%m/%d') FechaEntrega, date_format(itr.fecha_transferencia,'%Y/%m/%d') FechaTransferencia, itr.ubicacion Ubicacion, itr.peso_electronico PesoElectronico, itr.almacenamiento Almacenamiento
+                        select itr.id Id, itr.id_puesto IdPuesto, ca.descripcion NombreUnidadAdministrativa, cp.descripcion NombrePuesto, itr.responsable_archivo_tramite NombreResponsableAT, date_format(itr.fecha_elaboracion,'%Y/%m/%d') FechaElaboracion, date_format(itr.fecha_entrega,'%Y/%m/%d') FechaEntrega, date_format(itr.fecha_transferencia,'%Y/%m/%d') FechaTransferencia, itr.ubicacion Ubicacion, itr.peso_electronico PesoElectronico, itr.almacenamiento Almacenamiento, (select group_concat(distinct cs.codigo separator ', ') from prod_control_exp.inventario_control ic join prod_control_exp.expediente_control ec on ic.id = ec.id_inventario_control join prod_control_exp.cat_serie_documental csd on ec.id_expediente = csd.id join prod_control_exp.cat_secciones cs on csd.id_seccion = cs.id where ic.id = @Id) Secciones, (select group_concat(distinct csd.codigo separator ', ') from prod_control_exp.inventario_control ic join prod_control_exp.expediente_control ec on ic.id = ec.id_inventario_control join prod_control_exp.cat_serie_documental csd on ec.id_expediente = csd.id where ic.id = @Id) Series
                         from prod_control_exp.inventario_control itr
                         join prod_control_exp.cat_puestos cp on itr.id_puesto = cp.id
                         join prod_control_exp.cat_areas ca on cp.id_area = ca.id
@@ -867,7 +877,7 @@ namespace ConaviWeb.Data.Expedientes
                         select cp.id IdPuesto, cp.descripcion Puesto, cp.estatus, cp.id_area Id, ca.descripcion Descripcion
                         from prod_control_exp.cat_puestos cp
                         join prod_control_exp.cat_areas ca on cp.id_area = ca.id
-                        order by cp.id;";
+                        order by cp.descripcion;";
             return await db.QueryAsync<Area>(sql, new { });
         }
         public async Task<IEnumerable<Area>> GetPuestosListaValidacion()
@@ -972,7 +982,7 @@ namespace ConaviWeb.Data.Expedientes
             var sql = @"
                         select u.id Id, concat(u.nombre, ' ', u.primer_apellido, ' ', u.segundo_apellido) Name, u.usuario SUser, ca.descripcion Signer, u.cargo Position, u.numero_empleado EmployeeNumber, u.rfc RFC, u.activo Active
                         from prod_control_exp.usuario u
-                        join prod_control_exp.c_area ca on u.id_area = ca.id
+                        join prod_control_exp.cat_areas ca on u.id_area = ca.id
                         where u.id_rol in (15,16) and u.id <> 212
                         order by u.id;";
             return await db.QueryAsync<User>(sql, new { });
