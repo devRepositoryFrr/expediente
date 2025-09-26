@@ -24,6 +24,10 @@ namespace ConaviWeb.Controllers.Expedientes
         public async Task<IActionResult> IndexAsync()
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var idUserPuesto = await _expedienteRepository.GetIdUserPuesto(user.Cargo);
             var inventario = await _expedienteRepository.GetInventarioControl(user.Cargo);
             var cat = await _expedienteRepository.GetCodigosExp();
@@ -84,6 +88,10 @@ namespace ConaviWeb.Controllers.Expedientes
         public async Task<IActionResult> ExpedientesTP()
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var inventario = await _expedienteRepository.GetInventarioControl(user.Cargo);
 
             IEnumerable<Expediente> expedientes = new List<Expediente>();
@@ -125,8 +133,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetCaratulaExpedienteTP([FromForm] int id, int legajo)
         {
-            Caratula caratula = new();
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
+            Caratula caratula = new();
             caratula = await _expedienteRepository.GetCaratulaExpedienteTP(id,legajo);
             
             if (caratula == null)

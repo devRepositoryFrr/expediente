@@ -165,7 +165,7 @@
                     <thead>
                         <tr>
                             <td colspan="4">
-                                El presente inventario consta de <input type="text" size="1" id="fojas" value="1" /> fojas y ampara la cantidad de <u id="expedientes"></u> expedientes de los años <u id="anios"></u> ubicados en <u id="Ubicacion"></u> . Para los expedientes con documentos electrónicos, ampara la cantidad de <u id="PesoElectronicos"></u> (KB, MB, entre otros) almacenados en <u id="Almacenamiento"></u>.
+                                El presente inventario consta de <input type="text" size="1" id="fojas" value="1" /> foja(s) y ampara la cantidad de <u id="expedientes"></u> expediente(s) de los años <u id="anios"></u> ubicados en <u id="Ubicacion"></u> . Para los expedientes con documentos electrónicos, ampara la cantidad de <u id="PesoElectronicos"></u> (KB, MB, entre otros) almacenados en <u id="Almacenamiento"></u>.
                             </td>
                         </tr>
                         <tr>
@@ -216,11 +216,12 @@
     </div>
     @*Fin del formulario para el alta de expediente*@
     <hr />
-    <button class="btn btn-primary form-control" onclick="imprimirElemento()">Imprimir</button>
+    <button class="btn btn-primary form-control" onclick="generarPDF()">Imprimir</button>
 </div>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+<!-- jsPDF y html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -264,14 +265,26 @@
                                 var tableId = document.getElementById('tableExpControl');
                                 var tBody = tableId.getElementsByTagName('tbody')[0];
                                 var tableRow = tBody.getElementsByTagName('tr');
+                                var anio_final=0;
+                                var anios=0;
                                 var fojas_tot = 0;
-                                for (var t = 0; t < tableRow.length; t++) {
-                                    const a = parseInt(tableRow[t].cells[8].innerText);
-                                    fojas_tot += isNaN(a) ? 0 : a;
+                                var minAnioApertura=null;
+                                if(tableRow.length>0){
+                                    for (var t = 0; t < tableRow.length; t++) {
+                                        var valor = parseInt(tableRow[t].cells[4].innerText);
+                                        if (!isNaN(valor)) {
+                                            if (minAnioApertura === null || valor < minAnioApertura) {
+                                                minAnioApertura = valor;
+                                            }
+                                        }
+                                    }
+                                    anio_final = tableRow[tableRow.length - 1].cells[5].innerHTML;
+                                    anios = minAnioApertura == anio_final ? anio_final : minAnioApertura + '-' + anio_final;
+                                    for (var t = 0; t < tableRow.length; t++) {
+                                        const a = parseInt(tableRow[t].cells[8].innerText);
+                                        fojas_tot += isNaN(a) ? 0 : a;
+                                    }
                                 }
-                                const anio_inicial = tableRow[0].cells[4].innerHTML;
-                                const anio_final = tableRow[tableRow.length - 1].cells[5].innerHTML;
-                                const anios = anio_inicial == anio_final ? anio_final : anio_inicial + '-' + anio_final;
                                 $('#expedientes').text(tableRow.length);
                                 $('#anios').text(anios);
                             }
@@ -282,6 +295,7 @@
                         "destroy": true,
                         "scrollY": true,
                         "scrollCollapse": true,
+                        "scrollY": '60vh',
                         "paging": false,
                         "searching": false,
                         "info": false,
@@ -318,12 +332,6 @@
             .fail(function (xhr, status, error) {
                 // Mostramos un mensaje de error.
                 //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
-
-                // Escondemos el Ajax Loader
-                //$("#AjaxLoader").hide("slow");
-
-                // Habilitamos el botón de Submit
-                //$("#SubmitBtn").prop("disabled", false);
             })
             // Hacer algo siempre, haya sido exitosa o no.
             .always(function () {
@@ -404,51 +412,133 @@
                 $("#alerta").remove();
             }, 6000);
         }
-            // ventana.document.write('<style type="text/css">@@page { size: A4 landscape; margin: 20px; counter-reset: page pages;} #mainHeader{display: table-header-group;} #mainTable{page-break-after: always;} th{padding: 2px;} thead,td{padding: 2px; border: 1px solid #000;} table thead{counter-increment:page;}#mainHeader .pageHeader{width:200px;}#mainHeader .pageHeader::before {counter-increment: pages;content: "Hoja " counter(page) " de " counter(pages) " del inventario";}</style>');
-        function imprimirElemento() {
-            var ventana = window.open('', 'PRINT', 'height=600,width=800');
-            ventana.document.write('<html><head><title>InvControlArchTramite' + '_' + idInv + '</title><link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">');
-            ventana.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
-            // ventana.document.write('<style type="text/css">@@page { size: A4 landscape; margin: 20px; counter-reset: page pages;} th{padding: 2px;} thead,td{padding: 2px; border: 1px solid #000;}</style>');
-            ventana.document.write('<style type="text/css">@@page { font-family: "Noto Sans"; size: A4 landscape; @@bottom-left { content: "Hoja " counter(page) " de " counter(pages) " del inventario"; border-top: 1px solid #000; margin-bottom: 15px; }} #mainHeader{display: table-header-group;} #mainTable{page-break-after: always;} table thead{counter-increment:page;} .pageHeader::before{ counter-increment: pages; content: "Hoja " counter(page) " de " counter(pages) " del inventario"; }</style>');
-            // ventana.document.write('<style type="text/css">@@page { font-family: "Noto Sans"; size: A4 landscape; @@bottom-left { content: "Hoja " counter(page) " de " counter(pages) " del inventario"; border-top: 1px solid #000; margin-bottom: 15px; }}</style>');
-            ventana.document.write('</head>');
-            ventana.document.write('<table style="font-size:10px;width:100%;" id="mainTable"><thead id="mainHeader"><tr><th colspan="9" width="38%"><img src="/Expediente/img/logo_header25.png" style="width: 100%; height:100%;" /></th><th colspan="10" style="text-align: right;"><label style="text-align: right;">SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />DEPARTAMENTO DE UNIDADES DOCUMENTALES</label></th></tr>');
-            ventana.document.write('<tr><th colspan="19" style="text-align:center;"><label>Inventario general por expediente en el archivo de trámite</label></th></tr>');
-            ventana.document.write('<tr><td colspan="19" style="text-align:right;padding:5px;"><span class="pageHeader"></span></td></tr>');
-            ventana.document.write('<tr><td colspan="19"><label>Fecha de Elaboración del Inventario: ' + $('#fechaElaboracion').text() + '</label></td></tr>');
-            ventana.document.write('<tr><td colspan="19"><label>Fondo: CONAVI</label></td></tr>');
-            ventana.document.write('<tr><td colspan="19"><label>Sección: '+ $('#Secciones').text() +'</label></td></tr>');
-            ventana.document.write('<tr><td colspan="19"><label>Serie: '+ $('#Series').text() +'</label></td></tr>');
-            ventana.document.write('<tr><td colspan="19"><label>Unidad Administrativa: ' + $('#areaDescripcion').text() + '</label></td></tr>');
-            ventana.document.write('<tr><td colspan="19"><label>Área generadora: ' + $("#puestoDescripcion").text() + '</label></td><tr></thead>');
-            ventana.document.write('<tr><td rowspan="2" class="text-center"><label>No.</label></td><td rowspan="2" class="text-center"><label>Código de clasificación archivística:</label></td><td rowspan="2" class="text-center"><label>Título del expediente</label></td><td rowspan="2" class="text-center"><label>Descripción del asunto que trata cada expediente</label></td><td colspan="2" class="text-center"><label>Fechas extremas</label></td><td rowspan="2" class="text-center"><label>N° de legajos</label></td><td rowspan="2" class="text-center"><label>N° de Cds y USB</label></td><td rowspan="2" class="text-center"><label>N° de fojas</label></td><td colspan="2" class="text-center"><label>Soporte documental</label></td><td colspan="3" class="text-center"><label>Valor documental</label></td><td colspan="3" class="text-center"><label>N° de años en el tipo de archivo</label></td><td rowspan="2" class="text-center"><label>Ubicación del documento</label></td><td rowspan="2" class="text-center"><label>Observaciones</label></td></tr>');
-            ventana.document.write('<tr><td class="text-center"><label>Año de apertura</label></td><td class="text-center"><label>Año de cierre</label></td><td class="text-center"><label>Físico</label></td><td class="text-center"><label>Electr.</label></td><td class="text-center"><label>A</label></td><td class="text-center"><label>L</label></td><td class="text-center"><label>F/C</label></td><td class="text-center"><label>AT</label></td><td class="text-center"><label>AC</label></td><td class="text-center"><label>Total de años</label></td></tr>');
-            ventana.document.write('<tbody>');
-            var tableId = document.getElementById('tableExpControl');
-            var tBody = tableId.getElementsByTagName('tbody')[0];
+        function generarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'landscape',
+                unit: 'mm',
+                format: 'a4',
+                setFont: 'Noto Sans'
+            });
+
+            // Tabla principal
+            const table = document.getElementById('tableExpControl');
+            var tBody = table.getElementsByTagName('tbody')[0];
             var tableRow = tBody.getElementsByTagName('tr');
-            var fojas_tot = 0;
-            for (var t = 0; t < tableRow.length; t++) {
-                const a = parseInt(tableRow[t].cells[8].innerText);
-                fojas_tot += isNaN(a) ? 0 : a;
-                ventana.document.write('<tr>' + tableRow[t].innerHTML + '</tr>');
+            var anio_final=0;
+            var anios=0;
+            var minAnioApertura = null;
+            if(tableRow.length>0){
+                for (var t = 0; t < tableRow.length; t++) {
+                    var valor = parseInt(tableRow[t].cells[4].innerText);
+                    if (!isNaN(valor)) {
+                        if (minAnioApertura === null || valor < minAnioApertura) {
+                            minAnioApertura = valor;
+                        }
+                    }
+                }
+                anio_final = tableRow[tableRow.length - 1].cells[5].innerHTML;
+                anios = minAnioApertura == anio_final ? anio_final : minAnioApertura + '-' + anio_final;
             }
-            const anio_inicial = tableRow[0].cells[4].innerHTML;
-            const anio_final = tableRow[tableRow.length - 1].cells[5].innerHTML;
-            const anios = anio_inicial == anio_final ? anio_final : anio_inicial + '-' + anio_final;
-            ventana.document.write('<tr><td colspan="19">El presente inventario consta de <u>&nbsp;' + $("#fojas").val() + '&nbsp;</u> fojas y ampara la cantidad de <u>&nbsp;' + tableRow.length + '&nbsp;</u> expedientes de los años <u>&nbsp;' + anios + '&nbsp;</u> ubicados en <u>&nbsp;' + $('#Ubicacion').text() + '&nbsp;</u> . Para los expedientes con documentos electrónicos, ampara la cantidad de <u>&nbsp;' + $('#PesoElectronicos').text() + '&nbsp;</u> (MB) almacenados en <u>&nbsp;' + $('#Almacenamiento').text() + '&nbsp;</u> .</td></tr>');
-            ventana.document.write('<tr><td colspan="19" style="padding:0px;"><table style="font-size:10px;width:100%;"><tr><td class="text-center" width="25%" style="border:0px;border-right:1px solid black;border-bottom:1px solid black;">Elaboró</td><td class="text-center" width="25%" style="border:0px;border-right:1px solid black;border-bottom:1px solid black;">Validó/Entrega</td><td class="text-center" width="25%" style="border:0px;border-right:1px solid black;border-bottom:1px solid black;">Autorizó</td><td class="text-center" width="25%" style="border:0px;border-bottom:1px solid black;">Recibe</td></tr>');
-            ventana.document.write('<tr><td class="text-center" style="border:0px;border-right:1px solid black;border-bottom:1px solid black;"><br /><br /><br /><br /><br /></td><td class="text-center" style="border:0px;border-right:1px solid black;border-bottom:1px solid black;"><br /><br /><br /><br /><br /></td><td class="text-center" style="border:0px;border-right:1px solid black;border-bottom:1px solid black;"><br /><br /><br /><br /><br /></td><td class="text-center" style="border:0px;border-bottom:1px solid black;"><br /><br /><br /><br /><br /></td></tr>');
-            ventana.document.write('<tr><td class="text-center" style="border:0px;border-right:1px solid black;">' + $('#txt_name_elab').val() + '</td><td class="text-center" style="border:0px;border-right:1px solid black;">' + $('#txt_name_titular').val() + '</td><td class="text-center" style="border:0px;border-right:1px solid black;">' + $('#txt_name_titular_dud').val() + '</td><td class="text-center" style="border:0px;">' + $('#txt_name_recibe').val() +'</td></tr>');
-            ventana.document.write('<tr><td class="text-center" style="border:0px;border-right:1px solid black;">' + $('#txt_cargo_elab').val() + '</td><td class="text-center" style="border:0px;border-right:1px solid black;">' + $('#txt_cargo_titular').val() + '</td><td class="text-center" style="border:0px;border-right:1px solid black;">' + $('#txt_cargo_titular_dud').val() + '</td></tr></table></td></tr>');
-            ventana.document.write('</tbody>');
-            ventana.document.write('</table>');
-            ventana.document.write('<\/body></html>');
-            ventana.document.close();
-            ventana.focus();
-            ventana.print();
-            ventana.close();
+            const headers = [];
+            $(table).find('thead tr').each(function () {
+                const header1 = [];
+                $(this).find('th').each(function (){
+                    header1.push({ content: $(this).text().trim(), rowSpan: $(this).prop('rowspan') || 1, colSpan: $(this).prop('colspan') || 1, });
+                });
+                headers.push(header1);
+            });
+
+            const data = [];
+            $(table).find('tbody tr').each(function () {
+                const row = [];
+                $(this).find('td').each(function () {
+                    row.push($(this).text().trim());
+                });
+                if (row.length > 0) data.push(row);
+            });
+
+            // Prepara el footer de firmas
+            const firmasFooter = [
+                [
+                    { content: 'El presente inventario consta de {total_pages_count_string} foja(s) y ampara la cantidad de ' + tableRow.length + ' expediente(s) de los años ' + anios + ' ubicados en ' + $('#Ubicacion').text() + '. Para los expedientes con documentos electrónicos, ampara la cantidad de ' + $('#PesoElectronicos').text() + ' (MB) almacenados en ' + $('#Almacenamiento').text(), colSpan:19, styles: { halign:'center' } }
+                ],
+                [
+                    {content: 'Elaboró', colSpan:3, styles: { minCellHeight: 30}},
+                    {content: 'Validó/Entrega', colSpan: 3, styles: { minCellHeight: 30 }},
+                    {content: 'Autorizó', colSpan: 7, styles: { minCellHeight: 30 }},
+                    {content: 'Recibe', colSpan: 6, styles: { minCellHeight: 30 }}
+                ],
+                [
+                    {content: '____________________________', colSpan:3 },
+                    {content: '____________________________', colSpan:3 },
+                    {content: '____________________________', colSpan:7 },
+                    {content: '____________________________', colSpan:6 }
+                ],
+                [
+                    {content: $('#txt_name_elab').val() || '', colSpan: 3 },
+                    {content: $('#txt_name_titular').val() || '', colSpan: 3 },
+                    {content: $('#txt_name_titular_dud').val() || '', colSpan: 7 },
+                    {content: $('#txt_name_recibe').val() || '', colSpan: 6 }
+                ],
+                [
+                    {content: $('#txt_cargo_elab').val() || '', colSpan: 3 },
+                    {content: $('#txt_cargo_titular').val() || '', colSpan: 3 },
+                    {content: $('#txt_cargo_titular_dud').val() || '', colSpan: 7 },
+                    {content: '', colSpan: 6 }
+                ]
+            ];
+
+            // Paginación y tabla principal
+            doc.autoTable({
+                head: headers,
+                body: data,
+                foot: firmasFooter,
+                showFoot: 'lastPage',
+                startY: 72,
+                margin: { top:72, left:10, right: 10, bottom: 10 },
+                styles: { fontSize: 8 },
+                headStyles: { halign: 'center', valign: 'middle', fillColor: null, textColor: 20, lineWidth: 0.1 },
+                footStyles: { halign: 'center', fillColor: null, textColor: 20 },
+                theme: 'grid',
+                didDrawPage: function (data) {
+                    // Pie de página con paginación
+                    var str = "Hoja " + doc.internal.getNumberOfPages() + " de {total_pages_count_string} del inventario";
+                    var pageSize = doc.internal.pageSize;
+                    // var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+                    const img = document.querySelector('img[src*="logo_header25.png"]');
+                    if (img) {
+                        // Si la imagen está cargada, la agregamos
+                        // Necesitas convertir la imagen a base64 si no está en el DOM como base64
+                        // Aquí se asume que está disponible
+                        doc.addImage(img.src, 'PNG', 10, 10, 124, 18);
+                    }
+                    doc.setFontSize(10);
+                    doc.setFont("helvetica", "bold");
+                    doc.text('SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO', 170, 15);
+                    doc.text('DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS', 202, 20);
+                    doc.text('DEPARTAMENTO DE UNIDADES DOCUMENTALES', 201, 25);
+                    // doc.setFontSize(12);
+                    doc.text('Inventario general por expediente en el archivo de trámite', 100, 35);
+
+                    // Datos generales
+                    // doc.setFontSize(10);
+                    doc.text(`Fecha de elaboración del Inventario: ${$('#fechaElaboracion').text()}`, 10, 45);
+                    doc.text(`Fondo: CONAVI`, 10, 50);
+                    doc.text(`Sección: ${$('#Secciones').text()}`, 10, 55);
+                    doc.text(`Serie: ${$('#Series').text()}`, 10, 60);
+                    doc.text(`Unidad Administrativa: ${$('#areaDescripcion').text()}`, 10, 65);
+                    doc.text(`Área generadora: ${$('#puestoDescripcion').text()}`, 10, 70);
+                    doc.text(str, pageSize.width - 55, 40);
+                }
+            });
+            // Reemplaza el marcador de total de páginas
+            if (typeof doc.putTotalPages === 'function') {
+                doc.putTotalPages("{total_pages_count_string}");
+            }
+            doc.autoPrint({variant: 'non-conform'});
+            doc.output("pdfobjectnewwindow");
+            // doc.save(`InventarioArchivoTramite_id${idInv}.pdf`);
         }
     </script>
 }

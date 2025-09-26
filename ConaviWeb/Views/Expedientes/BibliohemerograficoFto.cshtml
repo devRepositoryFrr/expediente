@@ -142,12 +142,10 @@
     <hr />
     <button class="btn btn-primary form-control" onclick="generarPDF()">Imprimir</button>
 </div>
-@* <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script> *@
+
 <!-- jsPDF y html2canvas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-@* <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> *@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -225,12 +223,6 @@
             .fail(function (xhr, status, error) {
                 // Mostramos un mensaje de error.
                 //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
-
-                // Escondemos el Ajax Loader
-                //$("#AjaxLoader").hide("slow");
-
-                // Habilitamos el botón de Submit
-                //$("#SubmitBtn").prop("disabled", false);
             })
             // Hacer algo siempre, haya sido exitosa o no.
             .always(function () {
@@ -266,38 +258,6 @@
                 $("#alerta").remove();
             }, 6000);
         }
-        // async function imprimirElemento() {
-        //     var ventana = window.open('', 'PRINT', 'height=600,width=800');
-        //     ventana.document.write('<html><head><title>InventarioBibliohemerografico_id' + idInv + '</title><link href="https://framework-gb.cdn.gob.mx/gm/v3/assets/styles/main.css" rel="stylesheet">');
-        //     ventana.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
-        //     ventana.document.write('<style type="text/css">@@page { size: landscape; margin: 20px; @@bottom-left { content: "Hoja " counter(page) " de " counter(pages) " del inventario"; border-top: 1px solid #000; margin-bottom: 5px; }} body: {counter-reset: page,pages;}#mainTable{page-break-before: always;}table thead{counter-increment:page;}#mainHeader .pageHeader::before {counter-increment: pages;content: "Hoja " counter(page);}#mainHeader .pageHeader::after {content: " de " counter(pages) " del inventario";}</style></head><body style="font-size:10px !important;">');
-        //     ventana.document.write('<table style="font-size:10px;width:100%;" id="mainTable"><thead id="mainHeader" style="display: table-header-group;"><tr><th colspan="11"><table style="font-size:10px;"><tr><th width="38%"><img src="/Expediente/img/logo_header25.png" style="width: 100%; height:100%;" /></th><th style="text-align: right;"><label style="text-align: right;">SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />DEPARTAMENTO DE UNIDADES DOCUMENTALES</label></th></tr></table></th>');
-        //     ventana.document.write('<tr><th colspan="11" style="text-align:center;padding:10px;"><label>Inventario de acervo blibliohemerográfico</label></th></tr>');
-        //     ventana.document.write('<tr><th colspan="11" style="text-align:right;padding:5px;"><span class="pageHeader"></span></th></tr>');
-        //     ventana.document.write('<tr><th colspan="11"><table width="100%" style="font-size:10px;"><tr><th><label>Nombre de la Unidad Administrativa: </label></th><th><label>' + $('#unidadAdministrativa').text() + '</label></th></tr><tr><th><label for="felaboracion_inventario">Fecha de elaboración del inventario: ' + $('#felaboracion_inventario_biblio').text() + '</label></th><th><label>Fecha de transferencia: ' + $("#ftransferencia_biblio").text() + '</label></th></tr><tr><th><label>Nombre del responsable del archivo de trámite: </label></th><th><label>' + $("#responsableArchivo").text() + '</label></th></tr></table></th></tr>');
-        //     ventana.document.write('<tr><th>No. Prog.</th><th>No. Ejem.</th><th>Tipo de Soporte</th><th>Título del Libro</th><th>Nombre del Autor</th><th>Tema</th><th>Editorial</th><th>Año</th><th>ISBN/ISSN</th><th>No. Pág.</th><th>No. Volumen</th></tr></thead>');
-        //     ventana.document.write('<tbody>');
-        //     var tableId = document.getElementById('tableExpBiblio');
-        //     var tBody = tableId.getElementsByTagName('tbody')[0];
-        //     var tableRow = tBody.getElementsByTagName('tr');
-        //     // for (var t = 0; t < tableRow.length; t++) {
-        //     //     ventana.document.write('<tr>' + tableRow[t].innerHTML + '</tr>');
-        //     // }
-        //     for (var t = 0; t < 160; t++) {
-        //        ventana.document.write('<tr>' + tableRow[0].innerHTML + '</tr>');
-        //     }
-        //     ventana.document.write('<tr><th colspan="11">&nbsp;</th></tr>');
-        //     ventana.document.write('<tr><th colspan="11"><table id="table" class="text-center" style="font-size:10px;width:100%;font-size:10px;"><thead><tr><td style="width: 25%">Responsable de la custodia</td><td style="width: 25%">Entrega</td><td style="width: 25%">Recibe Responsable del Archivo de Concentración</td><td style="width: 25%">Vo.Bo. del Departamento de Unidades Documentales</td></tr><tr><td><br /><br /><br /><br />______________________________</td><td><br /><br /><br /><br />______________________________</td><td><br /><br /><br /><br />______________________________</td><td><br /><br /><br /><br />______________________________</td></tr><tr><td>' + $('#txt_name_resp').val() + '</td><td>' + $('#txt_name_entrega').val() + '</td><td>' + $('#txt_name_recibe').val() + '</td><td>' + $('#txt_name_vobo').val() +'</td></tr></thead></table></th></tr>');
-        //     ventana.document.write('<style type="text/css">@@page { size: landscape; margin: 20px; @@bottom-left { content: "Hoja " counter(page) " de " counter(pages) " del inventario"; border-top: 1px solid #000; margin-bottom: 5px; }} body: {counter-reset: page,pages;}#mainTable{page-break-before: always;}table thead{counter-increment:page;}#mainHeader .pageHeader::before {counter-increment: pages;content: "Hoja " counter(page);}#mainHeader .pageHeader::after {content: " de " counter(pages) " del inventario";}</style></head><body style="font-size:10px !important;">');
-        //     ventana.document.write('</tbody>');
-        //     ventana.document.write('</table><\/body>');
-        //     ventana.document.write('</html>');
-        //     ventana.document.close();
-        //     ventana.focus();
-        //     ventana.print();
-        //     ventana.close();
-        //     return true;
-        // }
         function generarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({
@@ -307,31 +267,6 @@
                 setFont: 'Noto Sans'
             });
 
-            // // Logo
-            // const img = document.querySelector('img[src*="logo_header25.png"]');
-            // if (img) {
-            //     // Si la imagen está cargada, la agregamos
-            //     // Necesitas convertir la imagen a base64 si no está en el DOM como base64
-            //     // Aquí se asume que está disponible
-            //     doc.addImage(img.src, 'PNG', 10, 10, 124, 18);
-            // }
-
-            // // Encabezado
-            // doc.setFontSize(10);
-            // doc.text('SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO', 170, 15);
-            // doc.text('DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS', 202, 20);
-            // doc.text('DEPARTAMENTO DE UNIDADES DOCUMENTALES', 201, 25);
-
-            // doc.setFontSize(12);
-            // doc.text('Inventario de acervo bibliohemerográfico', 120, 35);
-
-            // // Datos generales
-            // doc.setFontSize(10);
-            // doc.text(`Nombre de la Unidad Administrativa: ${$('#unidadAdministrativa').text()}`, 10, 50);
-            // doc.text(`Fecha de transferencia: ${$('#ftransferencia_biblio').text()}`, 10, 55);
-            // doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 60);
-            // doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario_biblio').text()}`, 10, 65);
-
             // Tabla principal
             const table = document.getElementById('tableExpBiblio');
             const headers = [];
@@ -340,7 +275,7 @@
             });
 
             const data = [];
-            for (var t = 0; t < 160; t++) {
+            // for (var t = 0; t < 145; t++) {
                 $(table).find('tbody tr').each(function () {
                     const row = [];
                     $(this).find('td').each(function () {
@@ -348,16 +283,41 @@
                     });
                     if (row.length > 0) data.push(row);
                 });
-            }
+            // }
+
+            // Prepara el footer de firmas
+            const firmasFooter = [
+                [
+                    {content: 'Responsable de la custodia', colSpan:3, styles: { cellWidth: 23.6, minCellHeight: 30}},
+                    {content: 'Entrega', colSpan: 2, styles: { cellWidth: 23.6, minCellHeight: 30 }},
+                    {content: 'Recibe Responsable del Archivo de Concentración', colSpan: 3, styles: { cellWidth: 23.6, minCellHeight: 30 }},
+                    {content: 'Vo.Bo. del Departamento de Unidades Documentales', colSpan: 3, styles: { cellWidth: 23.6, minCellHeight: 30 }}
+                ],
+                [
+                    {content: '____________________________', colSpan:3 },
+                    {content: '____________________________', colSpan:2 },
+                    {content: '____________________________', colSpan:3 },
+                    {content: '____________________________', colSpan:3 }
+                ],
+                [
+                    {content: $('#txt_name_resp').val() || '', colSpan: 3 },
+                    {content: $('#txt_name_entrega').val() || '', colSpan: 2 },
+                    {content: $('#txt_name_recibe').val() || '', colSpan: 3 },
+                    {content: $('#txt_name_vobo').val() || '', colSpan: 3 }
+                ]
+            ];
 
             // Paginación y tabla principal
             doc.autoTable({
                 head: [headers],
                 body: data,
+                foot: firmasFooter,
+                showFoot: 'lastPage',
                 startY: 58,
-                margin: { top:58 },
+                margin: { top:58, left:10, right: 10, bottom: 10 },
                 styles: { fontSize: 8 },
-                headStyles: { halign: 'center' },
+                headStyles: { halign: 'center', valign: 'middle', fillColor: null, textColor: 20, lineWidth: 0.1  },
+                footStyles: { halign: 'center', fillColor: null, textColor: 20 },
                 theme: 'grid',
                 didDrawPage: function (data) {
                     // Pie de página con paginación
@@ -372,19 +332,20 @@
                         doc.addImage(img.src, 'PNG', 10, 10, 124, 18);
                     }
                     doc.setFontSize(10);
+                    doc.setFont("helvetica", "bold");
                     doc.text('SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO', 170, 15);
                     doc.text('DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS', 202, 20);
                     doc.text('DEPARTAMENTO DE UNIDADES DOCUMENTALES', 201, 25);
-                    doc.setFontSize(12);
+                    //doc.setFontSize(12);
                     doc.text('Inventario de acervo bibliohemerográfico', 120, 35);
 
                     // Datos generales
-                    doc.setFontSize(10);
+                    //doc.setFontSize(10);
                     doc.text(`Nombre de la Unidad Administrativa: ${$('#unidadAdministrativa').text()}`, 10, 45);
                     doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario_biblio').text()}`, 10, 50);
-                    doc.text(`Fecha de transferencia: ${$('#ftransferencia_biblio').text()}`, pageSize.width - 68, 50);
+                    doc.text(`Fecha de transferencia: ${$('#ftransferencia_biblio').text()}`, pageSize.width - 69, 50);
                     doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 55);
-                    doc.text(str, pageSize.width - 52, 40);
+                    doc.text(str, pageSize.width - 55, 40);
                 }
             });
             // Reemplaza el marcador de total de páginas
@@ -392,26 +353,7 @@
             if (typeof doc.putTotalPages === 'function') {
                 doc.putTotalPages("{total_pages_count_string}");
             }
-
-            // Tabla de firmas
-            doc.autoTable({
-                head: [[
-                    'Responsable de la custodia',
-                    'Entrega',
-                    'Recibe Responsable del Archivo de Concentración',
-                    'Vo.Bo. del Departamento de Unidades Documentales'
-                ]],
-                body: [['','','',''],['','','','']
-                ,[
-                    $('#txt_name_resp').val() || '',
-                    $('#txt_name_entrega').val() || '',
-                    $('#txt_name_recibe').val() || '',
-                    $('#txt_name_vobo').val() || ''
-                ]],
-                startY: doc.lastAutoTable ? doc.lastAutoTable.finalY + 5 : 90,
-                styles: { fontSize: 8, halign: 'center' },
-                theme: 'plain'
-            });
+            doc.autoPrint({variant: 'non-conform'});
             doc.output("pdfobjectnewwindow");
             // doc.save(`InventarioBibliohemerografico_id${idInv}.pdf`);
         }

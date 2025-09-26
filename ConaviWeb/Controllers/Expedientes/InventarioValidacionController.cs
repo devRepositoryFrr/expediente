@@ -22,11 +22,15 @@ namespace ConaviWeb.Controllers.Expedientes
         }
         public async Task<IActionResult> IndexAsync()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             //var catArea = await _expedienteRepository.GetAreas();
             //ViewData["AreaCatalogo"] = catArea;
             var catArea = await _expedienteRepository.GetPuestosListaValidacion();
             ViewData["AreaCatalogo"] = catArea;
-            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
             var catSoporte = await _expedienteRepository.GetTiposSoporte();
             ViewData["CatalogoSoporte"] = catSoporte;
             var catTipoDoc = await _expedienteRepository.GetTiposDocumentales();
