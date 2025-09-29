@@ -213,27 +213,19 @@
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none" id="valSummary"></div>
 
                     <div class="form-floating">
-                        <input asp-for="SUser" class="form-control" placeholder="Usuario" autocomplete="username" />
+                        <input asp-for="SUser" class="form-control" placeholder="Usuario" autocomplete="username" required />
                         <label asp-for="SUser">Usuario</label>
                         <span asp-validation-for="SUser" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating">
-                        <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" id="txtPassword" />
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" id="txtPassword" required />
                         <label asp-for="Password">Contraseña</label>
                         <span asp-validation-for="Password" class="text-danger"></span>
                         <span class="toggle-wrapper" id="togglePwd" aria-label="Mostrar / Ocultar contraseña">
                             <i class="fa fa-eye-slash"></i>
                         </span>
                     </div>
-
-                    @* <div class="d-flex justify-content-between align-items-center mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="remember" />
-                            <label class="form-check-label small" for="remember">Recordar</label>
-                        </div>
-                        <a href="@Url.Action("ResetView","User")" class="small link-em">¿Olvidaste tu contraseña?</a>
-                    </div> *@
 
                     <button class="btn btn-primary w-100 d-inline-flex justify-content-center align-items-center gap-2 mb-3" type="submit" id="btnLogin">
                         <span class="spinner-border spinner-border-sm d-none" id="spinner" role="status" aria-hidden="true"></span>
@@ -300,8 +292,8 @@
         $form.on('invalid-form.validate', function () {
             if (btn) btn.disabled = false;
             spinner.classList.add('d-none');
-            summary.classList.remove('d-none');
-            summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
+            //summary.classList.remove('d-none');
+            //summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
             submitting = false;
         });
 
@@ -309,14 +301,18 @@
             if (submitting) { e.preventDefault(); return false; }
             if (!$form.valid()) { e.preventDefault(); return false; }
 
+            if(togglePwd.ariaValueMax=='' || document.getElementById("SUser").value==''){
+                summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
+                submitting = false;
+            }
             submitting = true;
             btn.disabled = true;
             spinner.classList.remove('d-none');
-            summary.classList.add('d-none');
+            //summary.classList.add('d-none');
         });
 
         if (frm.querySelectorAll('.input-validation-error').length > 0) {
-            summary.classList.remove('d-none');
+            //summary.classList.remove('d-none');
             summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
         }
     });
