@@ -269,7 +269,7 @@
                                 var anios=0;
                                 var fojas_tot = 0;
                                 var minAnioApertura=null;
-                                if(tableRow.length>0){
+                                if(tableRow.length>0 && tableRow[0].cells.length>1){
                                     for (var t = 0; t < tableRow.length; t++) {
                                         var valor = parseInt(tableRow[t].cells[4].innerText);
                                         if (!isNaN(valor)) {
@@ -428,7 +428,7 @@
             var anio_final=0;
             var anios=0;
             var minAnioApertura = null;
-            if(tableRow.length>0){
+            if(tableRow.length>0 && tableRow[0].cells.length>1){
                 for (var t = 0; t < tableRow.length; t++) {
                     var valor = parseInt(tableRow[t].cells[4].innerText);
                     if (!isNaN(valor)) {

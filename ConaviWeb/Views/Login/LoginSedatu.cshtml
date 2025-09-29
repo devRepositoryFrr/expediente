@@ -3,9 +3,175 @@
     Layout = "_LayoutSedatu";
     ViewBag.Title = "Login";
 }
-<div class="d-flex justify-content-center">
+<style type="text/css">
+    :root {
+        --gobmx-primary: #611232;
+        --gobmx-primary-dark: #4b0e27;
+        --gobmx-gray: #545454;
+        --gobmx-gray-light: #f5f5f5;
+        --gobmx-border: #d8d8d8;
+        --gobmx-focus: rgba(97,18,50,.35);
+        --radius: .75rem;
+    }
+
+    .login-wrapper {
+        min-height: calc(100vh - 90px);
+        background: var(--gobmx-gray-light);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-grid {
+        flex: 1;
+        display: grid;
+        grid-template-columns: clamp(320px,40%,520px) 1fr;
+        min-height: 100%;
+    }
+
+    @@media (max-width: 992px) {
+        .login-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .login-hero {
+            display: none;
+        }
+    }
+
+    .login-panel {
+        background: #ffffff;
+        border-right: 1px solid var(--gobmx-border);
+        padding: clamp(2rem,5vw,3rem);
+        display: flex;
+        flex-direction: column;
+    }
+
+    @@media (max-width:992px) {
+        .login-panel {
+            border-right: none;
+            border-bottom: 1px solid var(--gobmx-border);
+        }
+    }
+
+    .login-card {
+        background: #fff;
+        border: 1px solid var(--gobmx-border);
+        border-radius: var(--radius);
+        box-shadow: 0 4px 14px -2px rgba(0,0,0,.12);
+        padding: 1.75rem 1.5rem 1.25rem;
+    }
+
+    .login-hero {
+        background: linear-gradient(135deg,var(--gobmx-primary),var(--gobmx-primary-dark));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 2.5rem;
+    }
+
+    .login-hero-content {
+        max-width: 480px;
+    }
+
+    .login-hero h2 {
+        font-weight: 600;
+        letter-spacing: .5px;
+    }
+
+    .badge-primary-gob {
+        background: var(--gobmx-primary-dark);
+        font-weight: 500;
+    }
+
+    .form-floating {
+        position: relative;
+        margin-bottom: 2.1rem;
+    }
+
+    .form-floating .form-control {
+        border: 1px solid var(--gobmx-border);
+        background: #fff;
+        color: #222;
+    }
+
+    .form-floating .form-control:focus {
+        border-color: var(--gobmx-primary);
+        box-shadow: 0 0 0 .15rem var(--gobmx-focus);
+    }
+
+    .form-floating label {
+        color: #666;
+    }
+
+    .form-floating .field-validation-error,
+    .form-floating span.text-danger,
+    .form-floating span.text-warning {
+        position: absolute;
+        left: 0;
+        bottom: -1rem;
+        font-size: .7rem;
+        line-height: 1;
+        color: #c62828 !important;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+    }
+
+    .toggle-wrapper {
+        position: absolute;
+        top: 50%;
+        right: .65rem;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #777;
+    }
+
+    .toggle-wrapper:hover {
+        color: var(--gobmx-primary);
+    }
+
+    .btn-primary {
+        background: var(--gobmx-primary);
+        border-color: var(--gobmx-primary);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background: var(--gobmx-primary-dark);
+        border-color: var(--gobmx-primary-dark);
+    }
+
+    .link-em {
+        color: var(--gobmx-primary);
+        text-decoration: none;
+    }
+
+    .link-em:hover {
+        text-decoration: underline;
+        color: var(--gobmx-primary-dark);
+    }
+
+    .small-muted {
+        color: #6c6c6c;
+    }
+
+    .footer-mini {
+        font-size: .7rem;
+        color: var(--gobmx-gray);
+        text-align: center;
+        margin-top: 1.25rem;
+    }
+
+    .alert-danger {
+        font-size: .75rem;
+        padding: .5rem .75rem;
+    }
+</style>
+@* <div class="d-flex justify-content-center">
     <div class="card text-bg-dark mb-3"  style="width: 50rem;">
-        <div class="card-header">Inicio de sesión</div>
+        <div class="card-header">Inicio de sesión - Sistema de Control de Expedientes</div>
         <div class="card-body">
             <div class="row" style="text-align:center">
                 <a href="https://www.gob.mx/conavi" style="margin-left: 0px;margin-top: -15px;"><i class="icon-cnv red-ic" style="font-size: 100px;"></i></a>
@@ -27,29 +193,152 @@
             </form>
         </div>
     </div>
+    </div> *@
+<div class="login-wrapper">
+    <div class="login-grid">
+        <!-- Panel (Formulario) -->
+        <div class="login-panel">
+            <div class="mb-4 text-center">
+                <a href="https://www.gob.mx/conavi" class="text-decoration-none">
+                    <i class="icon-cnv red-ic" style="font-size:72px;"></i>
+                </a>
+                <h1 class="h5 mt-3 mb-1 text-dark fw-semibold">Acceso al Sistema</h1>
+                <p class="text-muted small mb-0">Ingrese sus credenciales para continuar</p>
+            </div>
+
+            @Html.Raw(ViewBag.Alert)
+
+            <div class="login-card text-dark">
+                <form method="post" asp-action="Auth" id="frmLogin" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger d-none" id="valSummary"></div>
+
+                    <div class="form-floating">
+                        <input asp-for="SUser" class="form-control" placeholder="Usuario" autocomplete="username" />
+                        <label asp-for="SUser">Usuario</label>
+                        <span asp-validation-for="SUser" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Contraseña" autocomplete="current-password" id="txtPassword" />
+                        <label asp-for="Password">Contraseña</label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <span class="toggle-wrapper" id="togglePwd" aria-label="Mostrar / Ocultar contraseña">
+                            <i class="fa fa-eye-slash"></i>
+                        </span>
+                    </div>
+
+                    @* <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="remember" />
+                            <label class="form-check-label small" for="remember">Recordar</label>
+                        </div>
+                        <a href="@Url.Action("ResetView","User")" class="small link-em">¿Olvidaste tu contraseña?</a>
+                    </div> *@
+
+                    <button class="btn btn-primary w-100 d-inline-flex justify-content-center align-items-center gap-2 mb-3" type="submit" id="btnLogin">
+                        <span class="spinner-border spinner-border-sm d-none" id="spinner" role="status" aria-hidden="true"></span>
+                        <i class="fa fa-sign-in"></i>
+                        <span>Iniciar Sesión</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="footer-mini">
+                Uso autorizado únicamente • @DateTime.Now.Year
+            </div>
+        </div>
+
+        <!-- Hero informativo -->
+        <div class="login-hero">
+            <div class="login-hero-content">
+                <span class="badge badge-primary-gob mb-3">Operación Interna</span>
+                <h2 class="h3 mb-3">Sistema de Control de Expedientes Conavi</h2>
+                <p class="mb-3">
+                    Plataforma para la gestión de inventarios y control de expedientes.
+                </p>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="https://www.gob.mx/conavi" target="_blank" class="btn btn-outline-light btn-sm">Portal CONAVI</a>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    @section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}
-    <script>
-        $(document).ready(function () {
-            showAlert();
-        });
-        $(window).on('beforeunload', function () {
-            console.log("before");
+@section Scripts {@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
 
-            $('.spinner').css('display', 'block');
-        });
+        const frm      = document.getElementById('frmLogin');
+        const btn      = document.getElementById('btnLogin');
+        const spinner  = document.getElementById('spinner');
+        const summary  = document.getElementById('valSummary');
+        const togglePwd= document.getElementById('togglePwd');
+        const txtPwd   = document.getElementById('txtPassword');
 
-        function showAlert() {
-
-            setTimeout(function () {
-                $("#alerta").fadeOut(1500);
-
-            }, 3000);
-            setTimeout(function () {
-
-                $("#alerta").remove();
-            }, 6000);
-
+        // Toggle password
+        if (togglePwd && txtPwd) {
+            togglePwd.addEventListener('click', () => {
+                const show = txtPwd.type === 'password';
+                txtPwd.type = show ? 'text' : 'password';
+                const icon = togglePwd.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-eye', show);
+                    icon.classList.toggle('fa-eye-slash', !show);
+                }
+            });
         }
-    </script>
+
+        if (!frm) return;
+
+        if (window.jQuery && $.validator && $.validator.unobtrusive) {
+            $.validator.unobtrusive.parse(frm);
+        }
+
+        const $form = $(frm);
+        let submitting = false;
+
+        $form.on('invalid-form.validate', function () {
+            if (btn) btn.disabled = false;
+            spinner.classList.add('d-none');
+            summary.classList.remove('d-none');
+            summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
+            submitting = false;
+        });
+
+        $form.on('submit', function (e) {
+            if (submitting) { e.preventDefault(); return false; }
+            if (!$form.valid()) { e.preventDefault(); return false; }
+
+            submitting = true;
+            btn.disabled = true;
+            spinner.classList.remove('d-none');
+            summary.classList.add('d-none');
+        });
+
+        if (frm.querySelectorAll('.input-validation-error').length > 0) {
+            summary.classList.remove('d-none');
+            summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
+        }
+    });
+    $(document).ready(function () {
+        showAlert();
+    });
+    $(window).on('beforeunload', function () {
+        console.log("before");
+
+        $('.spinner').css('display', 'block');
+    });
+
+    function showAlert() {
+
+        setTimeout(function () {
+            $("#alerta").fadeOut(1500);
+
+        }, 3000);
+        setTimeout(function () {
+
+            $("#alerta").remove();
+        }, 6000);
+
+    }
+</script>
