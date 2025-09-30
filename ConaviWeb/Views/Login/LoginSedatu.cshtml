@@ -169,31 +169,6 @@
         padding: .5rem .75rem;
     }
 </style>
-@* <div class="d-flex justify-content-center">
-    <div class="card text-bg-dark mb-3"  style="width: 50rem;">
-        <div class="card-header">Inicio de sesión - Sistema de Control de Expedientes</div>
-        <div class="card-body">
-            <div class="row" style="text-align:center">
-                <a href="https://www.gob.mx/conavi" style="margin-left: 0px;margin-top: -15px;"><i class="icon-cnv red-ic" style="font-size: 100px;"></i></a>
-            </div>
-            @Html.Raw(@ViewBag.Alert)
-            <form method="post" asp-action="Auth">
-                <div class="alert alert-danger" asp-validation-summary="ModelOnly"><button class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>
-                <div class="mb-3">
-                    <label asp-for="SUser" class="form-label">Email</label>
-                    <input type="text" class="form-control" asp-for="SUser">
-                    <span asp-validation-for="SUser" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" asp-for="Password">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <button class="btn btn-primary pull-right" type="submit"><span class="fa fa-sign-in"></span>&ensp;Iniciar Sesión</button>
-            </form>
-        </div>
-    </div>
-    </div> *@
 <div class="login-wrapper">
     <div class="login-grid">
         <!-- Panel (Formulario) -->
@@ -289,14 +264,6 @@
         const $form = $(frm);
         let submitting = false;
 
-        $form.on('invalid-form.validate', function () {
-            if (btn) btn.disabled = false;
-            spinner.classList.add('d-none');
-            //summary.classList.remove('d-none');
-            //summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
-            submitting = false;
-        });
-
         $form.on('submit', function (e) {
             if (submitting) { e.preventDefault(); return false; }
             if (!$form.valid()) { e.preventDefault(); return false; }
@@ -308,11 +275,9 @@
             submitting = true;
             btn.disabled = true;
             spinner.classList.remove('d-none');
-            //summary.classList.add('d-none');
         });
 
         if (frm.querySelectorAll('.input-validation-error').length > 0) {
-            //summary.classList.remove('d-none');
             summary.innerHTML = '<i class="fa fa-exclamation-circle"></i> Revise los campos.';
         }
     });
