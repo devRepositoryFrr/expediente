@@ -11,6 +11,19 @@
 @*Formulario para la carátula de expediente*@
 <form id="formInsertCaratulaExpedienteControl" enctype="multipart/form-data" method="post" asp-controller="CaratulaControl" asp-action="InsertCaratulaExpedienteIC">
     <div class="row">
+        <div class="col-md-5 center-block">
+            <img src="/Expediente/img/logo_header25.png" class="img-responsive" />
+        </div>
+        <div class="col-md-7 text-right">
+            <label>
+                SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />
+                DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />
+                DEPARTAMENTO DE UNIDADES DOCUMENTALES
+            </label>
+        </div>
+    </div>
+    <br />
+    <div class="row">
         <div class="col-md-12">
             <h3 class="text-center">Carátula de descripción del expediente</h3>
         </div>
@@ -310,7 +323,7 @@
             <button id="btn-save" type="submit" class="btn btn-sm btn-primary pull-right active">
                 <span class="fa fa-save"></span> Guardar
             </button>
-            <button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Carátula de Expediente" onclick="imprimirElemento()">
+            <button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Carátula de Expediente" onclick="generarPDF()">
                 <span class="fa fa-print"></span> Formato
             </button>
         </div>
@@ -318,6 +331,13 @@
     @*Fin del formulario de carátula de expediente*@
     <hr />
 </form>
+
+<!-- jsPDF y html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+<link rel="preload" href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" as="style" onload="this.rel=\'stylesheet\'">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style" onload="this.rel=\'stylesheet\'">
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -531,6 +551,243 @@
             ventana.print();
             ventana.close();
             return true;
+        }
+        function generarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+            // Encabezado
+            const img = document.querySelector('img[src*="logo_header25.png"]');
+            if (img) {
+                // Aquí se asume que está disponible
+                doc.addImage(img.src, 'PNG', 9, 15, 82, 12);
+            }
+            doc.setFontSize(8);
+            doc.setFont("helvetica", "bold");
+            doc.text('SUBDIRECCIÓN GENERAL DE ADMINISTRACIÓN Y FINANCIAMIENTO', doc.internal.pageSize.getWidth() - 9, 17, { align: 'right' });
+            doc.text('DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS', doc.internal.pageSize.getWidth() - 9, 21, { align: 'right' });
+            doc.text('DEPARTAMENTO DE UNIDADES DOCUMENTALES', doc.internal.pageSize.getWidth() - 9, 25, { align: 'right' });
+
+            // Título
+            doc.setFont("helvetica", "bold");
+            doc.text('Carátula de descripción del expediente', doc.internal.pageSize.getWidth()/2, 33, { align: 'center' });
+
+            // Datos generales
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9,47.1,192,4.7,"F");//1st rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,66.6,191.8,4.8,"F");//2nd rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,106.1,191.8,15.8,"F");//3rd rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,132.6,191.8,4.8,"F");//4th rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,147.6,191.8,4.8,"F");//5th rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,176.1,191.8,4.8,"F");//6th rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,205.1,191.8,7.8,"F");//7th rect gray
+            doc.setFont("helvetica", "bold");
+            doc.text(`Nombre de la Unidad Administrativa:`, 10, 40, { align: 'left', maxWidth: 32, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#puestoDescripcion").text()}`, 74.5, 39, { align: 'center', maxWidth: 59, baseline: 'botom' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Nombre del área generadora de la documentación:`, 106, 39, { align: 'left', maxWidth: 35, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#areaDescripcion").text()}`, 170, 39, { align: 'center', maxWidth: 59, baseline: 'bottom' });
+            // Definición de posiciones y dimensiones de la tabla
+            let startX = 9;
+            let startY = 41;
+            let colWidths = [35, 61, 35, 61]; // Puedes ajustar según columnas
+            let rowHeight = 12;
+            let y = startY;
+            // Dibujar líneas horizontales (arriba y abajo de la fila)
+            doc.line(startX, y - rowHeight / 2, startX + colWidths.reduce((a, b) => a + b), y - rowHeight / 2); // superior
+            doc.line(startX, y + rowHeight / 2, startX + colWidths.reduce((a, b) => a + b), y + rowHeight / 2); // inferior
+            // Dibujar líneas verticales (entre columnas)
+            let x = startX;
+            for (let i = 0; i <= colWidths.length; i++) {
+                doc.line(x, y - rowHeight / 2, x, y + rowHeight / 2);
+                if (i < colWidths.length) x += colWidths[i];
+            }
+            doc.setFont("helvetica", "bold");
+            doc.text('Datos de la Clave de clasificación por asunto', doc.internal.pageSize.getWidth()/2, 50.5, { align: 'center', baseline: 'alphabetic' });
+            y += 5;
+            rowHeight=11.5;
+            colWidths=[192];
+            doc.line(startX, y + rowHeight / 2, startX + colWidths.reduce((a, b) => a + b), y + rowHeight / 2); // inferior
+            // Dibujar líneas verticales (entre columnas)
+            doc.text(`Fondo:`, 10, 55);
+            doc.setFont("helvetica", "normal");
+            doc.text(`CONAVI`, 128.75, 55, { align: 'center', baseline: 'alphabetic' });
+            doc.line(9,56.5,201,56.5);// underline
+            doc.line(9,47,9,262.6);//línea transversal izquierda
+            doc.line(201,47,201,262.6);//linea transversal derecha
+            doc.line(63,51.75,63,66.5);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Sección, serie y subserie documental:`, 10, 60);
+            doc.setFont("helvetica", "normal");
+            doc.line(9,61.5,201,61.5);// underline
+            doc.text(`${$("#txtCodigo").text()}`, 128.75, 60, { align: 'center', baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Clave de clasificación completa:`, 10, 65);
+            doc.line(9,66.5,201,66.5);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#claveCompleta").text()}`, 128.75, 65, { align: 'center', baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text('Datos del expediente', doc.internal.pageSize.getWidth()/2, 70, { align: 'center' });
+            doc.line(9,71.5,201,71.5);//underline
+            doc.line(57,71.5,57,106);
+            doc.text(`Título del expediente:`, 10, 78);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#tituloExpediente").text()}`, 58.5, 75, { align: 'left', maxWidth: 141, baseline: 'alphabetic' });
+            doc.line(9,82.5,201,82.5);//linea por debajo
+            doc.line(105,82.5,105,106);
+            doc.line(152.5,82.5,152.5,106);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Fecha del primer documento del expediente:`, 10, 86, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#fprimer_documento").val()}`, 81.25, 87.5, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Fecha del último documento del expediente:`, 106, 86, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#fultimo_documento").val()}`, 176.25, 87.5, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.line(9,91,201,91);//underline
+            doc.setFont("helvetica", "bold");
+            doc.text(`Número de fojas por expediente o legajo:`, 10, 95, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#Fojas").val()}`, 81.25, 97, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Número de legajo y de CD´s:`, 106, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Legajos:`, 155.5, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`(${$("#Legajos").val()})`, 168, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`CD's o USB:`, 175.25, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`(${$("#numero_cds").val()})`, 193, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.line(9,101,201,101);//underline
+            //doc.line(176.25, 91, 176.25, 101);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Cantidad de documentos en:`, 10, 104.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Originales:`, 58.5, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#originales").val()}`, 74, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Copias:`, 82.25, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#copias").val()}`, 93.5, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Tipo de soporte documental:`, 106, 104.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#tipo_soporte").text()}`, 176.25, 104.5, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.line(9,106,201,106);//underline
+            doc.line(81.25, 101, 81.25, 106);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Valores de la serie documental que indica el Catálogo de disposición documental (A= administrativo; L=legal; F= fiscal y C=contable):`, 10, 110, { align: 'left', maxWidth: 63, baseline: 'alphabetic' });
+            doc.text(`Número de años de conservación en los diferentes tipos de archivos que se indica en el Catálogo de disposición documental (AT= archivo trámite y AC= archivo concentración).`, 75, 110, { align: 'left', maxWidth: 63, baseline: 'alphabetic' });
+            doc.text(`Técnicas de selección de la documentación (E= eliminación; C=conservación y M= muestreo).`, 139, 110, { align: 'left', maxWidth: 63, baseline: 'alphabetic' });
+            doc.line(9,122,201,122);//underline
+            doc.line(74,106,74,132.5);
+            doc.line(138,106,138,132.5);
+            doc.text(`Administrativo`, 20, 126, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`Legal`, 41.5, 126, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`Contable/Fiscal`, 63, 126, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`Trámite`, 89.75, 126, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.text(`Concentración`, 121.25, 126, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#tec_sel_e").val()}`, 169.5, 126, { align: 'center', maxWidth: 63, baseline: 'alphabetic' });
+            doc.line(9,127.5,201,127.5);//underline
+            doc.line(31,122,31,132.5);
+            doc.line(52,122,52,132.5);
+            doc.line(105,122,105,132.5);
+            doc.text(`${$("#vig_doc_val_a").val()}`, 20.5, 131, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_val_l").val()}`, 41.5, 131, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_val_fc").val()}`, 62.5, 131, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_pla_con_at").val()}`, 89.75, 131, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_pla_con_ac").val()}`, 121.25, 131, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.text(`${$("#tec_sel_libre").val()}`, 169.5, 131, { align: 'center', maxWidth: 63, baseline: 'alphabetic' });
+            doc.line(9,132.5,201,132.5);//underline
+            // Carácter de la información
+            doc.setFont("helvetica", "bold");
+            doc.text(`Carácter de la información`, doc.internal.pageSize.getWidth()/2, 136, { align: 'center' });
+            doc.line(9,137.5,201,137.5);//underline
+            doc.text(`Pública`, 33.75, 141, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Confidencial`, 81.25, 141, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Reservada cuando surja de una solicitud de información`, 152.5, 141, { align: 'center', maxWidth: 95, baseline: 'alphabetic' });
+            doc.line(9,142.5,201,142.5);//underline
+            doc.line(57.5,137.5,57.5,147.5);
+            doc.line(105,137.5,105,147.5);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#caracter_publica").val()}`, 33.75, 146, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`${$("#caracter_confidencial").val()}`, 81.25, 146, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`${$("#caracter_reservada").val()}`, 152.5, 146, { align: 'center', maxWidth: 95, baseline: 'alphabetic' });
+            doc.line(9,147.5,201,147.5);
+            // Descripción y observaciones
+            doc.setFont("helvetica", "bold");
+            doc.text(`Descripción del asunto o asuntos contenidos en el expediente:`, doc.internal.pageSize.getWidth()/2, 151, { align: 'center' });
+            doc.line(9,152.5,201,152.5);// underline
+            doc.setFont("helvetica", "normal");
+            doc.text($("#descripcion").text(), 10, 155, { maxWidth: 189, baseline: 'middle' });
+            doc.line(9,176,201,176);
+            doc.setFont("helvetica", "bold");
+            doc.text('Observaciones:', doc.internal.pageSize.getWidth()/2, 179.5, { align: 'center' });
+            doc.line(9,181,201,181);//underline
+            doc.setFont("helvetica", "normal");
+            doc.text($("#observaciones").text(), 10, 183.5, { maxWidth: 189, baseline: 'middle' });
+            doc.line(9,205,201,205);
+            //Clasificación
+            doc.setFont("helvetica", "bold");
+            doc.text(`Clasificación y desclasificación de la información (ESTOS APARTADOS SÓLO SE LLENAN EN CASO DE QUE UN EXPEDIENTE HAYA SIDO SOLICITADO PARA DAR RESPUESTA A UNA SOLICITUD DE INFORMACIÓN DEL INAI)`, doc.internal.pageSize.getWidth()/2, 208, { align: 'center', maxWidth: 190, baseline: 'alphabetic' });
+            doc.line(9,213,201,213);//underline
+            doc.text(`Fecha de clasificación:`, 10, 216.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Periodo de reserva:`, 58.5, 216.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Fundamento legal:`, 106, 216.5, { align: 'left', maxWidth: 95, baseline: 'alphabetic' });
+            doc.line(9,218.5,201,218.5);// underline
+            doc.line(57.5,213,57.5,246);
+            doc.line(105,213,105,262.5);
+            doc.line(152.5,226.5,152.5,246);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#fclasificacion_expediente").val()}`, 10, 222, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#periodo_reserva").val()}`, 58.5, 222, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#fundamento_legal").val()}`, 106, 222, { align: 'left', maxWidth: 94, baseline: 'alphabetic' });
+            doc.line(9,226.5,201,226.5);//underline
+            doc.setFont("helvetica", "bold");
+            doc.text(`Ampliación del periodo de reserva:`, 10, 233, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.text(`Fecha de desclasificación:`, 58.5, 233, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.text(`Nombre, rúbica y cargo del servidor público que desclasifica:`, 106, 231.5, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.text(`Indicar las partes o secciones reservadas o confidenciales que se están reservando:`, 153.5, 230, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.line(9,238,201,238);//underline
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#ampliacion_periodo_reserva").val()}`, 10, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#fdesclasificacion_expediente").val()}`, 58.5, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#info_desclasifica").val()}`, 106, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#info_reservada").val()}`, 153.5, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.line(9,246,201,246);// underline
+            doc.text(`Nombre y rúbrica del titular de la Unidad Administrativa en caso de clasificar la información:`, 10, 249.5, { align: 'left', maxWidth: 94, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#info_titular_area").val()}`, 106, 249.5, { align: 'left', maxWidth: 94, baseline: 'alphabetic' });
+            doc.line(9,254.5,201,254.5);// underline
+            doc.setFont("helvetica", "bold");
+            doc.text(`Datos topográficos (ubicación física del expediente).`, 10, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#info_topografico").text()}`, 58.5, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Nombre de quien hace la captura de esta carátula:`, 106, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#info_captura").val()}`, 153.5, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.line(9,262.5,201,262.5);//underline
+            doc.line(57.5,254.5,57.5,262.5);
+            doc.line(152.5,254.5,152.5,262.5);
+            
+            doc.autoPrint({variant: 'non-conform'});
+            doc.output("pdfobjectnewwindow");
         }
     </script>
 }
