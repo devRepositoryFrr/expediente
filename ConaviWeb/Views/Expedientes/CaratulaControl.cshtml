@@ -33,13 +33,13 @@
             <label class="control-label">Nombre de la Unidad Administrativa:</label>
         </div>
         <div class="col-sm-4">
-            <div id="areaDescripcion" class="form-control" style="min-height: 39px; height: 100%" readonly></div>
+            <div id="puestoDescripcion" class="form-control" style="min-height: 39px; height: 100%" readonly></div>
         </div>
         <div class="col-sm-2">
             <label class="control-label">Nombre del área generadora de la documentación:</label>
         </div>
         <div class="col-sm-4" style="min-height: 39px; height: 100%">
-            <div id="puestoDescripcion" class="form-control" style="min-height: 39px; height: 100%" readonly></div>
+            <div id="areaDescripcion" class="form-control" style="min-height: 39px; height: 100%" readonly></div>
         </div>
     </div>
     <div class="row">
@@ -336,9 +336,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
-<link rel="preload" href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" as="style" onload="this.rel=\'stylesheet\'">
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style" onload="this.rel=\'stylesheet\'">
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
@@ -506,7 +503,7 @@
 
             });
         }
-        function imprimirElemento() {
+        /*function imprimirElemento() {
             const urlParams = new URLSearchParams(window.location.search);
             const idExpediente = urlParams.get('id');
             var ventana = window.open('', 'PRINT', 'height=600,width=800');
@@ -551,7 +548,7 @@
             ventana.print();
             ventana.close();
             return true;
-        }
+        }*/
         function generarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({

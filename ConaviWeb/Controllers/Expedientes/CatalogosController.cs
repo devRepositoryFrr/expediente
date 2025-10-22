@@ -70,7 +70,7 @@ namespace ConaviWeb.Controllers.Expedientes
                 return RedirectToAction("Index", "LoginSedatu");
             }
             ViewData["Modulos"] = user.Modules;
-            var idUserArea = await _expedientesRepository.GetIdUserArea(user.Area);
+            //var idUserArea = await _expedientesRepository.GetIdUserArea(user.Area);
             var catArea = await _expedientesRepository.GetAreas();
             ViewBag.AreaCatalogo = (new SelectList(catArea, "Id", "Clave"));
             var catCargos = await _expedientesRepository.GetPuestosLista();
@@ -82,9 +82,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpGet]
         public async Task<IActionResult> ListaAjax()
         {
-            //IEnumerable<SerieDocumental> series = new List<SerieDocumental>();
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             IEnumerable<SerieDocumental> series = await _expedientesRepository.GetSeries();
-            //series = await _expedientesRepository.GetSeries();
             if (series == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Sin registros");
@@ -95,9 +98,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetSerieDocCatAsync([FromForm] int id)
         {
-            //SerieDocumental serie = new();
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             SerieDocumental serie = await _expedientesRepository.GetSerieDocumental(id);
-            //serie = await _expedientesRepository.GetSerieDocumental(id);
             if (serie == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Id no válido");
@@ -108,9 +114,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetSerieDocumentalAsync([FromForm] int id)
         {
-            //SerieDocumental serie = new();
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             SerieDocumental serie = await _expedientesRepository.GetSerieDocumental(id);
-            //serie = await _expedientesRepository.GetSerieDocumental(id);
             if (serie == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Id no encontrado");
@@ -121,6 +130,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> UpdateSerieDocCat(SerieDocumental serie)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.UpdateSerieDocCat(serie);
             if (!success)
             {
@@ -132,6 +146,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> ActivarSerieDoc(SerieDocumental serie)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.ActivarSerieDocCat(serie.Id);
             if (!success)
             {
@@ -143,6 +162,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> DesactivarSerieDoc(SerieDocumental serie)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.DesactivarSerieDocCat(serie.Id);
             if (!success)
             {
@@ -154,6 +178,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> ActivarArea(Area area)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.ActivarArea(area.Id);
             if (!success)
             {
@@ -165,6 +194,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> DesactivarArea(Area area)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.DesactivarArea(area.Id);
             if (!success)
             {
@@ -176,6 +210,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpGet]
         public async Task<IActionResult> ListaAreas()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             IEnumerable<Area> areas = await _expedientesRepository.GetAreasLista();
             if (areas == null)
             {
@@ -187,6 +226,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> UpdateArea(Area area)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.UpdateArea(area);
             if (!success)
             {
@@ -198,9 +242,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetAreaAsync([FromForm] int id)
         {
-            //Area area = new();
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             Area area = await _expedientesRepository.GetArea(id);
-            //area = await _expedientesRepository.GetArea(id);
             if (area == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Id no encontrado");
@@ -211,6 +258,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> ActivarPuesto(Area element)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.ActivarPuesto(element.IdPuesto);
             if (!success)
             {
@@ -222,6 +274,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> DesactivarPuesto(Area element)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.DesactivarPuesto(element.IdPuesto);
             if (!success)
             {
@@ -233,6 +290,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpGet]
         public async Task<IActionResult> ListaPuestos()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             IEnumerable<Area> puestos = await _expedientesRepository.GetPuestosLista();
             if (puestos == null)
             {
@@ -244,6 +306,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> UpdatePuesto(Area element)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.UpdatePuesto(element);
             if (!success)
             {
@@ -255,9 +322,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetPuestoAsync([FromForm] int id)
         {
-            //Area area = new();
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             Area puesto = await _expedientesRepository.GetPuesto(id);
-            //area = await _expedientesRepository.GetArea(id);
             if (puesto == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Id no encontrado");
@@ -268,6 +338,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> ActivarUsuario(User usuario)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.ActivarUsuario(usuario.Id);
             if (!success)
             {
@@ -279,6 +354,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> DesactivarUsuario(User usuario)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.DesactivarUsuario(usuario.Id);
             if (!success)
             {
@@ -290,6 +370,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpGet]
         public async Task<IActionResult> ListaUsuarios()
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             IEnumerable<User> usuarios = await _expedientesRepository.GetUsuariosLista();
             if (usuarios == null)
             {
@@ -301,6 +386,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> UpdateUsuario(User usuario)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedientesRepository.UpdateUsuario(usuario);
             if (!success)
             {
@@ -312,6 +402,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetUsuarioAsync([FromForm] int id)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             User usuario = await _expedientesRepository.GetUsuario(id);
             if (usuario == null)
             {

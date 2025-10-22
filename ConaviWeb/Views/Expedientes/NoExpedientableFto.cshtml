@@ -36,7 +36,7 @@
                 <label class="control-label">Nombre de la Unidad Administrativa generadora:</label>
             </th>
             <th>
-                <label class="form-control" id="unidadAdministrativa"></label>
+                <div class="form-control" id="unidadAdministrativa" style="min-height: 39px; height: 100%;"></div>
             </th>
         </tr>
         <tr>
@@ -239,7 +239,7 @@
                 type: "post"  // Verbo HTTP
             }).done(function (result) {
                 if (result.id != null) {
-                    $('#unidadAdministrativa').text(result.nombreUnidadAdministrativa);
+                    $('#unidadAdministrativa').text(result.nombrePuesto);
                     $('#responsableArchivo').text(result.nombreResponsableAT);
                     $('#felaboracion_inventario_nexp').text(result.fechaElaboracion != null ? result.fechaElaboracion.substring(8, 10) + '/' + result.fechaElaboracion.substring(5, 7) + '/' + result.fechaElaboracion.substring(0, 4) : '');
                     $('#ftransferencia_inventario').text(result.fechaTransferencia != null ? result.fechaTransferencia.substring(8, 10) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(0, 4) : '');
@@ -436,8 +436,8 @@
                 body: data,
                 foot: firmasFooter,
                 showFoot: 'lastPage',
-                startY: 58,
-                margin: { top:58, left:10, right: 10, bottom: 10 },
+                startY: 60,
+                margin: { top:60, left:10, right: 10, bottom: 10 },
                 styles: { fontSize: 8 },
                 headStyles: { halign: 'center', valign: 'middle', fillColor: null, textColor: 20, lineWidth: 0.1 },
                 footStyles: { halign: 'center', fillColor: null, textColor: 20 },
@@ -463,11 +463,13 @@
                     doc.text('Inventario de Documentación no Expedientable transferible al Archivo de Concentración', 80, 35);
 
                     // Datos generales
-                    // doc.setFontSize(10);
-                    doc.text(`Nombre de la Unidad Administrativa generadora: ${$('#unidadAdministrativa').text()}`, 10, 45);
-                    doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario_nexp').text()}`, 10, 50);
-                    doc.text(`Fecha de transferencia: ${$('#ftransferencia_inventario').text()}`, 228, 50);
-                    doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 55);
+                    const lineasTexto = doc.splitTextToSize(`Nombre de la Unidad Administrativa generadora: ${$('#unidadAdministrativa').text()}`, pageSize.width - 20);
+                    // Calcula la altura del bloque de texto completo
+                    const alturaBloque = lineasTexto.length * (doc.getLineHeight() / doc.internal.scaleFactor) + (lineasTexto.length>1 ? 0.5 : 1);
+                    doc.text(`Nombre de la Unidad Administrativa generadora: ${$('#unidadAdministrativa').text()}`, 10, 45, { align: 'left', maxWidth: pageSize.width - 20, baseline: 'alphabetic' });
+                    doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario_nexp').text()}`, 10, 45 + alturaBloque);
+                    doc.text(`Fecha de transferencia: ${$('#ftransferencia_inventario').text()}`, 228, 45 + alturaBloque);
+                    doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 50 + alturaBloque);
                     doc.text(str, pageSize.width - 55, 40);
                 }
             });

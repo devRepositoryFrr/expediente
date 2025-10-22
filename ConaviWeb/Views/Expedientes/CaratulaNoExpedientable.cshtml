@@ -6,6 +6,19 @@
 @*Formulario para la carátula de expediente no expedientable*@
 <form id="formInsertCaratulaNoExpedientable" enctype="multipart/form-data" method="post" asp-controller="CaratulaNoExpedientable" asp-action="InsertCaratulaNoExpedientable">
     <div class="row">
+        <div class="col-md-5 center-block">
+            <img src="/Expediente/img/logo_header25.png" class="img-responsive" />
+        </div>
+        <div class="col-md-7 text-right">
+            <label>
+                SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />
+                DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />
+                DEPARTAMENTO DE UNIDADES DOCUMENTALES
+            </label>
+        </div>
+    </div>
+    <br />
+    <div class="row">
         <div class="col-md-12">
             <h3 class="text-center">Carátula de descripción del expediente</h3>
         </div>
@@ -15,13 +28,13 @@
             <label class="control-label">Nombre de la Unidad Administrativa:</label>
         </div>
         <div class="col-sm-4">
-            <input id="areaDescripcion" type="text" class="form-control" style="min-height: 39px; height: 100%" readonly />
+            <div id="puestoDescripcion" class="form-control" style="min-height: 39px; height: 100%"></div>
         </div>
         <div class="col-sm-2">
             <label class="control-label">Nombre del área generadora de la documentación:</label>
         </div>
-        <div class="col-sm-4" style="min-height: 39px; height: 100%">
-            <input type="text" id="puestoDescripcion" class="form-control" style="min-height: 39px; height: 100%" readonly />
+        <div class="col-sm-4">
+            <div id="areaDescripcion" class="form-control" style="min-height: 39px; height: 100%"></div>
         </div>
     </div>
     <div class="row">
@@ -42,7 +55,7 @@
             <label class="control-label">Sección, serie y subserie documental:</label>
         </div>
         <div class="col-sm-8">
-            <input type="text" id="txtCodigo" asp-for="Codigo" class="form-control" placeholder="..." readonly />
+            <div id="txtCodigo" asp-for="Codigo" class="form-control">...</div>
         </div>
     </div>
     <div class="row form-group">
@@ -50,7 +63,7 @@
             <label class="control-label">Clave de clasificación completa:</label>
         </div>
         <div class="col-sm-8">
-            <input type="text" id="claveCompleta" class="form-control" placeholder="..." readonly />
+            <div id="claveCompleta" class="form-control">...</div>
         </div>
     </div>
     <div class="row">
@@ -64,21 +77,21 @@
             <label class="control-label">Título del expediente:</label>
         </div>
         <div class="col-md-9">
-            <input type="text" id="tituloExpediente" asp-for="Nombre" class="form-control" placeholder="..." readonly />
+            <div id="tituloExpediente" class="form-control" style="min-height:39px; height:100%;">...</div>
         </div>
     </div>
-    <div class="row form-group datepicker-group">
+    <div class="row form-group">
         <div class="col-sm-3">
             <label class="control-label">Fecha del primer documento del expediente:</label>
         </div>
         <div class="col-sm-3">
-            <input type="text" id="fprimer_documento" class="form-control" placeholder="..." readonly />
+            <div id="fprimer_documento" class="form-control"></div>
         </div>
         <div class="col-sm-3">
             <label class="control-label">Fecha del último documento del expediente:</label>
         </div>
         <div class="col-sm-3">
-            <input type="text" id="fultimo_documento" class="form-control" placeholder="..." readonly />
+            <div id="fultimo_documento" class="form-control">...</div>
         </div>
     </div>
     <div class="row form-group">
@@ -86,25 +99,24 @@
             <label class="control-label">Número de fojas por expediente o legajo:</label>
         </div>
         <div class="col-sm-3">
-            <input type="number" asp-for="Fojas" class="form-control" min="0" />
+            <div id="Fojas" name="Fojas" class="form-control"></div>
         </div>
         <div class="col-sm-2">
             <label class="control-label">Número de legajo y de CD's':</label>
         </div>
         <div class="col-sm-4">
-            @*<select id="Legajos" asp-for="Legajos" class="form-control" onchange="changedLegajo(this.value)"></select>*@
             <div class="row">
                 <div class="col-sm-3">
                     <label for="legajos">Legajos:</label>
                 </div>
                 <div class="col-sm-3">
-                    <select id="Legajos" asp-for="Legajos" class="form-control" onchange="changedLegajo(this.value)"></select>
+                    <select id="Legajos" asp-for="Legajos" class="form-select" onchange="changedLegajo(this.value)"></select>
                 </div>
                 <div class="col-sm-3">
                     <label for="numero_cds">CD's o USB:</label>
                 </div>
                 <div class="col-sm-3">
-                    <input type="number" id="numero_cds" asp-for="Cds" class="form-control" min="0" />
+                    <div id="numero_cds" name="Cds" class="form-control">...</div>
                 </div>
             </div>
         </div>
@@ -119,13 +131,13 @@
                     <label class="control-label">Originales:</label>
                 </div>
                 <div class="col-sm-3">
-                    <input type="number" id="originales" asp-for="DocOriginales" class="form-control" min="0" />
+                    <div id="originales" name="DocOriginales" class="form-control">...</div>
                 </div>
                 <div class="col-sm-3">
                     <label class="control-label">Copias:</label>
                 </div>
                 <div class="col-sm-3">
-                    <input type="number" id="copias" asp-for="DocCopias" class="form-control" min="0" />
+                    <div id="copias" name="DocCopias" class="form-control">...</div>
                 </div>
             </div>
         </div>
@@ -135,7 +147,7 @@
                     <label class="control-label">Tipo de soporte documental:</label>
                 </div>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="tipo_soporte" readonly />
+                    <div class="form-control" id="tipo_soporte">...</div>
                 </div>
             </div>
         </div>
@@ -150,15 +162,15 @@
             <div class="row form-group">
                 <div class="col-sm-4">
                     <p>Administrativo</p>
-                    <input type="text" id="vig_doc_val_a" class="form-control" placeholder="..." readonly />
+                    <div id="vig_doc_val_a" class="form-control">...</div>
                 </div>
                 <div class="col-sm-4">
                     <p>Legal</p>
-                    <input type="text" id="vig_doc_val_l" class="form-control" placeholder="..." readonly />
+                    <div id="vig_doc_val_l" class="form-control">...</div>
                 </div>
                 <div class="col-sm-4">
                     <p>Contable/Fiscal</p>
-                    <input type="text" id="vig_doc_val_fc" class="form-control" placeholder="..." readonly />
+                    <div id="vig_doc_val_fc" class="form-control">...</div>
                 </div>
             </div>
         </div>
@@ -171,11 +183,11 @@
             <div class="row form-group">
                 <div class="col-xs-6">
                     <p>Tramite</p>
-                    <input type="number" id="vig_doc_pla_con_at" class="form-control" min="0" readonly />
+                    <div id="vig_doc_pla_con_at" class="form-control">...</div>
                 </div>
                 <div class="col-xs-6">
                     <p>Concentración</p>
-                    <input type="number" id="vig_doc_pla_con_ac" class="form-control" min="0" readonly />
+                    <div id="vig_doc_pla_con_ac" class="form-control">...</div>
                 </div>
             </div>
         </div>
@@ -183,9 +195,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">Técnicas de selección de la documentación (E= eliminación; C=conservación y M= muestreo)</label>
-                    <input type="text" id="tec_sel_e" class="form-control" placeholder="..." readonly />
-                    <input type="text" id="tec_sel_libre" asp-for="TecnicasSeleccion" class="form-control" placeholder="..." />
-                    @*<input type="text" id="tec_sel_m" class="form-control" placeholder="..." />*@
+                    <div id="tec_sel_e" class="form-control">...</div>
+                    <div id="tec_sel_libre" name="TecnicasSeleccion" class="form-control">...</div>
                 </div>
             </div>
         </div>
@@ -198,64 +209,84 @@
     <div class="row form-group">
         <div class="col-xs-3">
             <label class="control-label">Pública</label>
-            <input type="text" id="caracter_publica" asp-for="Publica" class="form-control" placeholder="..." />
+            <div id="caracter_publica" name="Publica" class="form-control">...</div>
         </div>
         <div class="col-xs-3">
             <label class="control-label">Confidencial</label>
-            <input type="text" id="caracter_confidencial" asp-for="Confidencial" class="form-control" placeholder="..." />
+            <div id="caracter_confidencial" name="Confidencial" class="form-control">...</div>
         </div>
         <div class="col-xs-6">
             <label class="control-label">Reservada cuando surja de una solicitud de información</label>
-            <input type="text" id="caracter_reservada" asp-for="Reservada" class="form-control" placeholder="..." />
+            <div id="caracter_reservada" name="Reservada" class="form-control">...</div>
         </div>
     </div>
     <div class="row form-group">
         <div class="col-md-12">
             <h5 class="text-center">Descripción del asunto o asuntos contenidos en el expediente:</h5>
-            <textarea class="form-control" id="descripcion" asp-for="DescripcionAsunto" rows="3" placeholder="..."></textarea>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+            <div class="form-control" id="descripcion" name="DescripcionAsunto" style="min-height:78px; height:100%">...</div>
         </div>
     </div>
     <div class="row form-group">
         <div class="col-md-12">
             <h5 class="text-center">Observaciones:</h5>
-            <textarea class="form-control" id="observaciones" asp-for="Observaciones" rows="3" placeholder="..." readonly></textarea>
         </div>
     </div>
     <div class="row form-group">
         <div class="col-md-12">
+            <div class="form-control" id="observaciones" name="Observaciones" style="min-height:78px; height:100%;">...</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <h5 class="text-center">Clasificación y desclasificación de la información (ESTOS APARTADOS SÓLO SE LLENAN EN CASO DE QUE UN EXPEDIENTE HAYA SIDO SOLICITADO PARA DAR RESPUESTA A UNA SOLICITUD DE INFORMACIÓN DEL INAI)</h5>
         </div>
     </div>
-    <div class="row form-group datepicker-group">
+    <div class="row form-group">
         <div class="col-xs-3">
             <label for="fclasificacion_expediente">Fecha de clasificación:</label>
-            <input type="text" id="fclasificacion_expediente" asp-for="FechaClasificacion" class="form-control" readonly />
+            <div id="fclasificacion_expediente" name="FechaClasificacion" class="form-control">...</div>
         </div>
         <div class="col-xs-3">
             <label class="control-label">Periodo de reserva:</label>
-            <input type="text" id="periodo_reserva" asp-for="PeriodoReserva" class="form-control" placeholder="..." />
+            <div id="periodo_reserva" name="PeriodoReserva" class="form-control">...</div>
         </div>
         <div class="col-xs-6">
             <label class="control-label">Fundamento legal:</label>
-            <input type="text" id="fundamento_legal" asp-for="FundamentoLegal" class="form-control" placeholder="..." />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="fundamento_legal" name="FundamentoLegal" class="form-control" style="min-height:39px; height:100%;">...</div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row form-group datepicker-group">
+    <div class="row form-group">
         <div class="col-sm-3">
             <label class="control-label">Ampliación del periodo de reserva:</label>
-            <input type="text" id="ampliacion_periodo_reserva" asp-for="AmpliacionPeriodo" class="form-control" placeholder="..." />
+            <div id="ampliacion_periodo_reserva" name="AmpliacionPeriodo" class="form-control">...</div>
         </div>
         <div class="col-sm-3">
             <label for="fdesclasificacion_expediente">Fecha de desclasificación:</label>
-            <input type="text" id="fdesclasificacion_expediente" asp-for="FechaDesclasificacion" class="form-control" readonly />
+            <div id="fdesclasificacion_expediente" name="FechaDesclasificacion" class="form-control">...</div>
         </div>
         <div class="col-sm-3">
             <label class="control-label">Nombre, rúbrica y cargo del servidor público que desclasifica.</label>
-            <input type="text" id="info_desclasifica" asp-for="NombreDesclasifica" class="form-control" placeholder="..." />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="info_desclasifica" name="NombreDesclasifica" class="form-control" style="min-height:39px; height:100%;">...</div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-3">
             <label class="control-label">Indicar las partes o secciones reservadas o confidenciales que se están reservando.</label>
-            <input type="text" id="info_reservada" asp-for="PartesReservando" class="form-control" placeholder="..." />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="info_reservada" name="PartesReservando" class="form-control" style="min-height:39px; height:100%;">...</div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row form-group">
@@ -263,7 +294,7 @@
             <label class="control-label">Nombre y rúbrica del titular de la Unidad Administrativa en caso de clasificar la información</label>
         </div>
         <div class="col-sm-6">
-            <input type="text" id="info_titular_area" class="form-control" placeholder="..." />
+            <div id="info_titular_area" class="form-control" style="min-height:39px; height:100%;"></div>
         </div>
     </div>
     <div class="row form-group">
@@ -273,7 +304,7 @@
                     <label class="control-label">Datos topográficos (ubicación física del expediente)</label>
                 </div>
                 <div class="col-sm-6">
-                    <textarea class="form-control" id="info_topografico" asp-for="DatosTopograficos" placeholder="..."></textarea>
+                    <div class="form-control" id="info_topografico" name="DatosTopograficos" style="min-height:39px; height:100%">...</div>
                 </div>
             </div>
         </div>
@@ -283,17 +314,17 @@
                     <label class="control-label">Nombre de quien hace la captura  de esta carátula</label>
                 </div>
                 <div class="col-sm-6">
-                    <textarea class="form-control" id="info_captura" placeholder="..."></textarea>
+                    <div class="form-control" id="info_captura" style="min-height:39px; height:100%;">...</div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button id="btn-save" type="submit" class="btn btn-primary pull-right">
+            @* <button id="btn-save" type="submit" class="btn btn-primary pull-right">
                 <span class="fa fa-save"></span> Guardar
-            </button>
-            <button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Carátula de Expediente" onclick="imprimirElemento()">
+            </button> *@
+            <button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Carátula de Expediente" onclick="generarPDF()">
                 <span class="fa fa-print"></span> Formato
             </button>
         </div>
@@ -301,85 +332,80 @@
     @*Fin del formulario de carátula de expediente*@
     <hr />
 </form>
-<script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script>
+@* <script src="https://framework-gb.cdn.gob.mx/assets/scripts/jquery-ui-datepicker.js"></script> *@
+
+<!-- jsPDF y html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/3.0.3/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
 <script type="text/javascript">
-$(document).ready(function () {
-    $('#fprimer_documento, #fultimo_documento, #fclasificacion_expediente, #fdesclasificacion_expediente').datepicker({
-        dateFormat: 'yy/mm/dd',
-        changeYear: true
-    });
-    const urlParams = new URLSearchParams(window.location.search);
-    const idExpediente = urlParams.get('id');
-    const search = urlParams.get('sh');
-    $.ajax({
-        url: "@Url.Action("GetCaratulaNoExpedientable", "NoExpedientable")", // Url
-        data: {
-            // Datos / Parámetros
-            Id: idExpediente,
-            Legajo: 1
-        },
-        type: "post"  // Verbo HTTP
-    }).done(function (result) {
-        $('#idExpediente').val(idExpediente);
-        $('#txtCodigo').val(result.codigo);
-        $('#areaDescripcion').val(result.area);
-        $('#puestoDescripcion').val(result.puesto);
-        $('#tituloExpediente').val(result.nombre);
-        $('#claveCompleta').val(result.codigo + '-' + result.consecutivo + '/' + result.periodo);
-        $('#fprimer_documento').val(result.fechaPrimeroAntiguo!=null ? result.fechaPrimeroAntiguo.substring(0, 4) + '/' + result.fechaPrimeroAntiguo.substring(5, 7) + '/' + result.fechaPrimeroAntiguo.substring(8, 10) : '');
-        $('#fultimo_documento').val(result.fechaUltimoReciente != null ? result.fechaUltimoReciente.substring(0, 4) + '/' + result.fechaUltimoReciente.substring(5, 7) + '/' + result.fechaUltimoReciente.substring(8, 10) : '');
-        $('#Fojas').val(result.fojas);
-        for (var i = 1; i <= result.legajos; i++) {
-            $('#Legajos').append('<option value="' + i + '">' + i + '</option>');
-        }
-        $('#originales').val(result.docOriginales);
-        $('#copias').val(result.docCopias);
-        $('#numero_cds').val(result.cds);
-        $('#tipo_soporte').val(result.tipoSoporteDocumental);
-        $('#tec_sel_libre').val(result.tecnicasSeleccion);
-        $('#caracter_publica').val(result.publica != null ? result.publica : (result.confidencial == null && result.reservada == null) ? 'X' : '');
-        $('#caracter_confidencial').val(result.confidencial);
-        $('#caracter_reservada').val(result.reservada);
-        $('#descripcion').val(result.descripcionAsunto);
-        $('#observaciones').val(result.observaciones);
-        $('#fclasificacion_expediente').val(result.fechaClasificacion != null ? result.fechaClasificacion.substring(0, 4) + '/' + result.fechaClasificacion.substring(5, 7) + '/' + result.fechaClasificacion.substring(8, 10) : '');
-        $('#periodo_reserva').val(result.periodoReserva);
-        $('#fundamento_legal').val(result.fundamentoLegal);
-        $('#ampliacion_periodo_reserva').val(result.ampliacionPeriodo);
-        $('#fdesclasificacion_expediente').val(result.fechaDesclasificacion != null ? result.fechaDesclasificacion.substring(0, 4) + '/' + result.fechaDesclasificacion.substring(5, 7) + '/' + result.fechaDesclasificacion.substring(8, 10) : '');
-        $('#info_desclasifica').val(result.nombreDesclasifica);
-        $('#info_reservada').val(result.partesReservando);
-        $('#info_topografico').val(result.datosTopograficos);
-        $('#vig_doc_val_a').val(result.vigDocValA);
-        $('#vig_doc_val_l').val(result.vigDocValL);
-        $('#vig_doc_val_fc').val(result.vigDocValFC);
-        $('#vig_doc_pla_con_at').val(result.vigDocPlaConAT);
-        $('#vig_doc_pla_con_ac').val(result.vigDocPlaConAC);
-        //$('#vig_doc_pla_con_tot').val(result.vigDocPlaConTot);
-        $('#tec_sel_e').val(result.tecSelE == 'X' ? 'E' : result.tecSelC == 'X' ? 'C' : 'M');
-        //$('#tec_sel_c').val(result.tecSelC);
-        $('#info_captura').val(result.userName);
-        $("#btn-save").remove();
-        $("input[type=text], input[type=number], textarea").replaceWith(function () {
-            return '<div id="' + this.id + '" name="' + this.name +'" class="form-control" style="min-height: 39px; height:100%;">' + $(this).val() + '</div>';
+    $(document).ready(function () {
+        // $('#fprimer_documento, #fultimo_documento, #fclasificacion_expediente, #fdesclasificacion_expediente').datepicker({
+        //     dateFormat: 'yy/mm/dd',
+        //     changeYear: true
+        // });
+        const urlParams = new URLSearchParams(window.location.search);
+        const idExpediente = urlParams.get('id');
+        const search = urlParams.get('sh');
+        $.ajax({
+            url: "@Url.Action("GetCaratulaNoExpedientable", "NoExpedientable")", // Url
+            data: {
+                // Datos / Parámetros
+                Id: idExpediente,
+                Legajo: 1
+            },
+            type: "post"  // Verbo HTTP
+        }).done(function (result) {
+            $('#idExpediente').text(idExpediente);
+            $('#txtCodigo').text(result.codigo);
+            $('#areaDescripcion').text(result.area);
+            $('#puestoDescripcion').text(result.puesto);
+            $('#tituloExpediente').text(result.nombre);
+            $('#claveCompleta').text(result.codigo + '-' + result.consecutivo + '/' + result.periodo);
+            $('#fprimer_documento').text(result.fechaPrimeroAntiguo!=null ? result.fechaPrimeroAntiguo.substring(0, 4) + '/' + result.fechaPrimeroAntiguo.substring(5, 7) + '/' + result.fechaPrimeroAntiguo.substring(8, 10) : '');
+            $('#fultimo_documento').text(result.fechaUltimoReciente != null ? result.fechaUltimoReciente.substring(0, 4) + '/' + result.fechaUltimoReciente.substring(5, 7) + '/' + result.fechaUltimoReciente.substring(8, 10) : '');
+            $('#Fojas').text(result.fojas);
+            for (var i = 1; i <= result.legajos; i++) {
+                $('#Legajos').append('<option value="' + i + '">' + i + '</option>');
+            }
+            $('#originales').text(result.docOriginales);
+            $('#copias').text(result.docCopias);
+            $('#numero_cds').text(result.cds);
+            $('#tipo_soporte').text(result.tipoSoporteDocumental);
+            $('#tec_sel_libre').text(result.tecnicasSeleccion);
+            $('#caracter_publica').text(result.publica != null ? result.publica : (result.confidencial == null && result.reservada == null) ? 'X' : '');
+            $('#caracter_confidencial').text(result.confidencial);
+            $('#caracter_reservada').text(result.reservada);
+            $('#descripcion').text(result.descripcionAsunto);
+            $('#observaciones').text(result.observaciones);
+            $('#fclasificacion_expediente').text(result.fechaClasificacion != null ? result.fechaClasificacion.substring(0, 4) + '/' + result.fechaClasificacion.substring(5, 7) + '/' + result.fechaClasificacion.substring(8, 10) : '');
+            $('#periodo_reserva').text(result.periodoReserva);
+            $('#fundamento_legal').text(result.fundamentoLegal);
+            $('#ampliacion_periodo_reserva').text(result.ampliacionPeriodo);
+            $('#fdesclasificacion_expediente').text(result.fechaDesclasificacion != null ? result.fechaDesclasificacion.substring(0, 4) + '/' + result.fechaDesclasificacion.substring(5, 7) + '/' + result.fechaDesclasificacion.substring(8, 10) : '');
+            $('#info_desclasifica').text(result.nombreDesclasifica);
+            $('#info_reservada').text(result.partesReservando);
+            $('#info_topografico').text(result.datosTopograficos);
+            $('#vig_doc_val_a').text(result.vigDocValA);
+            $('#vig_doc_val_l').text(result.vigDocValL);
+            $('#vig_doc_val_fc').text(result.vigDocValFC);
+            $('#vig_doc_pla_con_at').text(result.vigDocPlaConAT);
+            $('#vig_doc_pla_con_ac').text(result.vigDocPlaConAC);
+            //$('#vig_doc_pla_con_tot').text(result.vigDocPlaConTot);
+            $('#tec_sel_e').text(result.tecSelE == 'X' ? 'E' : result.tecSelC == 'X' ? 'C' : 'M');
+            //$('#tec_sel_c').text(result.tecSelC);
+            $('#info_captura').text(result.userName);
+        })
+        // Se ejecuta si se produjo un error.
+        .fail(function (xhr, status, error) {
+            // Mostramos un mensaje de error.
+            //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
+        })
+        // Hacer algo siempre, haya sido exitosa o no.
+        .always(function () {
+
         });
-    })
-    // Se ejecuta si se produjo un error.
-    .fail(function (xhr, status, error) {
-        // Mostramos un mensaje de error.
-        //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
-
-        // Escondemos el Ajax Loader
-        //$("#AjaxLoader").hide("slow");
-
-        // Habilitamos el botón de Submit
-        //$("#SubmitBtn").prop("disabled", false);
-    })
-    // Hacer algo siempre, haya sido exitosa o no.
-    .always(function () {
-
     });
-});
     function changedLegajo() {
         const urlParams = new URLSearchParams(window.location.search);
         const idExpediente = urlParams.get('id');
@@ -393,12 +419,12 @@ $(document).ready(function () {
             },
             type: "post"  // Verbo HTTP
         }).done(function (result) {
-            $('#idExpediente').val(idExpediente);
-            $('#txtCodigo').val(result.codigo);
-            $('#areaDescripcion').val(result.area);
-            $('#puestoDescripcion').val(result.puesto);
-            $('#tituloExpediente').val(result.nombre);
-            $('#claveCompleta').val(result.codigo + '-' + result.consecutivo + '/' + result.periodo);
+            $('#idExpediente').text(idExpediente);
+            $('#txtCodigo').text(result.codigo);
+            $('#areaDescripcion').text(result.area);
+            $('#puestoDescripcion').text(result.puesto);
+            $('#tituloExpediente').text(result.nombre);
+            $('#claveCompleta').text(result.codigo + '-' + result.consecutivo + '/' + result.periodo);
             $('#fprimer_documento').text(result.fechaPrimeroAntiguo.substring(0, 4) + '/' + result.fechaPrimeroAntiguo.substring(5, 7) + '/' + result.fechaPrimeroAntiguo.substring(8, 10));
             $('#fultimo_documento').text(result.fechaUltimoReciente.substring(0, 4) + '/' + result.fechaUltimoReciente.substring(5, 7) + '/' + result.fechaUltimoReciente.substring(8, 10));
             $('#Fojas').text(result.fojas);
@@ -432,62 +458,293 @@ $(document).ready(function () {
         .fail(function (xhr, status, error) {
             // Mostramos un mensaje de error.
             //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
-
-            // Escondemos el Ajax Loader
-            //$("#AjaxLoader").hide("slow");
-
-            // Habilitamos el botón de Submit
-            //$("#SubmitBtn").prop("disabled", false);
         })
         // Hacer algo siempre, haya sido exitosa o no.
         .always(function () {
 
         });
     }
-    function imprimirElemento() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const idExpediente = urlParams.get('id');
-        var ventana = window.open('', 'PRINT', 'height=600,width=800');
-        ventana.document.write('<html><head><title>Carátula ' + $("#claveCompleta").text() + '_id.' + idExpediente + '</title><link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">');
-        ventana.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
-        ventana.document.write('<style type="text/css">@@page {size: portrait;} thead,th{padding: 2px;} table,td{ padding: 2px; border: 1px solid #000;} tr{height:20px;}</style></head><body style="font-size:9px !important;">');
-        ventana.document.write('<table style="font-size:9px;width:100%;" id="mainTable"><thead id="mainHeader" style="display: table-header-group;"><tr><th colspan="3"><img src="/Expediente/img/logo_header25.png" style="width: 100%; height:100%;" /></th><th colspan="3" style="text-align: right;"><label>SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />DEPARTAMENTO DE UNIDADES DOCUMENTALES</label></th></tr></thead>');
-        ventana.document.write('<tbody>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Carátula de descripción del expediente</label></td></tr>');
-        ventana.document.write('<tr><td><label>Nombre de la Unidad Administrativa:</label></td><td colspan="2" style="text-align: center;">' + $("#areaDescripcion").text() + '</td><td><label>Nombre del área generadora de la documentación:</label></td><td colspan="2" style="text-align: center;">' + $("#puestoDescripcion").text() +'</td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Datos de la Clave de clasificación por asunto</label></td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Fondo:</label></td><td colspan="4" align="center">CONAVI</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Sección, serie y subserie documental:</label></td><td colspan="4" align="center">' + $("#txtCodigo").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Clave de clasificación completa:</label></td><td colspan="4" align="center">' + $("#claveCompleta").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Datos del expediente</label></td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Título del expediente:</label></td><td colspan="4">' + $("#tituloExpediente").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Fecha del primer documento del expediente:</label></td><td colspan="2">' + $("#fprimer_documento").text() + '</td><td><label>Fecha del último documento del expediente</label></td><td>' + $("#fprimer_documento").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Número de fojas por expediente o legajo:</label></td><td colspan="2">' + $("#Fojas").text() + '</td><td><label>Número de legajo y de CD´s:</label></td><td>Legajos: (' + $("#Legajos option:selected").text() + ') CD´s o USB: (' + $("#numero_cds").text() +')</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Cantidad de documentos en:</label></td><td><label>Originales: </label> ' + $("#originales").text() + '</td><td><label>Copias: </label> ' + $("#copias").text() + '</td><td><label>Tipo de soporte documental: </label></td><td>' + $("#tipo_soporte").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="3"><label>Valores de la serie documental que indica el Catálogo de disposición documental (A= administrativo; L=legal; F= fiscal y C=contable):</label></td><td colspan="2"><label>Número de años de conservación en los diferentes tipos de archivos que se indica en el Catálogo de disposición documental (AT= archivo trámite y AC= archivo concentración).</label></td><td><label>Técnicas de selección de la documentación (E= eliminación; C=conservación y M= muestreo)</label></td></tr>');
-        ventana.document.write('<tr><td><label>Administrativo</label></td><td><label>Legal</label></td><td><label>Contable/Fiscal</label></td><td><label>Trámite</label></td><td><label>Concentración</label></td><td>' + $("#tec_sel_e").text() + '</td></tr>');
-        ventana.document.write('<tr align="center"><td>' + $("#vig_doc_val_a").text() + '</td><td>' + $("#vig_doc_val_l").text() + '</td><td>' + $("#vig_doc_val_fc").text() + '</td><td>' + $("#vig_doc_pla_con_at").text() + '</td><td>' + $("#vig_doc_pla_con_ac").text() + '</td><td>' + $("#tec_sel_libre").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Carácter de la información</label></td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Pública</label></td><td><label>Confidencial</label></td><td colspan="3"><label>Reservada cuando surja de una solicitud de información</label></td></tr>');
-        ventana.document.write('<tr align="center"><td colspan="2">' + $("#caracter_publica").text() + '</td><td>' + $("#caracter_confidencial").text() + '</td><td colspan="3">' + $("#caracter_reservada").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Descripción del asunto o asuntos contenidos en el expediente:</label></td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="height:90px;">' + $("#descripcion").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Observaciones:</label></td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="height:90px;">' + $("#observaciones").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Clasificación y desclasificación de la información (ESTOS APARTADOS SÓLO SE LLENAN EN CASO DE QUE UN EXPEDIENTE HAYA SIDO SOLICITADO PARA DAR RESPUESTA A UNA SOLICITUD DE INFORMACIÓN DEL INAI)</label></td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Fecha de clasificación:</label></td><td><label>Periodo de reserva:</label></td><td colspan="3"><label>Fundamento legal:</label></td></tr>');
-        ventana.document.write('<tr><td colspan="2">' + $("#fclasificacion_expediente").text() + '</td><td>' + $("#periodo_reserva").text() + '</td><td colspan="3">' + $("#fundamento_legal").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Ampliación del periodo de reserva:</label></td><td><label>Fecha de desclasificación:</label></td><td colspan="2"><label>Nombre, rúbrica y cargo del servidor público que desclasifica.</label></td><td><label>Indicar las partes o secciones reservadas o confidenciales que se están reservando.</label></td></tr>');
-        ventana.document.write('<tr><td colspan="2">' + $("#ampliacion_periodo_reserva").text() + '</td><td>' + $("#fdesclasificacion_expediente").text() + '</td><td colspan="2">' + $("#info_desclasifica").text() + '</td><td>' + $("#info_reservada").text() + '</td></tr>');
-        ventana.document.write('<tr><td colspan="3"><label>Nombre y rúbrica del titular de la Unidad Administrativa en caso de clasificar la información</label></td><td colspan="3">&nbsp;</td></tr>');
-        ventana.document.write('<tr><td colspan="2"><label>Datos topográficos (ubicación física del expediente)</label></td><td colspan="2">' + $("#info_topografico").text() + '</td><td><label>Nombre de quien hace la captura de esta carátula</label></td><td>' + $("#info_captura").text() + '</td></tr>');
-        ventana.document.write('</tbody>');
-        ventana.document.write('</table><\/body>');
-        ventana.document.write('</html>');
-        ventana.document.close();
-        ventana.focus();
-        ventana.print();
-        ventana.close();
-        return true;
-    }
+    // function imprimirElemento() {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const idExpediente = urlParams.get('id');
+    //     var ventana = window.open('', 'PRINT', 'height=600,width=800');
+    //     ventana.document.write('<html><head><title>Carátula ' + $("#claveCompleta").text() + '_id.' + idExpediente + '</title><link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">');
+    //     ventana.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">');
+    //     ventana.document.write('<style type="text/css">@@page {size: portrait;} thead,th{padding: 2px;} table,td{ padding: 2px; border: 1px solid #000;} tr{height:20px;}</style></head><body style="font-size:9px !important;">');
+    //     ventana.document.write('<table style="font-size:9px;width:100%;" id="mainTable"><thead id="mainHeader" style="display: table-header-group;"><tr><th colspan="3"><img src="/Expediente/img/logo_header25.png" style="width: 100%; height:100%;" /></th><th colspan="3" style="text-align: right;"><label>SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO<br />DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS<br />DEPARTAMENTO DE UNIDADES DOCUMENTALES</label></th></tr></thead>');
+    //     ventana.document.write('<tbody>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Carátula de descripción del expediente</label></td></tr>');
+    //     ventana.document.write('<tr><td><label>Nombre de la Unidad Administrativa:</label></td><td colspan="2" style="text-align: center;">' + $("#areaDescripcion").text() + '</td><td><label>Nombre del área generadora de la documentación:</label></td><td colspan="2" style="text-align: center;">' + $("#puestoDescripcion").text() +'</td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Datos de la Clave de clasificación por asunto</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Fondo:</label></td><td colspan="4" align="center">CONAVI</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Sección, serie y subserie documental:</label></td><td colspan="4" align="center">' + $("#txtCodigo").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Clave de clasificación completa:</label></td><td colspan="4" align="center">' + $("#claveCompleta").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Datos del expediente</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Título del expediente:</label></td><td colspan="4">' + $("#tituloExpediente").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Fecha del primer documento del expediente:</label></td><td colspan="2">' + $("#fprimer_documento").text() + '</td><td><label>Fecha del último documento del expediente</label></td><td>' + $("#fprimer_documento").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Número de fojas por expediente o legajo:</label></td><td colspan="2">' + $("#Fojas").text() + '</td><td><label>Número de legajo y de CD´s:</label></td><td>Legajos: (' + $("#Legajos option:selected").text() + ') CD´s o USB: (' + $("#numero_cds").text() +')</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Cantidad de documentos en:</label></td><td><label>Originales: </label> ' + $("#originales").text() + '</td><td><label>Copias: </label> ' + $("#copias").text() + '</td><td><label>Tipo de soporte documental: </label></td><td>' + $("#tipo_soporte").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="3"><label>Valores de la serie documental que indica el Catálogo de disposición documental (A= administrativo; L=legal; F= fiscal y C=contable):</label></td><td colspan="2"><label>Número de años de conservación en los diferentes tipos de archivos que se indica en el Catálogo de disposición documental (AT= archivo trámite y AC= archivo concentración).</label></td><td><label>Técnicas de selección de la documentación (E= eliminación; C=conservación y M= muestreo)</label></td></tr>');
+    //     ventana.document.write('<tr><td><label>Administrativo</label></td><td><label>Legal</label></td><td><label>Contable/Fiscal</label></td><td><label>Trámite</label></td><td><label>Concentración</label></td><td>' + $("#tec_sel_e").text() + '</td></tr>');
+    //     ventana.document.write('<tr align="center"><td>' + $("#vig_doc_val_a").text() + '</td><td>' + $("#vig_doc_val_l").text() + '</td><td>' + $("#vig_doc_val_fc").text() + '</td><td>' + $("#vig_doc_pla_con_at").text() + '</td><td>' + $("#vig_doc_pla_con_ac").text() + '</td><td>' + $("#tec_sel_libre").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Carácter de la información</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Pública</label></td><td><label>Confidencial</label></td><td colspan="3"><label>Reservada cuando surja de una solicitud de información</label></td></tr>');
+    //     ventana.document.write('<tr align="center"><td colspan="2">' + $("#caracter_publica").text() + '</td><td>' + $("#caracter_confidencial").text() + '</td><td colspan="3">' + $("#caracter_reservada").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Descripción del asunto o asuntos contenidos en el expediente:</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="height:90px;">' + $("#descripcion").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Observaciones:</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="height:90px;">' + $("#observaciones").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="6" style="text-align:center;"><label>Clasificación y desclasificación de la información (ESTOS APARTADOS SÓLO SE LLENAN EN CASO DE QUE UN EXPEDIENTE HAYA SIDO SOLICITADO PARA DAR RESPUESTA A UNA SOLICITUD DE INFORMACIÓN DEL INAI)</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Fecha de clasificación:</label></td><td><label>Periodo de reserva:</label></td><td colspan="3"><label>Fundamento legal:</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="2">' + $("#fclasificacion_expediente").text() + '</td><td>' + $("#periodo_reserva").text() + '</td><td colspan="3">' + $("#fundamento_legal").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Ampliación del periodo de reserva:</label></td><td><label>Fecha de desclasificación:</label></td><td colspan="2"><label>Nombre, rúbrica y cargo del servidor público que desclasifica.</label></td><td><label>Indicar las partes o secciones reservadas o confidenciales que se están reservando.</label></td></tr>');
+    //     ventana.document.write('<tr><td colspan="2">' + $("#ampliacion_periodo_reserva").text() + '</td><td>' + $("#fdesclasificacion_expediente").text() + '</td><td colspan="2">' + $("#info_desclasifica").text() + '</td><td>' + $("#info_reservada").text() + '</td></tr>');
+    //     ventana.document.write('<tr><td colspan="3"><label>Nombre y rúbrica del titular de la Unidad Administrativa en caso de clasificar la información</label></td><td colspan="3">&nbsp;</td></tr>');
+    //     ventana.document.write('<tr><td colspan="2"><label>Datos topográficos (ubicación física del expediente)</label></td><td colspan="2">' + $("#info_topografico").text() + '</td><td><label>Nombre de quien hace la captura de esta carátula</label></td><td>' + $("#info_captura").text() + '</td></tr>');
+    //     ventana.document.write('</tbody>');
+    //     ventana.document.write('</table><\/body>');
+    //     ventana.document.write('</html>');
+    //     ventana.document.close();
+    //     ventana.focus();
+    //     ventana.print();
+    //     ventana.close();
+    //     return true;
+    // }
+    function generarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+            // Encabezado
+            const img = document.querySelector('img[src*="logo_header25.png"]');
+            if (img) {
+                // Aquí se asume que está disponible
+                doc.addImage(img.src, 'PNG', 9, 15, 82, 12);
+            }
+            doc.setFontSize(8);
+            doc.setFont("helvetica", "bold");
+            doc.text('SUBDIRECCIÓN GENERAL DE ADMINISTRACIÓN Y FINANCIAMIENTO', doc.internal.pageSize.getWidth() - 9, 17, { align: 'right' });
+            doc.text('DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS', doc.internal.pageSize.getWidth() - 9, 21, { align: 'right' });
+            doc.text('DEPARTAMENTO DE UNIDADES DOCUMENTALES', doc.internal.pageSize.getWidth() - 9, 25, { align: 'right' });
+
+            // Título
+            doc.setFont("helvetica", "bold");
+            doc.text('Carátula de descripción del expediente', doc.internal.pageSize.getWidth()/2, 33, { align: 'center' });
+
+            // Datos generales
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9,47.1,192,4.7,"F");//1st rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,66.6,191.8,4.8,"F");//2nd rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,106.1,191.8,15.8,"F");//3rd rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,132.6,191.8,4.8,"F");//4th rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,147.6,191.8,4.8,"F");//5th rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,176.1,191.8,4.8,"F");//6th rect gray
+            doc.setFillColor('#BFBFBF');
+            doc.rect(9.1,205.1,191.8,7.8,"F");//7th rect gray
+            doc.setFont("helvetica", "bold");
+            doc.text(`Nombre de la Unidad Administrativa:`, 10, 40, { align: 'left', maxWidth: 32, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#puestoDescripcion").text()}`, 74.5, 39, { align: 'center', maxWidth: 59, baseline: 'botom' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Nombre del área generadora de la documentación:`, 106, 39, { align: 'left', maxWidth: 35, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#areaDescripcion").text()}`, 170, 39, { align: 'center', maxWidth: 59, baseline: 'bottom' });
+            // Definición de posiciones y dimensiones de la tabla
+            let startX = 9;
+            let startY = 41;
+            let colWidths = [35, 61, 35, 61]; // Puedes ajustar según columnas
+            let rowHeight = 12;
+            let y = startY;
+            // Dibujar líneas horizontales (arriba y abajo de la fila)
+            doc.line(startX, y - rowHeight / 2, startX + colWidths.reduce((a, b) => a + b), y - rowHeight / 2); // superior
+            doc.line(startX, y + rowHeight / 2, startX + colWidths.reduce((a, b) => a + b), y + rowHeight / 2); // inferior
+            // Dibujar líneas verticales (entre columnas)
+            let x = startX;
+            for (let i = 0; i <= colWidths.length; i++) {
+                doc.line(x, y - rowHeight / 2, x, y + rowHeight / 2);
+                if (i < colWidths.length) x += colWidths[i];
+            }
+            doc.setFont("helvetica", "bold");
+            doc.text('Datos de la Clave de clasificación por asunto', doc.internal.pageSize.getWidth()/2, 50.5, { align: 'center', baseline: 'alphabetic' });
+            y += 5;
+            rowHeight=11.5;
+            colWidths=[192];
+            doc.line(startX, y + rowHeight / 2, startX + colWidths.reduce((a, b) => a + b), y + rowHeight / 2); // inferior
+            // Dibujar líneas verticales (entre columnas)
+            doc.text(`Fondo:`, 10, 55);
+            doc.setFont("helvetica", "normal");
+            doc.text(`CONAVI`, 128.75, 55, { align: 'center', baseline: 'alphabetic' });
+            doc.line(9,56.5,201,56.5);// underline
+            doc.line(9,47,9,262.6);//línea transversal izquierda
+            doc.line(201,47,201,262.6);//linea transversal derecha
+            doc.line(63,51.75,63,66.5);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Sección, serie y subserie documental:`, 10, 60);
+            doc.setFont("helvetica", "normal");
+            doc.line(9,61.5,201,61.5);// underline
+            doc.text(`${$("#txtCodigo").text()}`, 128.75, 60, { align: 'center', baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Clave de clasificación completa:`, 10, 65);
+            doc.line(9,66.5,201,66.5);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#claveCompleta").text()}`, 128.75, 65, { align: 'center', baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text('Datos del expediente', doc.internal.pageSize.getWidth()/2, 70, { align: 'center' });
+            doc.line(9,71.5,201,71.5);//underline
+            doc.line(57,71.5,57,106);
+            doc.text(`Título del expediente:`, 10, 78);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#tituloExpediente").text()}`, 58.5, 75, { align: 'left', maxWidth: 141, baseline: 'alphabetic' });
+            doc.line(9,82.5,201,82.5);//linea por debajo
+            doc.line(105,82.5,105,106);
+            doc.line(152.5,82.5,152.5,106);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Fecha del primer documento del expediente:`, 10, 86, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#fprimer_documento").text()}`, 81.25, 87.5, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Fecha del último documento del expediente:`, 106, 86, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#fultimo_documento").text()}`, 176.25, 87.5, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.line(9,91,201,91);//underline
+            doc.setFont("helvetica", "bold");
+            doc.text(`Número de fojas por expediente o legajo:`, 10, 95, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#Fojas").text()}`, 81.25, 97, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Número de legajo y de CD´s:`, 106, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Legajos:`, 155.5, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`(${$("#Legajos").text()})`, 168, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`CD's o USB:`, 175.25, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`(${$("#numero_cds").text()})`, 193, 97, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.line(9,101,201,101);//underline
+            //doc.line(176.25, 91, 176.25, 101);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Cantidad de documentos en:`, 10, 104.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Originales:`, 58.5, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#originales").text()}`, 74, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Copias:`, 82.25, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#copias").text()}`, 93.5, 104.5, { align: 'left', maxWidth: 23.75, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Tipo de soporte documental:`, 106, 104.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#tipo_soporte").text()}`, 176.25, 104.5, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.line(9,106,201,106);//underline
+            doc.line(81.25, 101, 81.25, 106);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Valores de la serie documental que indica el Catálogo de disposición documental (A= administrativo; L=legal; F= fiscal y C=contable):`, 10, 110, { align: 'left', maxWidth: 63, baseline: 'alphabetic' });
+            doc.text(`Número de años de conservación en los diferentes tipos de archivos que se indica en el Catálogo de disposición documental (AT= archivo trámite y AC= archivo concentración).`, 75, 110, { align: 'left', maxWidth: 63, baseline: 'alphabetic' });
+            doc.text(`Técnicas de selección de la documentación (E= eliminación; C=conservación y M= muestreo).`, 139, 110, { align: 'left', maxWidth: 63, baseline: 'alphabetic' });
+            doc.line(9,122,201,122);//underline
+            doc.line(74,106,74,132.5);
+            doc.line(138,106,138,132.5);
+            doc.text(`Administrativo`, 20, 126, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`Legal`, 41.5, 126, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`Contable/Fiscal`, 63, 126, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`Trámite`, 89.75, 126, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.text(`Concentración`, 121.25, 126, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#tec_sel_e").text()}`, 169.5, 126, { align: 'center', maxWidth: 63, baseline: 'alphabetic' });
+            doc.line(9,127.5,201,127.5);//underline
+            doc.line(31,122,31,132.5);
+            doc.line(52,122,52,132.5);
+            doc.line(105,122,105,132.5);
+            doc.text(`${$("#vig_doc_val_a").text()}`, 20.5, 131, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_val_l").text()}`, 41.5, 131, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_val_fc").text()}`, 62.5, 131, { align: 'center', maxWidth: 21, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_pla_con_at").text()}`, 89.75, 131, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.text(`${$("#vig_doc_pla_con_ac").text()}`, 121.25, 131, { align: 'center', maxWidth: 31.5, baseline: 'alphabetic' });
+            doc.text(`${$("#tec_sel_libre").text()}`, 169.5, 131, { align: 'center', maxWidth: 63, baseline: 'alphabetic' });
+            doc.line(9,132.5,201,132.5);//underline
+            // Carácter de la información
+            doc.setFont("helvetica", "bold");
+            doc.text(`Carácter de la información`, doc.internal.pageSize.getWidth()/2, 136, { align: 'center' });
+            doc.line(9,137.5,201,137.5);//underline
+            doc.text(`Pública`, 33.75, 141, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Confidencial`, 81.25, 141, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Reservada cuando surja de una solicitud de información`, 152.5, 141, { align: 'center', maxWidth: 95, baseline: 'alphabetic' });
+            doc.line(9,142.5,201,142.5);//underline
+            doc.line(57.5,137.5,57.5,147.5);
+            doc.line(105,137.5,105,147.5);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#caracter_publica").text()}`, 33.75, 146, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`${$("#caracter_confidencial").text()}`, 81.25, 146, { align: 'center', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`${$("#caracter_reservada").text()}`, 152.5, 146, { align: 'center', maxWidth: 95, baseline: 'alphabetic' });
+            doc.line(9,147.5,201,147.5);
+            // Descripción y observaciones
+            doc.setFont("helvetica", "bold");
+            doc.text(`Descripción del asunto o asuntos contenidos en el expediente:`, doc.internal.pageSize.getWidth()/2, 151, { align: 'center' });
+            doc.line(9,152.5,201,152.5);// underline
+            doc.setFont("helvetica", "normal");
+            doc.text($("#descripcion").text(), 10, 155, { maxWidth: 189, baseline: 'middle' });
+            doc.line(9,176,201,176);
+            doc.setFont("helvetica", "bold");
+            doc.text('Observaciones:', doc.internal.pageSize.getWidth()/2, 179.5, { align: 'center' });
+            doc.line(9,181,201,181);//underline
+            doc.setFont("helvetica", "normal");
+            doc.text($("#observaciones").text(), 10, 183.5, { maxWidth: 189, baseline: 'middle' });
+            doc.line(9,205,201,205);
+            //Clasificación
+            doc.setFont("helvetica", "bold");
+            doc.text(`Clasificación y desclasificación de la información (ESTOS APARTADOS SÓLO SE LLENAN EN CASO DE QUE UN EXPEDIENTE HAYA SIDO SOLICITADO PARA DAR RESPUESTA A UNA SOLICITUD DE INFORMACIÓN DEL INAI)`, doc.internal.pageSize.getWidth()/2, 208, { align: 'center', maxWidth: 190, baseline: 'alphabetic' });
+            doc.line(9,213,201,213);//underline
+            doc.text(`Fecha de clasificación:`, 10, 216.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Periodo de reserva:`, 58.5, 216.5, { align: 'left', maxWidth: 47.5, baseline: 'alphabetic' });
+            doc.text(`Fundamento legal:`, 106, 216.5, { align: 'left', maxWidth: 95, baseline: 'alphabetic' });
+            doc.line(9,218.5,201,218.5);// underline
+            doc.line(57.5,213,57.5,246);
+            doc.line(105,213,105,262.5);
+            doc.line(152.5,226.5,152.5,246);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#fclasificacion_expediente").text()}`, 10, 222, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#periodo_reserva").text()}`, 58.5, 222, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#fundamento_legal").text()}`, 106, 222, { align: 'left', maxWidth: 94, baseline: 'alphabetic' });
+            doc.line(9,226.5,201,226.5);//underline
+            doc.setFont("helvetica", "bold");
+            doc.text(`Ampliación del periodo de reserva:`, 10, 233, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.text(`Fecha de desclasificación:`, 58.5, 233, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.text(`Nombre, rúbica y cargo del servidor público que desclasifica:`, 106, 231.5, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.text(`Indicar las partes o secciones reservadas o confidenciales que se están reservando:`, 153.5, 230, { align: 'left', maxWidth: 47, baseline: 'alphabetic' });
+            doc.line(9,238,201,238);//underline
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#ampliacion_periodo_reserva").text()}`, 10, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#fdesclasificacion_expediente").text()}`, 58.5, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#info_desclasifica").text()}`, 106, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.text(`${$("#info_reservada").text()}`, 153.5, 241, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.line(9,246,201,246);// underline
+            doc.text(`Nombre y rúbrica del titular de la Unidad Administrativa en caso de clasificar la información:`, 10, 249.5, { align: 'left', maxWidth: 94, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#info_titular_area").text()}`, 106, 249.5, { align: 'left', maxWidth: 94, baseline: 'alphabetic' });
+            doc.line(9,254.5,201,254.5);// underline
+            doc.setFont("helvetica", "bold");
+            doc.text(`Datos topográficos (ubicación física del expediente).`, 10, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#info_topografico").text()}`, 58.5, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "bold");
+            doc.text(`Nombre de quien hace la captura de esta carátula:`, 106, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.setFont("helvetica", "normal");
+            doc.text(`${$("#info_captura").text()}`, 153.5, 258, { align: 'left', maxWidth: 46.5, baseline: 'alphabetic' });
+            doc.line(9,262.5,201,262.5);//underline
+            doc.line(57.5,254.5,57.5,262.5);
+            doc.line(152.5,254.5,152.5,262.5);
+
+            doc.autoPrint({variant: 'non-conform'});
+            doc.output("pdfobjectnewwindow");
+        }
 </script>

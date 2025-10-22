@@ -24,11 +24,15 @@
     <div class="row form-group">
         <div class="col-md-8">
             <label class="control-label" for="unidadAdministrativa">Nombre de la Unidad Administrativa:</label>
-            <label class="form-control" id="unidadAdministrativa">Aquí aparecerá la unidad administrativa ligada al usuario</label>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-control" id="unidadAdministrativa" style="min-height:39px; height:100%;">Aquí aparecerá la unidad administrativa ligada al usuario</div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4 datepicker-group">
             <label for="ftransferencia_biblio">Fecha de transferencia:</label>
-            <label id="ftransferencia_biblio" class="form-control" />
+            <label id="ftransferencia_biblio" class="form-control"></label>
         </div>
     </div>
     <div class="row form-group">
@@ -313,8 +317,8 @@
                 body: data,
                 foot: firmasFooter,
                 showFoot: 'lastPage',
-                startY: 58,
-                margin: { top:58, left:10, right: 10, bottom: 10 },
+                startY: 60,
+                margin: { top:60, left:10, right: 10, bottom: 10 },
                 styles: { fontSize: 8 },
                 headStyles: { halign: 'center', valign: 'middle', fillColor: null, textColor: 20, lineWidth: 0.1  },
                 footStyles: { halign: 'center', fillColor: null, textColor: 20 },
@@ -341,10 +345,13 @@
 
                     // Datos generales
                     //doc.setFontSize(10);
-                    doc.text(`Nombre de la Unidad Administrativa: ${$('#unidadAdministrativa').text()}`, 10, 45);
-                    doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario_biblio').text()}`, 10, 50);
-                    doc.text(`Fecha de transferencia: ${$('#ftransferencia_biblio').text()}`, pageSize.width - 69, 50);
-                    doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 55);
+                    const lineasTexto = doc.splitTextToSize(`Nombre de la Unidad Administrativa: ${$('#unidadAdministrativa').text()}`, pageSize.width - 20);
+                    // Calcula la altura del bloque de texto completo
+                    const alturaBloque = lineasTexto.length * (doc.getLineHeight() / doc.internal.scaleFactor) + (lineasTexto.length>1 ? 0.5 : 1);
+                    doc.text(`Nombre de la Unidad Administrativa: ${$('#unidadAdministrativa').text()}`, 10, 45, { align: 'left', maxWidth: pageSize.width - 20, baseline: 'alphabetic' });
+                    doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario_biblio').text()}`, 10, 45 + alturaBloque);
+                    doc.text(`Fecha de transferencia: ${$('#ftransferencia_biblio').text()}`, pageSize.width - 69, 45 + alturaBloque);
+                    doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 50 + alturaBloque);
                     doc.text(str, pageSize.width - 55, 40);
                 }
             });

@@ -29,7 +29,7 @@ namespace ConaviWeb.Controllers
             _securityTools = securityTools;
         }
         //[Route("Inicio/{nameSystem?}")]
-        public async Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
             if (User.Identity.IsAuthenticated)
             {

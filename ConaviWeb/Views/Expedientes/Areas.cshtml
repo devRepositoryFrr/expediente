@@ -112,8 +112,13 @@
                         },
                         type: "post"  // Verbo HTTP
                     }).done(function (result) {
-                        $('#idArea').val(result.id);
-                        $('#label_descripcion').val(result.descripcion);
+                        if(result.id!=null){
+                            $('#idArea').val(result.id);
+                            $('#label_descripcion').val(result.descripcion);
+                        }else{
+                            if(result.startsWith('<!DOCTYPE html>'))
+                                window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }
                     })
                     // Se ejecuta si se produjo un error.
                     .fail(function (xhr, status, error) {

@@ -41,14 +41,14 @@ namespace ConaviWeb.Data.Expedientes
                        ";
             return await db.QueryAsync<Catalogo>(sql, new { });
         }
-        public async Task<int> GetIdUserArea(string area)
-        {
-            var db = DbConnection();
-            var sql = @"
-                        select id from prod_control_exp.cat_areas where descripcion = @Area order by id;
-                       ";
-            return await db.QueryFirstOrDefaultAsync<int>(sql, new { Area = area });
-        }
+        //public async Task<int> GetIdUserArea(string area)
+        //{
+        //    var db = DbConnection();
+        //    var sql = @"
+        //                select id from prod_control_exp.cat_areas where descripcion = @Area order by id;
+        //               ";
+        //    return await db.QueryFirstOrDefaultAsync<int>(sql, new { Area = area });
+        //}
 
         public async Task<IEnumerable<Catalogo>> GetTiposSoporte()
         {
@@ -184,18 +184,18 @@ namespace ConaviWeb.Data.Expedientes
             return result > 0;
         }
 
-        public async Task<Inventario> GetInventarioTP(string puesto)
-        {
-            var db = DbConnection();
+        //public async Task<Inventario> GetInventarioTP(string puesto)
+        //{
+        //    var db = DbConnection();
 
-            var sql = @"
-                        select itr.id Id, itr.fecha_elaboracion FechaElaboracion, itr.fecha_transferencia FechaTransferencia, itr.nombre_responsable_archivo_tramite NombreResponsableAT
-                        from prod_control_exp.inventario_transferencia itr
-                        join prod_control_exp.cat_puestos cp on itr.id_puesto = cp.id
-                        where cp.descripcion = @Puesto";
+        //    var sql = @"
+        //                select itr.id Id, itr.fecha_elaboracion FechaElaboracion, itr.fecha_transferencia FechaTransferencia, itr.nombre_responsable_archivo_tramite NombreResponsableAT
+        //                from prod_control_exp.inventario_transferencia itr
+        //                join prod_control_exp.cat_puestos cp on itr.id_puesto = cp.id
+        //                where cp.descripcion = @Puesto";
 
-            return await db.QueryFirstOrDefaultAsync<Inventario>(sql, new { Puesto = puesto });
-        }
+        //    return await db.QueryFirstOrDefaultAsync<Inventario>(sql, new { Puesto = puesto });
+        //}
         public async Task<bool> InsertInventarioTP(Inventario inventario)
         {
             var db = DbConnection();
@@ -214,7 +214,7 @@ namespace ConaviWeb.Data.Expedientes
             var db = DbConnection();
             var sql = @"
                         select ROW_NUMBER() over(order by ec.fecha_ultimo, ec.id) NoProg, ROW_NUMBER() over(partition by year(ec.fecha_ultimo) order by ec.fecha_ultimo, ec.id) Consecutivo, ec.id Id, ec.id_expediente IdExpediente, csd.codigo Codigo, ec.nombre Nombre, if(year(ec.fecha_primero)=year(ec.fecha_ultimo),year(ec.fecha_primero),concat(year(ec.fecha_primero),'-',year(ec.fecha_ultimo))) Periodo, ec.anios_resguardo AniosResguardo, ec.numero_legajos Legajos, ec.numero_fojas Fojas, ec.observaciones Observaciones, ec.fecha_registro FechaRegistro, ec.id_inventario_control IdInventario
-                            ,if(ec.id_user = @id, 'editable', 'noeditable') EsEditable, ec.estatus Estatus
+                            ,if(ec.id_user = @Id, 'editable', 'noeditable') EsEditable, ec.estatus Estatus
                         from prod_control_exp.expediente_control ec
                         join prod_control_exp.cat_serie_documental csd on ec.id_expediente = csd.id
                         where ec.id_inventario_control = @IdInv and ec.migrado_tp = 1
@@ -287,17 +287,16 @@ namespace ConaviWeb.Data.Expedientes
             var result = await db.ExecuteAsync(sql, new { Id = id });
             return result > 0;
         }
-        public async Task<Inventario> GetInventarioControl(string puesto)
+        public async Task<Inventario> GetInventarioControl(int id_puesto)
         {
             var db = DbConnection();
 
             var sql = @"
                         select itr.id Id, itr.id_puesto IdPuesto, itr.responsable_archivo_tramite NombreResponsableAT, date_format(itr.fecha_elaboracion, '%Y/%m/%d') FechaElaboracion, date_format(itr.fecha_entrega, '%Y/%m/%d') FechaEntrega, date_format(itr.fecha_transferencia,'%Y/%m/%d') FechaTransferencia, itr.ubicacion Ubicacion, itr.peso_electronico PesoElectronico, itr.almacenamiento Almacenamiento
                         from prod_control_exp.inventario_control itr
-                        join prod_control_exp.cat_puestos cp on itr.id_puesto = cp.id
-                        where cp.descripcion = @Puesto";
+                        where itr.id_puesto = @IdPuesto";
 
-            return await db.QueryFirstOrDefaultAsync<Inventario>(sql, new { Puesto = puesto });
+            return await db.QueryFirstOrDefaultAsync<Inventario>(sql, new { IdPuesto = id_puesto });
         }
         public async Task<Inventario> GetInventarioControlById(int id)
         {
@@ -546,17 +545,15 @@ namespace ConaviWeb.Data.Expedientes
             var result = await db.ExecuteAsync(sql, new { Id = id, Obs = obs });
             return result > 0;
         }
-        public async Task<Inventario> GetInventarioBibliohemerografico(string puesto)
+        public async Task<Inventario> GetInventarioBibliohemerografico(int id_puesto)
         {
             var db = DbConnection();
 
             var sql = @"
                         select itr.id Id, itr.id_puesto IdPuesto, itr.nombre_responsable NombreResponsableAT, date_format(itr.fecha_transferencia,'%Y/%m/%d') FechaTransferencia, date_format(itr.fecha_elaboracion,'%Y/%m/%d') FechaElaboracion
                         from prod_control_exp.inventario_bibliohemerografico itr
-                        join prod_control_exp.cat_puestos cp on itr.id_puesto = cp.id
-                        where cp.descripcion = @Puesto";
-
-            return await db.QueryFirstOrDefaultAsync<Inventario>(sql, new { Puesto = puesto });
+                        where itr.id_puesto = @IdPuesto";
+            return await db.QueryFirstOrDefaultAsync<Inventario>(sql, new { IdPuesto = id_puesto });
         }
         public async Task<Inventario> GetInventarioBiblioById(int id)
         {

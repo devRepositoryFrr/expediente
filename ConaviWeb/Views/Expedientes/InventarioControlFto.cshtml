@@ -48,28 +48,28 @@
             <label id="Secciones" class="form-control">Todas las secciones</label>
         </div>
     </div>
-    <div class="row mb-1">
+    <div class="row mb-2">
         <div class="col-md-4">
             <label>Serie:</label>
         </div>
         <div class="col-md-8">
-            <label id="Series" class="form-control">Todas las series</label>
+            <div id="Series" class="form-control" style="min-height:39px; height: 100%;">Todas las series</div>
         </div>
     </div>
-    <div class="row mb-1">
+    <div class="row mb-2">
         <div class="col-md-4">
             <label class="control-label">Unidad Administrativa:</label>
         </div>
         <div class="col-md-8">
-            <label class="form-control" id="areaDescripcion">Aquí aparecerá la unidad administrativa ligada al usuario</label>
+            <div class="form-control" id="areaDescripcion" style="min-height:39px; height: 100%;">Aquí aparecerá la unidad administrativa ligada al usuario</div>
         </div>
     </div>
-    <div class="row mb-1">
+    <div class="row mb-2">
         <div class="col-md-4">
             <label class="control-label">Área generadora:</label>
         </div>
         <div class="col-md-8">
-            <label class="form-control" id="puestoDescripcion">Aquí aparecerá la unidad administrativa ligada al usuario</label>
+            <div class="form-control" id="puestoDescripcion" style="min-height:39px; height: 100%;">Aquí aparecerá la unidad administrativa ligada al usuario</div>
         </div>
     </div>
     <div class="row">
@@ -495,8 +495,8 @@
                 body: data,
                 foot: firmasFooter,
                 showFoot: 'lastPage',
-                startY: 72,
-                margin: { top:72, left:10, right: 10, bottom: 10 },
+                startY: 70,
+                margin: { top:70, left:10, right: 10, bottom: 10 },
                 styles: { fontSize: 8 },
                 headStyles: { halign: 'center', valign: 'middle', fillColor: null, textColor: 20, lineWidth: 0.1 },
                 footStyles: { halign: 'center', fillColor: null, textColor: 20 },
@@ -518,17 +518,21 @@
                     doc.text('SUBDIRECCIÓN GENERAL DE ADMINSTRACIÓN Y FINANCIAMIENTO', 170, 15);
                     doc.text('DIRECCIÓN DE ADMINISTRACIÓN DE RECURSOS', 202, 20);
                     doc.text('DEPARTAMENTO DE UNIDADES DOCUMENTALES', 201, 25);
-                    // doc.setFontSize(12);
                     doc.text('Inventario general por expediente en el archivo de trámite', 100, 35);
 
                     // Datos generales
-                    // doc.setFontSize(10);
-                    doc.text(`Fecha de elaboración del Inventario: ${$('#fechaElaboracion').text()}`, 10, 45);
-                    doc.text(`Fondo: CONAVI`, 10, 50);
-                    doc.text(`Sección: ${$('#Secciones').text()}`, 10, 55);
-                    doc.text(`Serie: ${$('#Series').text()}`, 10, 60);
-                    doc.text(`Unidad Administrativa: ${$('#areaDescripcion').text()}`, 10, 65);
-                    doc.text(`Área generadora: ${$('#puestoDescripcion').text()}`, 10, 70);
+                    const lineasTexto = doc.splitTextToSize(`Serie: ${$('#Series').text()}`, pageSize.width - 20);
+                    // Calcula la altura del bloque de texto completo
+                    const alturaBloque = lineasTexto.length * (doc.getLineHeight() / doc.internal.scaleFactor);
+                    const lineasTexto2 = doc.splitTextToSize(`Unidad Administrativa: ${$('#areaDescripcion').text()}`, pageSize.width - 20);
+                    // Calcula la altura del bloque de texto completo
+                    const alturaBloque2 = lineasTexto2.length * (doc.getLineHeight() / doc.internal.scaleFactor);
+                    doc.text(`Fecha de elaboración del Inventario: ${$('#fechaElaboracion').text()}`, 10, 40);
+                    doc.text(`Fondo: CONAVI`, 10, 40 + (lineasTexto.length>1 && lineasTexto2.length>1 ? 4 : 5));
+                    doc.text(`Sección: ${$('#Secciones').text()}`, 10, 40 + (lineasTexto.length>1 && lineasTexto2.length>1 ? 8 : 10));
+                    doc.text(`Serie: ${$('#Series').text()}`, 10, 40 + (lineasTexto.length>1 && lineasTexto2.length>1 ? 12 : 15), { align: 'left', maxWidth: pageSize.width - 20, baseline: 'alphabetic' });
+                    doc.text(`Unidad Administrativa: ${$('#areaDescripcion').text()}`, 10, 40 + (lineasTexto.length>1 && lineasTexto2.length>1 ? 13 : 16) + alturaBloque, { align: 'left', maxWidth: pageSize.width - 20, baseline: 'alphabetic' });
+                    doc.text(`Área generadora: ${$('#puestoDescripcion').text()}`, 10, 40 + (lineasTexto.length>1 && lineasTexto2.length>1 ? 14 : 17) + alturaBloque + alturaBloque2);
                     doc.text(str, pageSize.width - 55, 40);
                 }
             });
@@ -538,7 +542,6 @@
             }
             doc.autoPrint({variant: 'non-conform'});
             doc.output("pdfobjectnewwindow");
-            // doc.save(`InventarioArchivoTramite_id${idInv}.pdf`);
         }
     </script>
 }

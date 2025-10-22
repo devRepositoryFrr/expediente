@@ -225,10 +225,14 @@
                                 showAlert();
                             }
                         } else {
-                            $('#modalExpediente').modal('toggle');
-                            window.scrollTo(0,0);
-                            $("#alertAjax").append(result);
-                            showAlert();
+                            if(result.startsWith('<!DOCTYPE html>')){
+                                window.location.href='@Url.Action("Index", "LoginSedatu")';
+                            }else{
+                                $('#modalExpediente').modal('toggle');
+                                window.scrollTo(0,0);
+                                $("#alertAjax").append(result);
+                                showAlert();
+                            }
                         }
                     })
                     // Se ejecuta si se produjo un error.
@@ -254,9 +258,9 @@
                     url: "@Url.Action("GetInventarioControl", "InventarioControl")", // Url
                     data: {
                         // Datos / Parámetros
-                        puesto: $("#" + this.id + " option:selected").text()
+                        id_puesto: $("#" + this.id + " option:selected").val()
                     },
-                    type: "post"  // Verbo HTTP
+                    type: "post",  // Verbo HTTP
                 }).done(function (result) {
                     if (result.id != null) {
                         $('#hd_id_inventario, #hd_id_inventario_expediente').val(result.id);
@@ -266,7 +270,7 @@
                         $('#Ubicacion').val(result.ubicacion);
                         $('#PesoElectronico').val(parseFloat(result.pesoElectronico));
                         $('#Almacenamiento').val(result.almacenamiento);
-                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario para el control del acervo documental en los archivos de trámite" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
+                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-secondary pull-right" title="Formato de Inventario para el control del acervo documental en los archivos de trámite" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
                         $("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-secondary btn-sm pull-right" data-bs-toggle="modal" data-bs-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
 
                         var urlTipo = "";
@@ -317,18 +321,22 @@
                             }
                         });
                     } else {
-                        $("#alertAjax").append(result);
-                        showAlert();
-                        $('#hd_id_inventario, #hd_id_inventario_expediente').val('0');
-                        $('#NombreResponsableAT, #fentrega_documento, #felaboracion_inventario, #Ubicacion, #PesoElectronico, #Almacenamiento').val('');
-                        $("#btn_fto").remove();
-                        $("#btn_add_exp").remove();
-                        $('#tableExpedientesControl').DataTable().clear().destroy();
-                        //$('#tableExpedientesControl').DataTable().destroy();
+                        if(result.startsWith('<!DOCTYPE html>')){
+                            window.location.href='@Url.Action("Index","LoginSedatu")';
+                        }else{
+                            $("#alertAjax").append(result);
+                            showAlert();
+                            $('#hd_id_inventario, #hd_id_inventario_expediente').val('0');
+                            $('#NombreResponsableAT, #fentrega_documento, #felaboracion_inventario, #Ubicacion, #PesoElectronico, #Almacenamiento').val('');
+                            $("#btn_fto").remove();
+                            $("#btn_add_exp").remove();
+                            $('#tableExpedientesControl').DataTable().clear().destroy();
+                        }
                     }
                 })
                 // Se ejecuta si se produjo un error.
                 .fail(function (xhr, status, error) {
+                    console.log(xhr.status);
                     // Mostramos un mensaje de error.
                     //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
 

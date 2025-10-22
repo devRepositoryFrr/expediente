@@ -23,6 +23,10 @@ namespace ConaviWeb.Controllers.Expedientes
         public IActionResult Index()
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             ViewData["Modulos"] = user.Modules;
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
@@ -32,6 +36,10 @@ namespace ConaviWeb.Controllers.Expedientes
         public async Task<IActionResult> InsertCaratulaExpedienteIC(Caratula caratula)
         {
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             caratula.IdUser = user.Id;
 
             var success = await _expedienteRepository.InsertCaratulaExpedienteIC(caratula);
@@ -45,8 +53,12 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetCaratulaExpedienteControl([FromForm] int id, int legajo)
         {
-            Caratula caratula = new();
             var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
+            Caratula caratula = new();
             caratula = await _expedienteRepository.GetCaratulaExpedienteControl(id, legajo, user.Id);
             if (caratula == null)
             {

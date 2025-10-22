@@ -167,20 +167,25 @@
                         },
                         type: "post"  // Verbo HTTP
                     }).done(function (result) {
-                        $('#idSerie').val(result.id);
-                        $('#label_cod').val(result.codigo);
-                        $('#label_descripcion').val(result.descripcion);
-                        $('#VigDocA').val(result.vigDocA);
-                        $('#VigDocL').val(result.vigDocL);
-                        $('#VigDocFC').val(result.vigDocFC);
-                        $('#PlazoConAT').val(result.plazoConAT);
-                        $('#PlazoConAC').val(result.plazoConAC);
-                        $('#PlazoConTot').val(result.plazoConTot);
-                        $('#TecSelE').val(result.tecSelE);
-                        $('#TecSelC').val(result.tecSelC);
-                        $('#TecSelM').val(result.tecSelM);
-                        $('#Observaciones').val(result.observaciones);
-                        $('#slctIdSeccion [value='+result.idSeccion+']').prop("selected",true);
+                        if(result.id!=null){
+                            $('#idSerie').val(result.id);
+                            $('#label_cod').val(result.codigo);
+                            $('#label_descripcion').val(result.descripcion);
+                            $('#VigDocA').val(result.vigDocA);
+                            $('#VigDocL').val(result.vigDocL);
+                            $('#VigDocFC').val(result.vigDocFC);
+                            $('#PlazoConAT').val(result.plazoConAT);
+                            $('#PlazoConAC').val(result.plazoConAC);
+                            $('#PlazoConTot').val(result.plazoConTot);
+                            $('#TecSelE').val(result.tecSelE);
+                            $('#TecSelC').val(result.tecSelC);
+                            $('#TecSelM').val(result.tecSelM);
+                            $('#Observaciones').val(result.observaciones);
+                            $('#slctIdSeccion [value='+result.idSeccion+']').prop("selected",true);
+                        }else{
+                            if(result.startsWith('<!DOCTYPE html>'))
+                                window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }
                     })
                     // Se ejecuta si se produjo un error.
                     .fail(function (xhr, status, error) {

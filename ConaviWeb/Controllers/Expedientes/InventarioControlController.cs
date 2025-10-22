@@ -33,9 +33,8 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
-            //var idUserArea = await _expedienteRepository.GetIdUserArea(user.Area);
-            var idUserPuesto = await _expedienteRepository.GetIdUserPuesto(user.Cargo);
-            var inventario = await _expedienteRepository.GetInventarioControl(user.Cargo);
+            //var idUserPuesto = await _expedienteRepository.GetIdUserPuesto(user.Cargo);
+            var inventario = await _expedienteRepository.GetInventarioControl(user.IdCargo);
             var catSoporte = await _expedienteRepository.GetTiposSoporte();
             ViewData["CatalogoSoporte"] = catSoporte;
             var catTipoDoc = await _expedienteRepository.GetTiposDocumentales();
@@ -55,14 +54,12 @@ namespace ConaviWeb.Controllers.Expedientes
             if (rol == 15)
             {
                 var catArea = await _expedienteRepository.GetPuestosLista();
-                ViewBag.AreaCatalogo = (new SelectList(catArea, "IdPuesto", "Puesto", idUserPuesto));
-                //ViewData["btnShowValidacion"] = true;
+                ViewBag.AreaCatalogo = (new SelectList(catArea, "IdPuesto", "Puesto", user.IdCargo));
             }
             else
             {
-                var catArea = await _expedienteRepository.GetPuestoUser(idUserPuesto);
-                ViewBag.AreaCatalogo = new SelectList(catArea, "IdPuesto", "Puesto", idUserPuesto);
-                //ViewData["btnShowValidacion"] = false;
+                var catArea = await _expedienteRepository.GetPuestoUser(user.IdCargo);
+                ViewBag.AreaCatalogo = new SelectList(catArea, "IdPuesto", "Puesto", user.IdCargo);
             }
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
@@ -81,6 +78,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> InsertInventarioControl(Inventario inventario)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedienteRepository.InsertInventarioControl(inventario);
             if (!success)
             {
@@ -123,7 +125,7 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
-            var inventario = await _expedienteRepository.GetInventarioControl(user.Cargo);
+            var inventario = await _expedienteRepository.GetInventarioControl(user.IdCargo);
 
             IEnumerable<Expediente> expedientes = new List<Expediente>();
             expedientes = await _expedienteRepository.GetExpedientesInventarioControl(user.Id, inventario!=null ? inventario.Id : 0);
@@ -144,7 +146,6 @@ namespace ConaviWeb.Controllers.Expedientes
                 return RedirectToAction("Index", "LoginSedatu");
             }
             IEnumerable<Expediente> expedientes = new List<Expediente>();
-            //expedientes = await _expedienteRepository.GetExpedientesInventarioControlByIdInv(id);
             if (id != 0)
             {
                 expedientes = await _expedienteRepository.GetExpedientesInventarioControl(user.Id, id);
@@ -158,10 +159,10 @@ namespace ConaviWeb.Controllers.Expedientes
             return Json(new { data = expedientes });
         }
         [HttpPost]
-        public async Task<IActionResult> GetInventarioControl([FromForm] string puesto)
+        public async Task<IActionResult> GetInventarioControl([FromForm] int id_puesto)
         {
             Inventario inventario = new();
-            inventario = await _expedienteRepository.GetInventarioControl(puesto);
+            inventario = await _expedienteRepository.GetInventarioControl(id_puesto);
             if (inventario == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Id de inventario no encontrado");
@@ -173,7 +174,6 @@ namespace ConaviWeb.Controllers.Expedientes
         public async Task<IActionResult> GetInventarioControlById([FromForm] int id)
         {
             Inventario inventario = new();
-            //var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
             inventario = await _expedienteRepository.GetInventarioControlById(id);
             if (inventario == null)
             {
@@ -224,18 +224,6 @@ namespace ConaviWeb.Controllers.Expedientes
             TempData["Alert"] = AlertService.ShowAlert(Alerts.Success, "Se envió el expediente a revisión con exito");
             return RedirectToAction("Index");
         }
-        //[HttpPost]
-        //public async Task<IActionResult> SendRevalExpedienteControl(Expediente expediente)
-        //{
-        //    var success = await _expedienteRepository.RevalidacionExpedienteControl(expediente.Id);
-        //    if (!success)
-        //    {
-        //        TempData["Alert"] = AlertService.ShowAlert(Alerts.Danger, "Ocurrio un error al enviar el expediente");
-        //        return RedirectToAction("Index");
-        //    }
-        //    TempData["Alert"] = AlertService.ShowAlert(Alerts.Success, "Se envió el expediente a revalidación con exito");
-        //    return RedirectToAction("Index");
-        //}
         [HttpPost]
         public async Task<IActionResult> MigrarExpedienteControlInvTP(Expediente expediente)
         {

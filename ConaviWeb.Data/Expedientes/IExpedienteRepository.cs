@@ -10,11 +10,11 @@ namespace ConaviWeb.Data.Expedientes
 {
     public interface IExpedienteRepository
     {
-        Task<int> GetIdUserArea(string area);
-        Task<Inventario> GetInventarioTP(string area);
-        Task<Inventario> GetInventarioControl(string area);
+        //Task<int> GetIdUserArea(string area);
+        //Task<Inventario> GetInventarioTP(string area);
+        Task<Inventario> GetInventarioControl(int id_puesto);
         Task<Inventario> GetInventarioControlById(int id);
-        Task<Inventario> GetInventarioBibliohemerografico(string area);
+        Task<Inventario> GetInventarioBibliohemerografico(int id_puesto);
         Task<Inventario> GetInventarioBiblioById(int id);
         //Task<Inventario> GetInventarioNoExpedientable(string area);
         Task<IEnumerable<Catalogo>> GetCodigosExp();

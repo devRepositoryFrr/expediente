@@ -115,9 +115,14 @@
                         },
                         type: "post"  // Verbo HTTP
                     }).done(function (result) {
-                        $('#idPuesto').val(result.idPuesto);
-                        $('#label_descripcion').val(result.puesto);
-                        $('#id_area option[value="'+ result.id +'"]').prop('selected', true);
+                        if(result.id!=null){
+                            $('#idPuesto').val(result.idPuesto);
+                            $('#label_descripcion').val(result.puesto);
+                            $('#id_area option[value="'+ result.id +'"]').prop('selected', true);
+                        }else{
+                            if(result.startsWith('<!DOCTYPE html>'))
+                                window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }
                     })
                     // Se ejecuta si se produjo un error.
                     .fail(function (xhr, status, error) {

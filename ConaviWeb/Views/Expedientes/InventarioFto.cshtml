@@ -29,7 +29,7 @@
                     <label class="control-label">Nombre de la Unidad Administrativa generadora:</label>
                 </div>
                 <div class="col-md-8">
-                    <label class="form-control" id="unidadAdministrativa">Aquí aparecerá la unidad administrativa ligada al usuario</label>
+                    <div class="form-control" id="unidadAdministrativa" style="min-height:39px; height: 100%;">Aquí aparecerá la unidad administrativa ligada al usuario</div>
                 </div>
             </div>
         </div>
@@ -320,8 +320,8 @@
                 body: data,
                 foot: firmasFooter,
                 showFoot: 'lastPage',
-                startY: 58,
-                margin: { top:58, left:10, right: 10, bottom: 10 },
+                startY: 60,
+                margin: { top:60, left:10, right: 10, bottom: 10 },
                 styles: { fontSize: 8 },
                 headStyles: { halign: 'center', valign: 'middle', fillColor: null, textColor: 20, lineWidth: 0.1 },
                 footStyles: { halign: 'center', fillColor: null, textColor: 20 },
@@ -348,11 +348,13 @@
                     doc.text(str, pageSize.width - 55, 40);
                     
                     // Datos generales
-                    // doc.setFontSize(10);
-                    doc.text(`Nombre de la Unidad Administrativa generadora: ${$('#unidadAdministrativa').text()}`, 10, 45);
-                    doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario').text()}`, 10, 50);
-                    doc.text(`Fecha de transferencia al Archivo de Concentración: ${$('#ftransferencia_inventario').text()}`, 179, 50);
-                    doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 55);
+                    const lineasTexto = doc.splitTextToSize(`Nombre de la Unidad Administrativa generadora: ${$('#unidadAdministrativa').text()}`, pageSize.width - 20);
+                    // Calcula la altura del bloque de texto completo
+                    const alturaBloque = lineasTexto.length * (doc.getLineHeight() / doc.internal.scaleFactor) + (lineasTexto.length>1 ? 0.5 : 1);
+                    doc.text(`Nombre de la Unidad Administrativa generadora: ${$('#unidadAdministrativa').text()}`, 10, 45, { align: 'left', maxWidth: pageSize.width - 20, baseline: 'alphabetic' });
+                    doc.text(`Fecha de elaboración del Inventario: ${$('#felaboracion_inventario').text()}`, 10, 45 + alturaBloque);
+                    doc.text(`Fecha de transferencia al Archivo de Concentración: ${$('#ftransferencia_inventario').text()}`, 179, 45 + alturaBloque);
+                    doc.text(`Nombre del responsable del archivo de trámite: ${$('#responsableArchivo').text()}`, 10, 50 + alturaBloque, { align: 'left', maxWidth: pageSize.width - 20, baseline: 'alphabetic' });
                 }
             });
             // Reemplaza el marcador de total de páginas
@@ -363,8 +365,5 @@
             doc.output("pdfobjectnewwindow");
             // doc.save(`InventarioTransPrimaria_id${idInv}.pdf`);
         }
-        //setTimeout(function () {
-        //    imprimirElemento();
-        //}, 2000);
     </script>
 }

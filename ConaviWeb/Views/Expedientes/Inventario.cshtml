@@ -145,7 +145,7 @@
                     url: "@Url.Action("GetInventarioControl", "InventarioControl")", // Url
                     data: {
                         // Datos / Parámetros
-                        puesto: $("#" + this.id + " option:selected").text()
+                        id_puesto: $("#" + this.id + " option:selected").val()
                     },
                     type: "post"  // Verbo HTTP
                 }).done(function (result) {
@@ -154,9 +154,7 @@
                         $('#NombreResponsableAT').val(result.nombreResponsableAT);
                         $('#ftransferencia_archivo').val(result.fechaTransferencia != null ? result.fechaTransferencia.substring(0, 4) + '/' + result.fechaTransferencia.substring(5, 7) + '/' + result.fechaTransferencia.substring(8, 10) : '');
                         $('#felaboracion_inventario').val(result.fechaElaboracion != null ? result.fechaElaboracion.substring(0, 4) + '/' + result.fechaElaboracion.substring(5, 7) + '/' + result.fechaElaboracion.substring(8, 10) : '');
-                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="button" id="btn_fto" class="btn btn-sm btn-primary pull-right" title="Formato de Inventario de Transferencia Primaria al Archivo de Concentración" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
-                        //$("#btn_add_exp").length ? '' : $("#div_btn_addExp").append('<button id="btn_add_exp" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#modalExpediente"><span class="fa fa-plus"></span> Agregar Expediente</button>');
-
+                        $("#btn_fto").length ? '' : $("#div_btns_inv").append('<button type="submit" id="btn_save_inv" class="btn btn-primary btn-sm pull-right active"><span class="fa fa-save"></span> Guardar</button><button type="button" id="btn_fto" class="btn btn-sm btn-secondary pull-right" title="Formato de Inventario de Transferencia Primaria al Archivo de Concentración" onclick="sendToFormat()"><span class="fa fa-print"></span> Formato</button>');
                         var urlTipo = "";
                         urlTipo = "@Url.Action("GetExpedientesTPByIdInv","Inventario")";
                         table = $('#tableExpedientes').DataTable({
@@ -205,26 +203,23 @@
                             }
                         });
                     } else {
-                        $("#alertAjax").append(result);
-                        showAlert();
-                        $('#hd_id_inventario').val('0');
-                        $('#NombreResponsableAT, #ftransferencia_archivo, #felaboracion_inventario').val('');
-                        $("#btn_fto").remove();
-                        //$("#btn_add_exp").remove();
-                        $('#tableExpedientes').DataTable().clear().destroy();
-                        //$('#tableExpedientesControl').DataTable().destroy();
+                        if(result.startsWith("<!DOCTYPE html>")){
+                            window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }else{
+                            $("#alertAjax").append(result);
+                            showAlert();
+                            $('#hd_id_inventario').val('0');
+                            $('#NombreResponsableAT, #ftransferencia_archivo, #felaboracion_inventario').val('');
+                            $("#btn_fto").remove();
+                            $("#btn_save_inv").remove();
+                            $('#tableExpedientes').DataTable().clear().destroy();
+                        }
                     }
                 })
                 // Se ejecuta si se produjo un error.
                 .fail(function (xhr, status, error) {
                     // Mostramos un mensaje de error.
                     //$("#ErrorAlert").show("slow").delay(2000).hide("slow");
-
-                    // Escondemos el Ajax Loader
-                    //$("#AjaxLoader").hide("slow");
-
-                    // Habilitamos el botón de Submit
-                    //$("#SubmitBtn").prop("disabled", false);
                 })
                 // Hacer algo siempre, haya sido exitosa o no.
                 .always(function () {

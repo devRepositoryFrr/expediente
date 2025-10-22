@@ -15,6 +15,7 @@ namespace ConaviWeb.Model.Response
         public string SUser { get; set; }
         public string NuEmpleado { get; set; }
         public string Cargo { get; set; }
+        public int IdCargo { get; set; }
         public string Area { get; set; }
         public RolType Rol { get; set; }
         public int Sistema { get; set; }

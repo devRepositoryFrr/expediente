@@ -28,15 +28,11 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
-            var idUserPuesto = await _expedienteRepository.GetIdUserPuesto(user.Cargo);
-            var inventario = await _expedienteRepository.GetInventarioBibliohemerografico(user.Cargo);
+            var inventario = await _expedienteRepository.GetInventarioBibliohemerografico(user.IdCargo);
             var cat = await _expedienteRepository.GetTiposSoporte();
             ViewData["Catalogo"] = cat;
-            //var catArea = await _expedienteRepository.GetAreas();
-            //ViewBag.AreaCatalogo = (new SelectList(catArea, "Id", "Clave", idUserArea));
             ViewBag.NombreResponsable = inventario != null ? inventario.NombreResponsableAT : "";
             ViewBag.IdInv = inventario != null ? inventario.Id : 0;
-            //ViewBag.FechaElab = inventario != null ? inventario.FechaElaboracion.ToString("dd/MM/yyyy") : "";
             ViewBag.FechaElab = inventario != null ? inventario.FechaElaboracion : "";
             ViewBag.FechaTrans = inventario != null ? inventario.FechaTransferencia : "";
             ViewData["Modulos"] = user.Modules;
@@ -44,14 +40,12 @@ namespace ConaviWeb.Controllers.Expedientes
             if (rol == 15)
             {
                 var catPuesto = await _expedienteRepository.GetPuestosLista();
-                ViewBag.AreaCatalogo = (new SelectList(catPuesto, "IdPuesto", "Puesto", idUserPuesto));
-                //ViewData["btnShowValidacion"] = true;
+                ViewBag.AreaCatalogo = (new SelectList(catPuesto, "IdPuesto", "Puesto", user.IdCargo));
             }
             else
             {
-                var catPuesto = await _expedienteRepository.GetPuestoUser(idUserPuesto);
-                ViewBag.AreaCatalogo = new SelectList(catPuesto, "IdPuesto", "Puesto", idUserPuesto);
-                //ViewData["btnShowValidacion"] = false;
+                var catPuesto = await _expedienteRepository.GetPuestoUser(user.IdCargo);
+                ViewBag.AreaCatalogo = new SelectList(catPuesto, "IdPuesto", "Puesto", user.IdCargo);
             }
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
@@ -60,6 +54,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> InsertInventarioBibliohemerografico(Inventario inventario)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedienteRepository.InsertInventarioBibliohemerografico(inventario);
             if (!success)
             {
@@ -69,10 +68,15 @@ namespace ConaviWeb.Controllers.Expedientes
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public async Task<IActionResult> GetInventarioBibliohemerografico([FromForm] string puesto)
+        public async Task<IActionResult> GetInventarioBibliohemerografico([FromForm] int id_puesto)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             Inventario inventario = new();
-            inventario = await _expedienteRepository.GetInventarioBibliohemerografico(puesto);
+            inventario = await _expedienteRepository.GetInventarioBibliohemerografico(id_puesto);
             if (inventario == null)
             {
                 var alert = AlertService.ShowAlert(Alerts.Danger, "Id de inventario no encontrado");
@@ -83,6 +87,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> GetInventarioBiblioById([FromForm] int id)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             Inventario inventario = new();
             inventario = await _expedienteRepository.GetInventarioBiblioById(id);
             if (inventario == null)
@@ -127,7 +136,7 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
-            var inventario = await _expedienteRepository.GetInventarioBibliohemerografico(user.Cargo);
+            var inventario = await _expedienteRepository.GetInventarioBibliohemerografico(user.IdCargo);
 
             IEnumerable<ExpedienteBibliohemerografico> expedientes = new List<ExpedienteBibliohemerografico>();
             if(inventario != null)
@@ -154,6 +163,11 @@ namespace ConaviWeb.Controllers.Expedientes
         [HttpPost]
         public async Task<IActionResult> DropExpediente(ExpedienteBibliohemerografico expediente)
         {
+            var user = HttpContext.Session.GetObject<UserResponse>("ComplexObject");
+            if (user == null)
+            {
+                return RedirectToAction("Index", "LoginSedatu");
+            }
             var success = await _expedienteRepository.DropExpedienteBibliohemerografico(expediente.Id);
             if (!success)
             {

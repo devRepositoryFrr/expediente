@@ -169,10 +169,14 @@
                             //    return this.tagName == 'SELECT' ? '<div class="form-control" style="min-height: 39px; height:100%;">' + $('#' + this.id + ' option:selected').text() + '</div>' : '<div class="form-control" style="min-height: 39px; height:100%;">' + $(this).val() + '</div>';
                             //});
                         } else {
-                            $('#modalExpediente').modal('toggle');
-                            window.scrollTo(0,0);
-                            $("#alertAjax").append(result);
-                            showAlert();
+                            if(result.startsWith('<!DOCTYPE html>')){
+                                window.location.href='@Url.Action("Index", "LoginSedatu")';
+                            }else{
+                                $('#modalExpediente').modal('toggle');
+                                window.scrollTo(0,0);
+                                $("#alertAjax").append(result);
+                                showAlert();
+                            }
                         }
                     })
                     // Se ejecuta si se produjo un error.
@@ -212,11 +216,15 @@
                         showAlert();
                         $("#showModalVoBoExpedienteControl").modal('toggle');
                     } else {
-                        // Mostramos un mensaje de error.
-                        $("#alertAjax").append(result);
-                        // Habilitamos el botón de Submit
-                        $("#btn_vobo").prop("disabled", false);
-                        showAlert();
+                        if(result.startsWith('<!DOCTYPE html>')){
+                            window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }else{
+                            // Mostramos un mensaje de error.
+                            $("#alertAjax").append(result);
+                            // Habilitamos el botón de Submit
+                            $("#btn_vobo").prop("disabled", false);
+                            showAlert();
+                        }
                     }
                 })
                 // Se ejecuta si se produjo un error.
@@ -266,12 +274,16 @@
                         showAlert();
                         $("#showModalRevalidacionExpedienteControl").modal('toggle');
                     } else {
-                        // Mostramos un mensaje de error.
-                        $("#alertAjax").append(result);
-                        // Habilitamos el botón de Submit
-                        $("#btn_reval").prop("disabled", false);
-                        showAlert();
-                        $("#showModalRevalidacionExpedienteControl").modal('toggle');
+                        if(result.startsWith('<!DOCTYPE html>')){
+                            window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }else{
+                            // Mostramos un mensaje de error.
+                            $("#alertAjax").append(result);
+                            // Habilitamos el botón de Submit
+                            $("#btn_reval").prop("disabled", false);
+                            showAlert();
+                            $("#showModalRevalidacionExpedienteControl").modal('toggle');
+                        }
                     }
                 })
                 // Se ejecuta si se produjo un error.
@@ -311,8 +323,6 @@
             const idArea = $('#slcArea option:selected').val();
             urlTipo = "@Url.Action("GetExpedientesControl", "InventarioValidacion")";
             $('#divtableExpedientesControl').show();
-            //table.destroy();
-            //$('#' + tableName).empty();
             var tableControl = $('#tableExpedientesControl').DataTable({
                 "proccessing": true,
                 "serverSide": false,
@@ -323,8 +333,15 @@
                         'RequestVerificationToken': $('@Html.AntiForgeryToken()').val(),
                         'slcPuesto' : idArea
                     },
-                    complete: function () {
+                    complete: function (result) {
+                        if((result.responseText).startsWith("<!DOCTYPE html>")){
+                            window.location.href='@Url.Action("Index", "LoginSedatu")';
+                        }
                         $("#spinner").hide();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Error al cargar datos:", jqXHR.status, textStatus, errorThrown);
+                        // Mostrar un mensaje al usuario
                     }
                 },
                 "columnDefs": columnsControl,
