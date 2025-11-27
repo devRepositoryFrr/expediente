@@ -977,9 +977,10 @@ namespace ConaviWeb.Data.Expedientes
         {
             var db = DbConnection();
             var sql = @"
-                        select u.id Id, concat(u.nombre, ' ', u.primer_apellido, ' ', u.segundo_apellido) Name, u.usuario SUser, ca.descripcion Signer, u.cargo Position, u.numero_empleado EmployeeNumber, u.rfc RFC, u.activo Active
+                        select u.id Id, concat(u.nombre, ' ', u.primer_apellido, ' ', u.segundo_apellido) Name, u.usuario SUser, ca.descripcion Signer, cp.descripcion Position, u.numero_empleado EmployeeNumber, u.rfc RFC, u.activo Active
                         from prod_control_exp.usuario u
                         join prod_control_exp.cat_areas ca on u.id_area = ca.id
+                        join prod_control_exp.cat_puestos cp on u.id_cargo = cp.id
                         where u.id_rol in (15,16) and u.id <> 212
                         order by u.id;";
             return await db.QueryAsync<User>(sql, new { });
@@ -991,12 +992,12 @@ namespace ConaviWeb.Data.Expedientes
             if (usuario.Id == 0)
             {
                 sql = @"
-                        INSERT INTO prod_control_exp.usuario (nombre, primer_apellido, segundo_apellido, usuario, password, id_rol, cargo, numero_empleado, rfc, grado_academico, id_area, email, update_pass) VALUES(upper(@Nombre), upper(@PApellido), upper(@SApellido), @UserName, sha2(@Password,256), if(@Rol = 1, 15, 16), @Cargo, @NumEmpleado, upper(@RFC), upper(@GradoAcademico), @IdArea, lower(@Email), b'0');";
+                        INSERT INTO prod_control_exp.usuario (nombre, primer_apellido, segundo_apellido, usuario, password, id_rol, cargo, id_cargo, numero_empleado, rfc, grado_academico, id_area, email, update_pass) VALUES(upper(@Nombre), upper(@PApellido), upper(@SApellido), @UserName, sha2(@Password,256), if(@Rol = 1, 15, 16), @Cargo, @IdCargo, @NumEmpleado, upper(@RFC), upper(@GradoAcademico), @IdArea, lower(@Email), b'0');";
             }
             else
             {
                 sql = @"
-                        UPDATE prod_control_exp.usuario SET nombre = upper(@Nombre), primer_apellido = upper(@PApellido), segundo_apellido = upper(@SApellido), id_area = @IdArea, usuario = @UserName, cargo = @Cargo, numero_empleado = @NumEmpleado, rfc = upper(@RFC), grado_academico = upper(@GradoAcademico), email = lower(@Email), id_rol = if(@Rol = 1, 15, 16)";
+                        UPDATE prod_control_exp.usuario SET nombre = upper(@Nombre), primer_apellido = upper(@PApellido), segundo_apellido = upper(@SApellido), id_area = @IdArea, usuario = @UserName, cargo = @Cargo, id_cargo = @IdCargo, numero_empleado = @NumEmpleado, rfc = upper(@RFC), grado_academico = upper(@GradoAcademico), email = lower(@Email), id_rol = if(@Rol = 1, 15, 16)";
                 if (!String.IsNullOrEmpty(usuario.Password))
                 {
                     sql += @", password = sha2(@Password,256)";
@@ -1013,7 +1014,8 @@ namespace ConaviWeb.Data.Expedientes
                 IdArea = usuario.IdSystem,
                 UserName = usuario.SUser,
                 Password = usuario.Password,
-                Cargo = usuario.Position,
+                Cargo = usuario.Active,
+                IdCargo = usuario.Position,
                 NumEmpleado = usuario.EmployeeNumber,
                 RFC = usuario.RFC,
                 GradoAcademico = usuario.Degree,
@@ -1028,7 +1030,7 @@ namespace ConaviWeb.Data.Expedientes
             var db = DbConnection();
 
             var sql = @"
-                        select id Id, nombre Name, primer_apellido LName, segundo_apellido SLName, usuario SUser, if(id_rol=15,1,2) Rol, cargo Position, id_area IdSystem, numero_empleado EmployeeNumber, rfc RFC, grado_academico Degree, email Email
+                        select id Id, nombre Name, primer_apellido LName, segundo_apellido SLName, usuario SUser, if(id_rol=15,1,2) Rol, id_cargo Position, id_area IdSystem, numero_empleado EmployeeNumber, rfc RFC, grado_academico Degree, email Email
                         from prod_control_exp.usuario
                         where id = @Id";
 

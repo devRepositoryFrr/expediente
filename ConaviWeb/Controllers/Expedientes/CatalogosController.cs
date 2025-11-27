@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ConaviWeb.Commons;
+using ConaviWeb.Data.Expedientes;
+using ConaviWeb.Model;
+using ConaviWeb.Model.Expedientes;
+using ConaviWeb.Model.Request;
+using ConaviWeb.Model.Response;
+using ConaviWeb.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ConaviWeb.Model.Expedientes;
-using ConaviWeb.Model;
-using ConaviWeb.Data.Expedientes;
-using ConaviWeb.Services;
 using static ConaviWeb.Models.AlertsViewModel;
-using ConaviWeb.Model.Request;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ConaviWeb.Commons;
-using ConaviWeb.Model.Response;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace ConaviWeb.Controllers.Expedientes
 {
@@ -29,6 +30,10 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
+            else if((int) user.Rol != 15)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewData["Modulos"] = user.Modules;
             var catSecciones = await _expedientesRepository.GetSecciones();
             ViewBag.Secciones = (new SelectList(catSecciones, "Id", "Clave"));
@@ -43,6 +48,10 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
+            else if ((int)user.Rol != 15)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewData["Modulos"] = user.Modules;
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
@@ -54,6 +63,10 @@ namespace ConaviWeb.Controllers.Expedientes
             if (user == null)
             {
                 return RedirectToAction("Index", "LoginSedatu");
+            }
+            else if ((int)user.Rol != 15)
+            {
+                return RedirectToAction("Index", "Home");
             }
             ViewData["Modulos"] = user.Modules;
             var catArea = await _expedientesRepository.GetAreas();
@@ -69,12 +82,16 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
+            else if ((int)user.Rol != 15)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewData["Modulos"] = user.Modules;
             //var idUserArea = await _expedientesRepository.GetIdUserArea(user.Area);
             var catArea = await _expedientesRepository.GetAreas();
             ViewBag.AreaCatalogo = (new SelectList(catArea, "Id", "Clave"));
             var catCargos = await _expedientesRepository.GetPuestosLista();
-            ViewBag.CargoCatalogo = (new SelectList(catCargos, "Puesto", "Puesto"));
+            ViewBag.CargoCatalogo = (new SelectList(catCargos, "IdPuesto", "Puesto"));
             if (TempData.ContainsKey("Alert"))
                 ViewBag.Alert = TempData["Alert"].ToString();
             return View("../Expedientes/Usuarios");
@@ -391,6 +408,8 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
+            Area puesto = await _expedientesRepository.GetPuesto(Convert.ToInt32(usuario.Position));    //Conseguimos la descripción del cargo
+            usuario.Active = puesto.Puesto; //se la asignamos al objeto usuario
             var success = await _expedientesRepository.UpdateUsuario(usuario);
             if (!success)
             {

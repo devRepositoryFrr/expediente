@@ -29,6 +29,10 @@ namespace ConaviWeb.Controllers.Expedientes
             {
                 return RedirectToAction("Index", "LoginSedatu");
             }
+            else if ((int)user.Rol != 15)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var catArea = await _expedienteRepository.GetPuestosListaValidacion();
             ViewData["AreaCatalogo"] = catArea;
             var catSoporte = await _expedienteRepository.GetTiposSoporte();
