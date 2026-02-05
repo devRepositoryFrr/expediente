@@ -892,7 +892,7 @@ namespace ConaviWeb.Data.Expedientes
         {
             var db = DbConnection();
             var sql = @"";
-            if (area.Id == 0)
+            if (area.IdPuesto == 0)
             {
                 sql = @"
                         INSERT INTO prod_control_exp.cat_puestos (descripcion, id_area) VALUES(@Puesto, @IdArea);";
