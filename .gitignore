@@ -452,3 +452,6 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/ConaviWeb/appsettings.json
+/ConaviWeb/appsettings.Development.json
+/ConaviWeb/appsettings.Production.json
